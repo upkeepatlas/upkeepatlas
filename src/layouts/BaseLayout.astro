@@ -8,8 +8,9 @@ const rawOrigin = import.meta.env.PUBLIC_SITE_URL?.trim();
 const validOrigin = rawOrigin && /^https:\/\/[a-z0-9.-]+(?::[0-9]+)?\/?$/i.test(rawOrigin) ? rawOrigin.replace(/\/$/, "") : "";
 const canonical = validOrigin ? new URL(Astro.url.pathname, validOrigin).href : undefined;
 // Build fingerprint: IndexNow automation waits for this exact deployed commit before POSTing.
-const cfCommit = process.env.CF_PAGES_COMMIT_SHA || "";
-const deployedCommit = validOrigin && process.env.CF_PAGES_BRANCH === "main" && /^[a-f0-9]{40}$/.test(cfCommit) ? cfCommit : "";
+const buildEnv = (globalThis as typeof globalThis & {process?: {env?: Record<string,string | undefined>}}).process?.env ?? {};
+const cfCommit = buildEnv.CF_PAGES_COMMIT_SHA || "";
+const deployedCommit = validOrigin && buildEnv.CF_PAGES_BRANCH === "main" && /^[a-f0-9]{40}$/.test(cfCommit) ? cfCommit : "";
 const brand = "Upkeep Atlas";
 const fullTitle = title === brand ? brand + " | Home maintenance, made manageable" : title + " | " + brand;
 const schema = validOrigin ? [
