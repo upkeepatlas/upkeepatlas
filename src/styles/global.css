@@ -50,3 +50,13 @@ h1,h2,h3,h4{line-height:1.15;letter-spacing:-.036em}h1,h2{font-family:var(--seri
 @media(max-width:560px){.container,.narrow.container{width:min(calc(100% - 32px),var(--container))}.header-inner{height:72px}.mobile-menu nav{top:72px}.hero{padding:52px 0}.hero h1{font-size:clamp(3rem,13.2vw,4rem)}.hero-art{height:320px;padding:1.5rem}.hero-art:before{inset:12px}.art-top,.art-bottom span{font-size:.6rem}.art-bottom strong{font-size:1.7rem}.hero-actions{gap:1.1rem}.section-small{padding:48px 0}.numbered-row,.cards,.month-grid,.tool-grid{grid-template-columns:1fr}.section-heading{display:block}.section-heading a{margin-top:1rem}.page-head{padding:46px 0 28px}.page-head h1{font-size:clamp(2.6rem,11vw,3.5rem)}.footer-links{gap:3rem}.footer-bottom{flex-direction:column;gap:.3rem}.tool-shell{padding:1.1rem}.button{min-height:48px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition:none!important}}
 @media print{.site-header,.site-footer,.skip-link,.no-print,.tool-actions,nav,.button{display:none!important}html,body{background:white!important;color:black!important}.container,.narrow.container{max-width:none;width:100%}.page-head,.section,.section-small{padding:0!important}.month-grid{grid-template-columns:repeat(2,1fr)}.month-card,.checklist,.tool-shell{break-inside:avoid;border:1px solid #999}.page-layout{display:block}.hero-art{display:none}.note{background:transparent!important;border:1px solid #999}.tool-result{background:white;color:black;border:1px solid black}.tool-result p{color:black}}
+
+/* CONTACT — purposeful fields and a quiet, accessible two-column layout */
+.field textarea{width:100%;min-height:180px;border:1px solid #A8B5AB;border-radius:0;background:#FDFDFC;padding:.8rem .85rem;color:var(--ink);line-height:1.6;resize:vertical;font:inherit}
+.field textarea:focus{border-color:var(--pine)}
+.contact-span{grid-column:1/-1}
+.contact-honeypot{display:none!important}
+.contact-privacy{margin:1.5rem 0 0;max-width:65ch;color:var(--muted);line-height:1.6}
+.contact-sidebar .contact-email{font-family:var(--serif);font-size:1.18rem;overflow-wrap:anywhere;line-height:1.45}
+.contact-rule{border-top:1px solid var(--line);margin:1.9rem 0}
+@media(max-width:560px){.contact-form-shell{padding:1.25rem}.contact-sidebar{margin-top:1rem}}
