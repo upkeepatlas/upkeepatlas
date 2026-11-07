@@ -1,0 +1,48 @@
+name: Bing IndexNow — deployed content notifications
+
+on:
+  workflow_run:
+    workflows: ["Build and quality"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      submit_all:
+        description: "Manually submit all published URLs (initial setup or recovery only)"
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: upkeepatlas-indexnow-production
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    # Only successful main-branch push builds, never PRs or preview deployments.
+    if: >-
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.event == 'push') ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout the tested Git commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate public ownership key and canonical URLs
+        run: node scripts/indexnow.mjs --check
+      - name: Notify Bing only about verified live changes
+        env:
+          INDEXNOW_EXPECT_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          INDEXNOW_FORCE_ALL: ${{ github.event_name == 'workflow_dispatch' && inputs.submit_all && 'true' || 'false' }}
+        run: node scripts/indexnow.mjs --submit

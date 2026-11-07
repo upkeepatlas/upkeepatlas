@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {PUBLIC_ROUTES,publishedOrigin} from "../src/lib/routes.mjs";
+import {INDEXNOW_KEY} from "../src/lib/indexnow.mjs";
 const output=path.resolve("dist");
 if(!fs.existsSync(output))throw new Error("Missing dist directory; run npm run build first.");
 const errors=[];const titles=new Set();const origin=publishedOrigin(process.env.PUBLIC_SITE_URL);
@@ -16,6 +17,10 @@ for(const route of PUBLIC_ROUTES){
   if(count!==1)errors.push(route+": expected one H1; found "+count);
   if(!/<meta\s+name="description"\s+content="[^"]+"/i.test(html))errors.push(route+": description missing");
   if(!html.includes('lang="en-US"'))errors.push(route+": missing language declaration");
+  if(origin && process.env.CF_PAGES_BRANCH==="main" && process.env.CF_PAGES_COMMIT_SHA &&
+    !html.includes('name="upkeepatlas-deploy-commit" content="'+process.env.CF_PAGES_COMMIT_SHA+'"')){
+    errors.push(route+": missing production deployment fingerprint for IndexNow");
+  }
   if(route==="/contact/"){
     if(!html.includes('action="https://formsubmit.co/upkeepatlas@protonmail.com"'))errors.push("Contact form: email delivery endpoint missing");
     if(!html.includes('method="POST"'))errors.push("Contact form: POST method missing");
@@ -46,6 +51,9 @@ for(const route of PUBLIC_ROUTES){
 if(!fs.existsSync(path.join(output,"robots.txt")))errors.push("robots.txt missing");
 if(!fs.existsSync(path.join(output,"sitemap.xml")))errors.push("sitemap.xml missing");
 if(!fs.existsSync(path.join(output,"404.html")))errors.push("404.html missing");
+const indexNowFile=path.join(output,INDEXNOW_KEY+".txt");
+if(!fs.existsSync(indexNowFile) || fs.readFileSync(indexNowFile,"utf8").trim()!==INDEXNOW_KEY)
+  errors.push("IndexNow public ownership file missing or mismatched in build output");
 const adsTxt=path.join(output,"ads.txt");
 if(!fs.existsSync(adsTxt))errors.push("ads.txt missing");
 else if(read("ads.txt").trim()!=="google.com, pub-3399213817491318, DIRECT, f08c47fec0942fa0")errors.push("ads.txt must contain the exact authorized Google publisher record");

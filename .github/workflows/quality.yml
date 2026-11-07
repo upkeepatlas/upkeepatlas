@@ -19,10 +19,14 @@ jobs:
       - run: npm run test
       - run: npm run build
       - run: npm run check:seo
+      - run: node scripts/indexnow.mjs --check
       - run: npm run check
       - name: Verify production-host SEO output
         env:
           PUBLIC_SITE_URL: https://upkeepatlas.pages.dev
+          CF_PAGES_BRANCH: main
+          CF_PAGES_COMMIT_SHA: ${{ github.sha }}
         run: |
           npm run build
           npm run check:seo
+          node scripts/indexnow.mjs --check
