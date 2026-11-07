@@ -20,3 +20,9 @@ jobs:
       - run: npm run build
       - run: npm run check:seo
       - run: npm run check
+      - name: Verify production-host SEO output
+        env:
+          PUBLIC_SITE_URL: https://upkeepatlas.pages.dev
+        run: |
+          npm run build
+          npm run check:seo
