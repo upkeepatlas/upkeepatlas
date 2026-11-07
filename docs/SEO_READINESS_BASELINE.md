@@ -1,28 +1,21 @@
-# SEO / GEO readiness baseline — 2026-11-07
+# Upkeep Atlas — SEO/GEO readiness status (2026-11-07)
 
-## Honest current status
-Status: **NOT READY / NOT YET TESTABLE**.
+**Current state:** Astro website built, committed to GitHub and published to Cloudflare Pages at https://upkeepatlas.pages.dev/. Technical SEO build checks are green, but Search Console, real-user performance, and complete accessibility audits remain outstanding.
 
-As of this baseline:
-- GitHub repository is accessible and was empty before the new governance/skills commit.
-- No website source, built HTML, canonical production hostname, published sitemap, or pages are yet available to audit.
-- Connected Cloudflare Upkeep Atlas account authenticated, but Pages projects and Worker scripts returned zero on the last checked session. Recheck when the site is provisioned/connected.
-- No Search Console, live URLs, field performance, ad approval, or index coverage was verified.
-- Local skill documentation prepares the quality process but does not itself satisfy any SEO or GEO release gate.
+See the detailed evidence-based [initial launch audit](audits/2026-11-07-final.md) for each PASS / BLOCKED / N/A decision and links to CI evidence.
 
-## Planned measurable checkpoints
-| Area | Gate | Current |
-| --- | --- | --- |
-| Content | Published unique, sourced, helpful pages | BLOCKED |
-| Crawlability | Static HTML, robots, sitemap, links, 200/404 | BLOCKED |
-| Metadata | Titles, descriptions, canonical, OG | BLOCKED |
-| Structured data | Valid, visible-content-aligned JSON-LD | BLOCKED |
-| GEO | Crawlable answer + reliable sourcing + genuine value | BLOCKED |
-| Experience | WCAG AA-oriented checks, mobile usability | BLOCKED |
-| Performance | Field/lab LCP, INP, CLS | BLOCKED |
-| Hosting | Visible Pages project, production deployment, HTTPS | BLOCKED |
-| Search Console | Verified ownership, sitemap, indexing observations | BLOCKED |
-| Ads / privacy | Legal, policy and implementation review | BLOCKED |
+## Verified
 
-## Audit rule
-Each release must update a dated audit record showing actual evidence and outstanding blockers. Do not claim the site is 'SEO-complete' solely from a checklist or code inspection. No website can guarantee search ranking or AI citations.
+- GitHub source, Cloudflare Pages project and automatic production deployment.
+- Fourteen static content routes; readable home page HTML with title, description, H1, structured data, indexable robots meta and production canonical.
+- Successful `npm run test` (6 tests), `npm run build`, `npm run check:seo` in staging and production-origin modes, and `npm run check` in GitHub CI.
+- Three sourced guides, annual planner, paint estimator, two printable checklists, privacy and editorial pages.
+
+## Pending live or human verification
+
+- Live robots.txt and sitemap HTTP fetch; sitewide crawl; complete structured data validation.
+- Actual browser usability, keyboard, screen reader, contrast, responsive and Lighthouse/Core Web Vitals measurements.
+- Google Search Console, sitemap submission and indexing feedback; AI search citations, ad policy and privacy review.
+- Final custom domain, branding asset replacement and periodic safety/content editorial review.
+
+**No search ranking, AI citation, ad approval, or accessibility certification is guaranteed.**
