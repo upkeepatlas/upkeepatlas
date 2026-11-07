@@ -28,6 +28,7 @@ export const TASKS = [
 ];
 export function generatePlan({climate="temperate",home="detached",features=["hvac","gutters","dryer"]}={}) {
   const enabled=new Set(features);
+  /** @type {{name:string,number:number,tasks:{id:string,title:string,detail:string,level:string,source:string}[]}[]} */
   const result=months.map((name,index)=>({name,number:index+1,tasks:[]}));
   for(const task of TASKS){
     if(task.features && !task.features.every(f=>enabled.has(f))) continue;
