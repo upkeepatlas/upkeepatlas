@@ -13,6 +13,7 @@ A thoughtfully designed home-maintenance field guide for first-time U.S. homeown
 - Two printable checklists for the first year and seasonal home care.
 - Three carefully structured homeowner guides with primary-source links and safety qualifications.
 - Contact page with a no-JavaScript contact form targeting upkeepatlas@protonmail.com, plus a direct email link.
+- Bing IndexNow ownership key and production-verified GitHub Actions notifications for new or changed public URLs.
 - Refined responsive editorial UI; no login, with Google AdSense loader configured for production. Ad placement and approval remain managed in AdSense.
 - Static semantic HTML, per-route SEO metadata, sitemap and robots rules, JSON-LD, accessible navigation and a custom 404 page.
 
@@ -27,6 +28,8 @@ npm run test
 npm run check
 npm run build
 npm run check:seo
+npm run check:indexnow
+npm run indexnow:dry-run
 ```
 
 Build output is `dist/`. Production Cloudflare Pages build command: `npm run build`, output: `dist`.
@@ -43,6 +46,7 @@ GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 
 - [Research source ledger](docs/SOURCE_LEDGER.md)
 - [Implementation & deployment notes](docs/IMPLEMENTATION.md)
 - [Contact form setup and mailbox activation](docs/CONTACT_FORM_SETUP.md)
+- [Bing IndexNow deployment automation and verification](docs/INDEXNOW.md)
 - [SEO/GEO readiness audit](docs/audits/2026-11-07-final.md)
 - [Search Console, Bing Webmaster and AdSense setup](docs/SEARCH_AND_ADS_SETUP.md)
 - [Search and advertising integration audit — 2026-11-08](docs/audits/2026-11-08-search-ads.md)
