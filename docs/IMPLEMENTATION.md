@@ -1,7 +1,7 @@
 # Upkeep Atlas implementation and deployment
 
 ## Architecture
-Astro static output, HTML-first pages, small client-side scripts for the maintenance planner, calculator and printable checklists. Styling is hand-built CSS. Node's built-in test runner covers deterministic business logic. There is no backend, login or tracking/ad SDK.
+Astro static output, HTML-first pages, small client-side scripts for the maintenance planner, calculator and printable checklists. Styling is hand-built CSS. Node's built-in test runner covers deterministic business logic. There is no first-party message-storage backend or login. The contact page submits to the external FormSubmit email delivery service after its one-time mailbox activation; production pages also load the configured Google AdSense script.
 
 ## Pages deployment (GitHub source)
 - GitHub: upkeepatlas/upkeepatlas, branch main.
