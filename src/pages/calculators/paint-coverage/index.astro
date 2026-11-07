@@ -1,0 +1,62 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import {estimatePaint} from "../../../lib/paint.mjs";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Paint coverage"}];
+const estimate=estimatePaint();
+---
+<Base title="Interior Paint Coverage Calculator" description="Estimate paint gallons with this free calculator using room dimensions, doors and windows, coats and manufacturer coverage." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">FREE TOOL / INTERIOR PAINT</span><h1>Enough paint. <em class="serif" style="color:var(--pine)">Less guesswork.</em></h1><p class="lede">Estimate the paint needed for a rectangular room's walls. Adjust the number of coats, openings, product coverage and waste allowance.</p></div></section>
+  <section class="section-small rule-top"><div class="container page-layout">
+    <div class="tool-shell">
+      <div class="tool-head"><span class="eyebrow">ROOM & PRODUCT DETAILS</span><h2>Your wall measurements</h2><p class="small muted">Measurements are in feet. We subtract the combined door and window area from four walls.</p></div>
+      <form id="paint-form" novalidate>
+        <div class="tool-grid">
+          <div class="field"><label for="length">Room length (ft)</label><input id="length" name="length" type="number" min="1" max="500" step=".1" value="12" required/></div>
+          <div class="field"><label for="width">Room width (ft)</label><input id="width" name="width" type="number" min="1" max="500" step=".1" value="12" required/></div>
+          <div class="field"><label for="height">Wall height (ft)</label><input id="height" name="height" type="number" min="1" max="100" step=".1" value="8" required/></div>
+          <div class="field"><label for="openings">Doors/windows area (sq ft)</label><input id="openings" name="openings" type="number" min="0" step=".1" value="40" required/></div>
+          <div class="field"><label for="coats">Number of coats</label><input id="coats" name="coats" type="number" min="1" max="8" step="1" value="2" required/></div>
+          <div class="field"><label for="coverage">Label coverage (sq ft / gallon)</label><input id="coverage" name="coverage" type="number" min="1" max="2000" step="1" value="350" required/><small>Use your actual paint manufacturer's stated value.</small></div>
+          <div class="field"><label for="waste">Allowance for waste (%)</label><input id="waste" name="waste" type="number" min="0" max="50" step="1" value="10" required/></div>
+        </div>
+        <p id="paint-error" class="error" role="alert" aria-live="polite"></p>
+        <div class="tool-actions no-print"><button type="submit" class="button">Calculate paint ↗</button><button class="button light" type="button" id="paint-print">Print result</button></div>
+      </form>
+      <div class="tool-result" role="status" aria-live="polite" aria-atomic="true">
+        <span class="eyebrow" style="color:#C8DCCC">ESTIMATED WHOLE GALLONS TO BUY</span>
+        <strong id="paint-gallons">{estimate.gallonsToBuy} gallons</strong>
+        <p id="paint-breakdown">{estimate.paintableArea.toFixed(0)} sq ft of wall after openings · {estimate.gallonsExact.toFixed(2)} gallons calculated, before rounding up.</p>
+      </div>
+      <div class="prose" style="font-size:.93rem">
+        <h2>How the estimate works</h2><p>Wall area = 2 × (length + width) × height. Subtract doors and windows. Multiply by number of coats and (1 + waste percent ÷ 100), then divide by your product's stated square feet per gallon. Finally, round up to full gallons for a simple purchase estimate.</p>
+        <p><strong>Not included:</strong> ceiling, trim, sloped or irregular walls, textured surfaces, primer, surface porosity or different paint pack sizes. The product label and actual surface preparation determine final requirements.</p>
+      </div>
+    </div>
+    <aside class="sidebar"><span class="eyebrow">BEFORE YOU BUY</span><h3>Measure well.</h3><p class="small muted">For rooms with alcoves or slopes, calculate each wall area separately. Manufacturer coverage varies with product, surface and application.</p><a href="/guides/first-year-maintenance-rhythm/">Start a maintenance log ↗</a><a href="/maintenance-calendar/">Make a yearly plan ↗</a></aside>
+  </div></section>
+</Base>
+<script>
+  import {estimatePaint} from "../../../lib/paint.mjs";
+  const form=document.querySelector<HTMLFormElement>("#paint-form");
+  const error=document.querySelector<HTMLElement>("#paint-error");
+  const amount=document.querySelector<HTMLElement>("#paint-gallons");
+  const breakdown=document.querySelector<HTMLElement>("#paint-breakdown");
+  form?.addEventListener("submit",event=>{
+    event.preventDefault();
+    try {
+      const values=new FormData(form);
+      const inputs:Record<string,number>={};
+      for(const key of ["length","width","height","openings","coats","coverage","waste"]){
+        const raw=String(values.get(key)??"");
+        if(raw.trim()==="") throw new RangeError("Fill in all fields before calculating.");
+        inputs[key]=Number(raw);
+      }
+      const result=estimatePaint(inputs);
+      if(error)error.textContent="";
+      if(amount)amount.textContent=result.gallonsToBuy+" "+(result.gallonsToBuy===1?"gallon":"gallons");
+      if(breakdown)breakdown.textContent=result.paintableArea.toFixed(1)+" sq ft of wall after openings · "+result.gallonsExact.toFixed(2)+" gallons calculated, before rounding up.";
+    }catch(e){if(error)error.textContent=e instanceof Error?e.message:"Check the measurements and try again.";}
+  });
+  document.querySelector("#paint-print")?.addEventListener("click",()=>window.print());
+</script>

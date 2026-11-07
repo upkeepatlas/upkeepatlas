@@ -1,0 +1,14 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Calculators"}];
+---
+<Base title="Home Maintenance Calculators" description="Practical homeowner calculators with transparent formulas, clear assumptions and print-friendly results." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">MEASURE TWICE</span><h1>Useful numbers, <em class="serif" style="color:var(--pine)">clearly explained.</em></h1><p class="lede">Simple calculations that make a project easier to plan. No hidden assumptions, email forms or account required.</p></div></section>
+  <section class="section-small rule-top"><div class="container">
+    <div class="cards">
+      <a class="editorial-card" href="/calculators/paint-coverage/"><span class="meta">FINISHES · ESTIMATOR</span><h3>Interior paint coverage calculator</h3><p>Estimate wall area and gallons for a rectangular room, with coats, openings and a waste allowance you control.</p><span class="arrow">Open calculator ↗</span></a>
+    </div>
+    <div class="note" style="margin-top:3rem">Calculators provide planning estimates only. Check the actual product label, surface condition, local requirements and professional advice before purchasing or starting work.</div>
+  </div></section>
+</Base>

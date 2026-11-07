@@ -1,0 +1,82 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import {generatePlan} from "../../lib/planner.mjs";
+const crumbs=[{title:"Maintenance planner"}];
+const defaultPlan=generatePlan();
+const total=defaultPlan.reduce((num,month)=>num+month.tasks.length,0);
+---
+<Base title="Free Annual Home Maintenance Planner" description="Create a month-by-month home maintenance plan for your climate, home type and equipment. Check off reminders and print your yearly schedule." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container">
+    <Breadcrumbs items={crumbs}/>
+    <span class="eyebrow">THE MAINTENANCE PLANNER / FREE</span>
+    <h1>Make room for the <em class="serif" style="color:var(--pine)">important things.</em></h1>
+    <p class="lede">One year. A manageable rhythm. Choose a few details about your home to organize a starting plan of simple checks and professional reminders.</p>
+  </div></section>
+  <section class="section-small rule-top"><div class="container">
+    <div class="tool-shell">
+      <div class="tool-head"><span class="eyebrow">01 / THE DETAILS</span><h2>Tell us a little about your home.</h2><p class="small muted">Your selections remain in your browser during this visit. No account or address required.</p></div>
+      <form id="planner-form" class="tool-grid">
+        <div class="field"><label for="climate">Your climate</label><select id="climate" name="climate"><option value="temperate">Temperate / mixed seasons</option><option value="cold">Colder winters</option><option value="warm">Warm weather / mild winter</option></select><small>Broad planning categories, not localized forecasts.</small></div>
+        <div class="field"><label for="home">Your home type</label><select id="home" name="home"><option value="detached">Detached house</option><option value="townhouse">Townhouse</option><option value="condo">Condo / apartment</option></select><small>Check HOA or building management responsibilities.</small></div>
+        <fieldset style="border:0;margin:0;padding:0;grid-column:1/-1"><legend style="font-weight:650;font-size:.86rem;margin-bottom:.6rem">Features in your home</legend><div style="display:flex;flex-wrap:wrap;gap:1rem 2rem">
+          <label><input type="checkbox" name="feature" value="hvac" checked/> Central heating / cooling</label>
+          <label><input type="checkbox" name="feature" value="gutters" checked/> Exterior gutters</label>
+          <label><input type="checkbox" name="feature" value="dryer" checked/> Clothes dryer</label>
+        </div></fieldset>
+      </form>
+      <div class="output-header"><div><span class="eyebrow">02 / YOUR STARTER YEAR</span><h2>A year in small steps.</h2></div><span class="pill"><output id="task-count">{total} reminders</output></span></div>
+      <div class="tool-actions no-print"><button class="button" type="button" id="print-plan">Print this plan ↗</button><button class="button light" type="button" id="reset-plan">Clear checkmarks</button></div>
+      <div class="month-grid" id="plan-months">
+        {defaultPlan.map(month=><section class="month-card" aria-label={month.name}>
+          <h3>{month.name}</h3>
+          {month.tasks.map(task=><label class="task-item"><input type="checkbox" data-task={task.id}/><span><strong>{task.title}</strong><small>{task.level} · <a href={task.source} target="_blank" rel="noopener noreferrer">source ↗</a></small></span></label>)}
+        </section>)}
+      </div>
+      <p class="small muted" style="margin-top:1.6rem">These are general starting reminders, not mandatory maintenance intervals or building-code requirements. Equipment manuals, professional advice, your climate and any building/HOA rules take precedence.</p>
+    </div>
+    <div class="numbered-row">
+      <div class="numbered-item"><span class="eyebrow">HOW IT WORKS</span><h3>Change a detail.</h3><p>We update the calendar immediately to match the features and conditions you choose.</p></div>
+      <div class="numbered-item"><span class="eyebrow">GOOD TO KNOW</span><h3>Leave risky work to experts.</h3><p>Roof, gas, electrical and hazardous repair tasks belong with qualified professionals.</p></div>
+      <div class="numbered-item"><span class="eyebrow">MAKE IT YOURS</span><h3>Print, keep, repeat.</h3><p>Checkmarks are temporary. Print or save a copy in your personal home-maintenance file.</p></div>
+    </div>
+  </div></section>
+</Base>
+<script>
+  import {generatePlan} from "../../lib/planner.mjs";
+  const form=document.querySelector<HTMLFormElement>("#planner-form");
+  const container=document.querySelector<HTMLElement>("#plan-months");
+  const counter=document.querySelector<HTMLOutputElement>("#task-count");
+  function element(tag:string,cls?:string,text?:string):HTMLElement{
+    const node=document.createElement(tag);if(cls)node.className=cls;if(text)node.textContent=text;return node;
+  }
+  function render(){
+    if(!form||!container)return;
+    const climate=(form.elements.namedItem("climate") as HTMLSelectElement).value;
+    const home=(form.elements.namedItem("home") as HTMLSelectElement).value;
+    const features=Array.from(form.querySelectorAll<HTMLInputElement>('input[name="feature"]:checked')).map(input=>input.value);
+    const plan=generatePlan({climate,home,features});
+    container.replaceChildren();
+    let number=0;
+    for(const month of plan){
+      const section=element("section","month-card");section.setAttribute("aria-label",month.name);
+      section.append(element("h3",undefined,month.name));
+      for(const task of month.tasks){
+        number++;
+        const label=element("label","task-item");
+        const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.setAttribute("data-task",task.id);
+        const contents=element("span");contents.append(element("strong",undefined,task.title));
+        const detail=element("small",undefined,task.level+" · ");
+        const source=document.createElement("a");source.href=task.source;source.target="_blank";source.rel="noopener noreferrer";source.textContent="source ↗";
+        detail.append(source);contents.append(detail);label.append(checkbox,contents);section.append(label);
+      }
+      container.append(section);
+    }
+    if(counter)counter.value=number+" reminders";
+  }
+  form?.addEventListener("change",render);
+  document.querySelector("#reset-plan")?.addEventListener("click",()=>{
+    document.querySelectorAll<HTMLInputElement>('#plan-months input[type="checkbox"]').forEach(input=>input.checked=false);
+  });
+  document.querySelector("#print-plan")?.addEventListener("click",()=>window.print());
+</script>
