@@ -1,0 +1,104 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+
+const crumbs = [{ title: "Contact" }];
+---
+<Base
+  title="Contact Upkeep Atlas"
+  description="Contact Upkeep Atlas with a question, suggestion, correction or partnership inquiry. Send a message through our contact form or email us directly."
+  breadcrumbs={crumbs}
+>
+  <section class="page-head">
+    <div class="container">
+      <Breadcrumbs items={crumbs} />
+      <span class="eyebrow">GET IN TOUCH / UPKEEP ATLAS</span>
+      <h1>We'd love to <em class="serif" style="color:var(--pine)">hear from you.</em></h1>
+      <p class="lede">A question about one of our guides? Found something we should correct? Have an idea for a useful homeowner tool? Drop us a note.</p>
+    </div>
+  </section>
+
+  <section class="section-small rule-top">
+    <div class="container page-layout">
+      <div>
+        <div class="tool-shell contact-form-shell">
+          <div class="tool-head">
+            <span class="eyebrow">SEND A MESSAGE</span>
+            <h2>Write to us.</h2>
+            <p class="small muted">Fields marked * are required. Please don't include passwords, account numbers, or other sensitive information.</p>
+          </div>
+
+          <!-- Native POST works without JavaScript. FormSubmit requires mailbox
+               activation before messages can be delivered. Keep reCAPTCHA enabled. -->
+          <form
+            action="https://formsubmit.co/upkeepatlas@protonmail.com"
+            method="POST"
+            aria-label="Contact Upkeep Atlas"
+          >
+            <input type="hidden" name="_subject" value="Upkeep Atlas — new contact message" />
+            <input type="hidden" name="_template" value="table" />
+            <div class="contact-honeypot" aria-hidden="true">
+              <label for="website-check">Leave this field empty</label>
+              <input id="website-check" type="text" name="_honey" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="tool-grid">
+              <div class="field">
+                <label for="contact-name">Your name *</label>
+                <input id="contact-name" type="text" name="name" autocomplete="name" maxlength="120" required placeholder="Your name" />
+              </div>
+              <div class="field">
+                <label for="contact-email">Email address *</label>
+                <input id="contact-email" type="email" name="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
+              </div>
+              <div class="field contact-span">
+                <label for="contact-topic">What's this about? *</label>
+                <select id="contact-topic" name="topic" required>
+                  <option value="" disabled selected>Choose a topic</option>
+                  <option value="Question about a guide">Question about a guide</option>
+                  <option value="Correction or feedback">Correction or feedback</option>
+                  <option value="Website or tool issue">Website or tool issue</option>
+                  <option value="Partnership or media inquiry">Partnership or media inquiry</option>
+                  <option value="Other">Something else</option>
+                </select>
+              </div>
+              <div class="field contact-span">
+                <label for="contact-message">Your message *</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows="7"
+                  minlength="10"
+                  maxlength="5000"
+                  required
+                  placeholder="Tell us what you have in mind..."
+                ></textarea>
+                <small>Between 10 and 5,000 characters.</small>
+              </div>
+            </div>
+
+            <p class="contact-privacy small">When you send this form, your contact details and message are processed by <a href="https://formsubmit.co/privacy.pdf" rel="noopener noreferrer" target="_blank">FormSubmit</a>, our third-party email delivery service. You may see an anti-spam check or a confirmation page. Read our <a href="/privacy/">privacy policy</a>.</p>
+
+            <div class="tool-actions">
+              <button type="submit" class="button">Send your message <span aria-hidden="true">↗</span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <aside class="sidebar contact-sidebar" aria-label="Other ways to get in touch">
+        <span class="eyebrow">DIRECT EMAIL</span>
+        <h3>Prefer your inbox?</h3>
+        <p class="small muted">You can also reach us directly without using the form.</p>
+        <a class="contact-email" href="mailto:upkeepatlas@protonmail.com">upkeepatlas@protonmail.com <span aria-hidden="true">↗</span></a>
+        <div class="contact-rule"></div>
+        <span class="eyebrow">GOOD TO KNOW</span>
+        <p class="small muted">We welcome corrections and practical feedback. For emergencies or safety-critical electrical, gas, structural or water issues, contact a qualified local professional or emergency service instead of waiting for an email reply.</p>
+        <div class="contact-rule"></div>
+        <span class="eyebrow">ABOUT THE PROJECT</span>
+        <p class="small muted">Upkeep Atlas is a growing resource for everyday home maintenance, with research-backed guides and simple planning tools.</p>
+        <a href="/editorial-policy/">Our editorial approach ↗</a>
+      </aside>
+    </div>
+  </section>
+</Base>
