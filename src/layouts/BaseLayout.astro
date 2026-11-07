@@ -24,6 +24,11 @@ const schema = validOrigin ? [
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#234238" />
   <meta name="generator" content="Astro" />
+  <!-- Ownership verification: Google Search Console and Bing Webmaster Tools. -->
+  <meta name="google-site-verification" content="dLBYqjQSU_b8qIgIePwzoGsC7t8yMRd_7clA3LDZzvg" />
+  <meta name="msvalidate.01" content="6F5CEF54439CF26D57A6D6556901350F" />
+  <!-- AdSense account recognition; ads are only enabled on the configured production origin. -->
+  <meta name="google-adsense-account" content="ca-pub-3399213817491318" />
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <meta name="robots" content={canonical ? "index,follow,max-image-preview:large" : "noindex,nofollow"} />
@@ -36,6 +41,7 @@ const schema = validOrigin ? [
   {validOrigin && <meta property="og:image" content={validOrigin + "/social-card.svg"} />}
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  {validOrigin && <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3399213817491318" crossorigin="anonymous"></script>}
   {schema.map((item)=><script type="application/ld+json" set:html={JSON.stringify(item)} />)}
 </head>
 <body>
