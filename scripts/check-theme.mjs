@@ -11,7 +11,7 @@ for(const route of PUBLIC_ROUTES){
   const file=path.join(root,route,"index.html");
   if(!fs.existsSync(file)){errors.push(route+": generated HTML missing");continue;}
   const html=fs.readFileSync(file,"utf8");
-  if((html.match(/data-theme-toggle/g)||[]).length!==1)errors.push(route+": expected one accessible theme button");
+  if((html.match(/<button\b[^>]*data-theme-toggle\b/g)||[]).length!==1)errors.push(route+": expected one accessible theme button");
   if(!html.includes('upkeepatlas-theme') || !html.includes("prefers-color-scheme: dark"))errors.push(route+": missing early appearance preference bootstrap");
   if(!html.includes('meta name="theme-color"'))errors.push(route+": missing browser bar theme metadata");
   if(!html.includes('aria-label="Switch to night mode"'))errors.push(route+": missing accessible initial theme label");
