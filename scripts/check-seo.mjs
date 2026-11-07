@@ -16,6 +16,13 @@ for(const route of PUBLIC_ROUTES){
   if(count!==1)errors.push(route+": expected one H1; found "+count);
   if(!/<meta\s+name="description"\s+content="[^"]+"/i.test(html))errors.push(route+": description missing");
   if(!html.includes('lang="en-US"'))errors.push(route+": missing language declaration");
+  // Verification markers must be in rendered HTML (not client-injected).
+  if(!html.includes('name="google-site-verification" content="dLBYqjQSU_b8qIgIePwzoGsC7t8yMRd_7clA3LDZzvg"'))errors.push(route+": Google Search Console marker missing");
+  if(!html.includes('name="msvalidate.01" content="6F5CEF54439CF26D57A6D6556901350F"'))errors.push(route+": Bing Webmaster marker missing");
+  if(!html.includes('name="google-adsense-account" content="ca-pub-3399213817491318"'))errors.push(route+": Google AdSense account marker missing");
+  const adsenseLoadCount=(html.match(/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=ca-pub-3399213817491318/g)||[]).length;
+  if(origin && adsenseLoadCount!==1)errors.push(route+": expected one production AdSense script, found "+adsenseLoadCount);
+  if(!origin && adsenseLoadCount!==0)errors.push(route+": AdSense must not load on unconfigured staging builds");
   if(origin){
     if(!html.includes('rel="canonical" href="'+origin+route+'"'))errors.push(route+": canonical incorrect");
     if(html.includes('content="noindex'))errors.push(route+": incorrectly noindex");
@@ -33,6 +40,9 @@ for(const route of PUBLIC_ROUTES){
 if(!fs.existsSync(path.join(output,"robots.txt")))errors.push("robots.txt missing");
 if(!fs.existsSync(path.join(output,"sitemap.xml")))errors.push("sitemap.xml missing");
 if(!fs.existsSync(path.join(output,"404.html")))errors.push("404.html missing");
+const adsTxt=path.join(output,"ads.txt");
+if(!fs.existsSync(adsTxt))errors.push("ads.txt missing");
+else if(read("ads.txt").trim()!=="google.com, pub-3399213817491318, DIRECT, f08c47fec0942fa0")errors.push("ads.txt must contain the exact authorized Google publisher record");
 if(errors.length===0){
   const robots=read("robots.txt");const sitemap=read("sitemap.xml");
   if(origin){
