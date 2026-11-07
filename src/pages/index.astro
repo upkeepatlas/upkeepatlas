@@ -1,0 +1,55 @@
+---
+import Base from "../layouts/BaseLayout.astro";
+const features=[
+{label:"01 / Plan",title:"An annual plan for your actual home.",text:"A sensible monthly starting point, adjusted for climate, home type and equipment.",href:"/maintenance-calendar/"},
+{label:"02 / Check",title:"The small things, remembered.",text:"Seasonal and first-year checklists you can check off and print.",href:"/checklists/"},
+{label:"03 / Understand",title:"Clear guidance. Credible sources.",text:"Calm explanations and practical limits, without the maintenance guesswork.",href:"/guides/"}
+];
+---
+<Base title="Upkeep Atlas" description="Make home maintenance manageable with a free annual planner, printable checklists, practical calculators and research-backed homeowner guides.">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">THE HOMEOWNER'S FIELD GUIDE · EST. 2026</div>
+        <h1>A home is cared for <em class="serif" style="font-weight:400;color:var(--pine)">over time.</em></h1>
+        <p class="lede">Know what matters, what can wait, and what deserves a professional. A quieter, clearer way to stay ahead of home maintenance.</p>
+        <div class="hero-actions">
+          <a class="button" href="/maintenance-calendar/">Make your maintenance plan <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="/checklists/">Explore checklists <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="hero-note">Free to use · Designed for first-time U.S. homeowners · No account needed</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-top">UPKEEP / THE LONG VIEW</div>
+        <div class="art-center">
+          <svg viewBox="0 0 440 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 260H416M48 290H390M80 315H360" stroke="#648475" stroke-width="1" stroke-dasharray="4 10"/>
+            <path d="M74 169 219 41l146 128" stroke="#E4ECE1" stroke-width="2.1" stroke-linecap="round"/>
+            <path d="M114 154V276H325V154M290 100V58H324V130" stroke="#E4ECE1" stroke-width="2"/>
+            <path d="M175 276V208H262V276M161 164H190V194H161ZM245 164H274V194H245Z" stroke="#AFC8B2" stroke-width="1.6"/>
+            <circle cx="220" cy="168" r="135" stroke="#779887" stroke-width="1" stroke-dasharray="3 9" opacity=".5"/>
+            <circle cx="219" cy="41" r="5" fill="#C4D8C3"/><circle cx="74" cy="169" r="4" fill="#C4D8C3"/>
+            <path d="M36 38V108M14 72H75M367 225H425M396 196V255" stroke="#779887" opacity=".4"/>
+            <path d="M145 315V290M219 315V290M294 315V290" stroke="#779887"/>
+            <path d="m351 269 9 9 19-19" stroke="#C9DABF" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="art-bottom"><strong>Keep well.</strong><span>GOOD HOMES<br/>ARE MADE IN THE DETAILS</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="section-small rule-top">
+    <div class="container">
+      <div class="section-heading"><div><span class="eyebrow">A MORE USEFUL APPROACH</span><h2>Everything in its season.</h2></div><p class="muted" style="max-width:320px;font-size:.94rem">You don't need to know everything about a house. You just need a good place to start.</p></div>
+      <div class="numbered-row">{features.map(f=><a href={f.href} class="numbered-item" style="text-decoration:none;color:inherit"><div class="num">{f.label.slice(0,2)}</div><h3>{f.title}</h3><p>{f.text}</p><span class="text-link">Explore <span aria-hidden="true">↗</span></span></a>)}</div>
+    </div>
+  </section>
+  <section class="section"><div class="container tools-feature">
+    <div><span class="eyebrow">OUR MOST USEFUL TOOL</span><h2>A little upkeep, all year long.</h2><p class="lede">Choose your climate and the features of your home. Get a thoughtfully organized starter schedule you can make your own, check off, and print.</p><p class="small muted">Built from general homeowner guidance, with source links and clear safety boundaries.</p><a class="button" href="/maintenance-calendar/">Create your yearly plan <span aria-hidden="true">↗</span></a></div>
+    <div class="mini-plan" aria-hidden="true"><div class="eyebrow">A YEAR IN SMALL STEPS</div><div class="plan-row"><span>JAN</span><span>Start with the records & the essentials</span></div><div class="plan-row"><span>APR</span><span>Notice drainage, schedule spring care</span></div><div class="plan-row"><span>SEP</span><span>Prepare systems for cooler months</span></div><div class="plan-row"><span>DEC</span><span>Close the year, review the log</span></div></div>
+  </div></section>
+  <section class="section-small rule-top"><div class="container"><div class="section-heading"><div><span class="eyebrow">THE FIELD NOTES</span><h2>Know your home a little better.</h2></div><a class="text-link" href="/guides/">All guides ↗</a></div>
+    <div class="cards"><a class="editorial-card" href="/guides/first-year-maintenance-rhythm/"><span class="meta">GETTING STARTED · 6 MIN READ</span><h3>Finding your first-year maintenance rhythm</h3><p>A simpler way to learn what your home needs, without feeling behind.</p><span class="arrow">Read the guide ↗</span></a><a class="editorial-card" href="/guides/spotting-moisture-early/"><span class="meta">HOME HEALTH · 5 MIN READ</span><h3>How to notice moisture before it spreads</h3><p>Where to look, what to document, and when to get help.</p><span class="arrow">Read the guide ↗</span></a><a class="editorial-card" href="/guides/hvac-filter-routine/"><span class="meta">HEATING & COOLING · 4 MIN READ</span><h3>Making sense of HVAC filter care</h3><p>Inspection intervals, manufacturer guidance, and a simple log.</p><span class="arrow">Read the guide ↗</span></a></div>
+  </div></section>
+  <section class="section"><div class="container dark-panel"><span class="eyebrow">SMALL STEPS, BETTER DAYS</span><h2 style="max-width:700px;margin:.8rem 0 1.2rem">Take care of what takes care of you.</h2><p style="max-width:600px">Start with a printable checklist or work out how much paint your next project might need. Practical is the whole point.</p><div class="hero-actions"><a href="/checklists/" class="button cream">Browse checklists ↗</a><a href="/calculators/paint-coverage/" class="text-link" style="color:white;border-color:white">Open paint calculator ↗</a></div></div></section>
+</Base>

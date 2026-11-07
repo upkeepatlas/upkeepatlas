@@ -1,0 +1,69 @@
+---
+import BrandMark from "../components/BrandMark.astro";
+import "../styles/global.css";
+interface Crumb { title: string; href?: string; }
+interface Props { title: string; description: string; breadcrumbs?: Crumb[]; type?: "website" | "article"; }
+const { title, description, breadcrumbs = [], type = "website" } = Astro.props;
+const rawOrigin = import.meta.env.PUBLIC_SITE_URL?.trim();
+const validOrigin = rawOrigin && /^https:\/\/[a-z0-9.-]+(?::[0-9]+)?\/?$/i.test(rawOrigin) ? rawOrigin.replace(/\/$/, "") : "";
+const canonical = validOrigin ? new URL(Astro.url.pathname, validOrigin).href : undefined;
+const brand = "Upkeep Atlas";
+const fullTitle = title === brand ? brand + " | Home maintenance, made manageable" : title + " | " + brand;
+const schema = validOrigin ? [
+  { "@context": "https://schema.org", "@type": "WebSite", name: brand, url: validOrigin + "/", description: "Practical home maintenance planners, checklists and tools." },
+  ...(breadcrumbs.length ? [{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: validOrigin + "/" },
+    ...breadcrumbs.map((b,i)=>({ "@type": "ListItem", position: i+2, name: b.title, item: new URL(b.href || Astro.url.pathname, validOrigin).href }))
+  ] }] : [])
+] : [];
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#234238" />
+  <meta name="generator" content="Astro" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content={canonical ? "index,follow,max-image-preview:large" : "noindex,nofollow"} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:site_name" content={brand} />
+  <meta property="og:type" content={type} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  {validOrigin && <meta property="og:image" content={validOrigin + "/social-card.svg"} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  {schema.map((item)=><script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="container header-inner">
+        <BrandMark />
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href="/maintenance-calendar/">The Planner</a><a href="/checklists/">Checklists</a><a href="/guides/">Field Notes</a><a href="/calculators/">Calculators</a>
+        </nav>
+        <a class="header-cta" href="/maintenance-calendar/">Build your plan <span aria-hidden="true">↗</span></a>
+        <details class="mobile-menu">
+          <summary aria-label="Open navigation">Menu <span aria-hidden="true">☰</span></summary>
+          <nav aria-label="Mobile navigation"><a href="/maintenance-calendar/">The Planner</a><a href="/checklists/">Checklists</a><a href="/guides/">Field Notes</a><a href="/calculators/">Calculators</a><a href="/about/">About</a></nav>
+        </details>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-primary">
+          <div class="footer-brand"><BrandMark /><p>Quietly useful tools for looking after the place you call home.</p></div>
+          <div class="footer-links"><div><strong>Explore</strong><a href="/maintenance-calendar/">Maintenance planner</a><a href="/checklists/">Checklists</a><a href="/calculators/">Calculators</a><a href="/guides/">Field notes</a></div><div><strong>Our approach</strong><a href="/about/">About Upkeep Atlas</a><a href="/editorial-policy/">Editorial standards</a><a href="/privacy/">Privacy</a></div></div>
+        </div>
+        <div class="footer-bottom"><span>© {new Date().getFullYear()} Upkeep Atlas</span><span>Made for the everyday work of caring for a home.</span></div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
