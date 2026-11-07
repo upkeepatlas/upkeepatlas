@@ -1,0 +1,53 @@
+<button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch to night mode" title="Switch to night mode" hidden>
+  <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+    <path d="M20.1 15.4A8.5 8.5 0 0 1 8.6 3.9 8.5 8.5 0 1 0 20.1 15.4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+  </svg>
+  <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="3.8" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path d="M12 1.75v2.1m0 16.3v2.1M1.75 12h2.1m16.3 0h2.1M4.75 4.75l1.5 1.5m11.5 11.5 1.5 1.5m0-14.5-1.5 1.5m-11.5 11.5-1.5 1.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"/>
+  </svg>
+  <span class="theme-toggle-label" aria-hidden="true">Night mode</span>
+</button>
+
+<script>
+  import { resolveTheme, nextTheme } from "../lib/theme.mjs";
+  const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+  const root = document.documentElement;
+  const preference = window.matchMedia("(prefers-color-scheme: dark)");
+  const storageKey = "upkeepatlas-theme";
+
+  function savedPreference(): string | null {
+    try { return window.localStorage.getItem(storageKey); }
+    catch { return null; }
+  }
+
+  function applyTheme(theme: "dark" | "light") {
+    root.dataset.theme = theme;
+    const actionLabel = theme === "dark" ? "Switch to day mode" : "Switch to night mode";
+    if (toggle) {
+      toggle.setAttribute("aria-label", actionLabel);
+      toggle.title = actionLabel;
+      const label = toggle.querySelector<HTMLElement>(".theme-toggle-label");
+      if (label) label.textContent = theme === "dark" ? "Day mode" : "Night mode";
+    }
+    const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.content = theme === "dark" ? "#151C19" : "#F7F6F2";
+  }
+
+  applyTheme(resolveTheme(savedPreference(), preference.matches));
+  if (toggle) {
+    toggle.hidden = false;
+    toggle.addEventListener("click", () => {
+      const theme = nextTheme(root.dataset.theme) as "dark" | "light";
+      applyTheme(theme);
+      try { window.localStorage.setItem(storageKey, theme); } catch { /* Theme works without persistent storage. */ }
+    });
+  }
+
+  preference.addEventListener("change", () => {
+    // Follow system changes until a person makes an explicit choice.
+    if (!["dark", "light"].includes(savedPreference() ?? "")) {
+      applyTheme(resolveTheme(null, preference.matches));
+    }
+  });
+</script>

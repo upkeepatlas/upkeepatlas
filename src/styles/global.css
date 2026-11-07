@@ -60,3 +60,104 @@ h1,h2,h3,h4{line-height:1.15;letter-spacing:-.036em}h1,h2{font-family:var(--seri
 .contact-sidebar .contact-email{font-family:var(--serif);font-size:1.18rem;overflow-wrap:anywhere;line-height:1.45}
 .contact-rule{border-top:1px solid var(--line);margin:1.9rem 0}
 @media(max-width:560px){.contact-form-shell{padding:1.25rem}.contact-sidebar{margin-top:1rem}}
+
+
+/* NIGHT MODE — warm charcoal and forest green rather than inverted colors.
+   Every major surface has an intentional dark counterpart; typography and
+   architectural illustrations retain the established editorial art direction. */
+html{color-scheme:light}
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#151C19;
+  --pine:#AFD5B9;
+  --ink:#EAF0E9;
+  --sage:#25352C;
+  --clay:#D9A17E;
+  --muted:#B8C6BC;
+  --line:#394B40;
+}
+
+/* An action button, not a decorative switch: label describes the next mode. */
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+  flex:none;min-height:44px;padding:.55rem .75rem;
+  color:var(--ink);background:transparent;border:1px solid var(--line);
+  font-size:.8rem;font-weight:600;white-space:nowrap;
+}
+.theme-toggle:hover{background:var(--sage)}
+.theme-toggle[hidden]{display:none!important}
+.theme-toggle .theme-icon{flex:none}
+.theme-icon-sun{display:none}
+html[data-theme="dark"] .theme-icon-moon{display:none}
+html[data-theme="dark"] .theme-icon-sun{display:block}
+
+@media(max-width:1100px){
+  .desktop-nav,.header-cta{display:none}
+  .mobile-menu{display:block;margin-left:0}
+  .theme-toggle{margin-left:auto}
+}
+@media(max-width:560px){
+  .theme-toggle{width:44px;padding:.55rem}
+  .theme-toggle-label{display:none}
+}
+
+html[data-theme="dark"] a:hover{color:#D8EAD9}
+html[data-theme="dark"] .site-header{background:rgba(21,28,25,.97)}
+html[data-theme="dark"] .skip-link{background:var(--pine);color:#0F2619}
+html[data-theme="dark"] :focus-visible{outline-color:#FFCA8C}
+html[data-theme="dark"] .lede{color:#C1D1C6}
+html[data-theme="dark"] .header-cta:hover{background:var(--pine);color:#0F2619}
+html[data-theme="dark"] .button:not(.light):not(.cream){
+  color:#0F2619;background:var(--pine);border-color:var(--pine);
+}
+html[data-theme="dark"] .button:not(.light):not(.cream):hover{
+  background:#CCE6D3;border-color:#CCE6D3;color:#0F2619;
+}
+html[data-theme="dark"] .button.light:hover{color:var(--pine)}
+html[data-theme="dark"] .button.cream{background:#DFEBDD;border-color:#DFEBDD;color:#1B3829}
+html[data-theme="dark"] .button.cream:hover{background:#F1F7ED;color:#1B3829}
+html[data-theme="dark"] .theme-toggle:hover,
+html[data-theme="dark"] .desktop-nav a:hover{color:var(--ink)}
+html[data-theme="dark"] .hero-art{background:#1E4030}
+html[data-theme="dark"] .mini-plan{background:#1B2A22}
+html[data-theme="dark"] .mini-plan .plan-row{background:#17231C}
+html[data-theme="dark"] .paper-panel{background:#24352C}
+html[data-theme="dark"] .dark-panel{background:#203E30;color:#F5F9F4}
+html[data-theme="dark"] .prose .intro{color:#CFDED2}
+html[data-theme="dark"] .note.caution{background:#403128}
+html[data-theme="dark"] .tool-shell{background:#1E2922}
+html[data-theme="dark"] .field input,
+html[data-theme="dark"] .field select,
+html[data-theme="dark"] .field textarea{
+  background:#18241D;color:var(--ink);border-color:#7C9782;
+}
+html[data-theme="dark"] .field input::placeholder,
+html[data-theme="dark"] .field textarea::placeholder{color:#ACB9AF}
+html[data-theme="dark"] .field select option{background:#18241D;color:var(--ink)}
+html[data-theme="dark"] .task-item{border-top-color:#36483A}
+html[data-theme="dark"] .tool-result{background:#234B37;color:#F1F7EF}
+html[data-theme="dark"] .tool-result p{color:#D6E9D9}
+html[data-theme="dark"] .error{color:#F4A69C}
+html[data-theme="dark"] .site-footer{background:#1A2720}
+html[data-theme="dark"] .footer-links a:hover{color:var(--pine)}
+html[data-theme="dark"] .contact-privacy{color:var(--muted)}
+
+/* Printing remains white with dark ink, regardless of visitor preference. */
+@media print{
+  html[data-theme="dark"]{
+    color-scheme:light;
+    --paper:#FFFFFF;--pine:#214532;--ink:#151C19;
+    --sage:#FFFFFF;--clay:#76503B;--muted:#333333;--line:#999999;
+  }
+  .theme-toggle{display:none!important}
+  html[data-theme="dark"] body,
+  html[data-theme="dark"] .tool-shell,
+  html[data-theme="dark"] .paper-panel,
+  html[data-theme="dark"] .checklist,
+  html[data-theme="dark"] .month-card{background:#FFF!important;color:#000!important}
+  html[data-theme="dark"] .field input,
+  html[data-theme="dark"] .field select,
+  html[data-theme="dark"] .field textarea{background:#FFF!important;color:#000!important}
+  html[data-theme="dark"] .tool-result{background:#FFF!important;color:#000!important;border:1px solid #999}
+  html[data-theme="dark"] .tool-result p{color:#000!important}
+}

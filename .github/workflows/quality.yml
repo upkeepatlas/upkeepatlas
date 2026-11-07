@@ -19,6 +19,7 @@ jobs:
       - run: npm run test
       - run: npm run build
       - run: npm run check:seo
+      - run: npm run check:theme
       - run: node scripts/indexnow.mjs --check
       - run: npm run check
       - name: Verify production-host SEO output
@@ -29,4 +30,5 @@ jobs:
         run: |
           npm run build
           npm run check:seo
+          npm run check:theme
           node scripts/indexnow.mjs --check

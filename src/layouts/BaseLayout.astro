@@ -1,5 +1,6 @@
 ---
 import BrandMark from "../components/BrandMark.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import "../styles/global.css";
 interface Crumb { title: string; href?: string; }
 interface Props { title: string; description: string; breadcrumbs?: Crumb[]; type?: "website" | "article"; }
@@ -26,7 +27,19 @@ const schema = validOrigin ? [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#234238" />
+  <meta name="theme-color" content="#F7F6F2" />
+  <!-- Set the theme before the first paint so there is no light-mode flash. -->
+  <script is:inline>
+    (() => {
+      let saved = null;
+      try { saved = localStorage.getItem("upkeepatlas-theme"); } catch { /* Storage may be disabled. */ }
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme = saved === "dark" || saved === "light" ? saved : systemDark ? "dark" : "light";
+      document.documentElement.dataset.theme = theme;
+      const color = document.querySelector('meta[name="theme-color"]');
+      if (color) color.setAttribute("content", theme === "dark" ? "#151C19" : "#F7F6F2");
+    })();
+  </script>
   <meta name="generator" content="Astro" />
   {deployedCommit && <meta name="upkeepatlas-deploy-commit" content={deployedCommit} />}
   <!-- Ownership verification: Google Search Console and Bing Webmaster Tools. -->
@@ -59,6 +72,7 @@ const schema = validOrigin ? [
           <a href="/maintenance-calendar/">The Planner</a><a href="/checklists/">Checklists</a><a href="/guides/">Field Notes</a><a href="/calculators/">Calculators</a>
         </nav>
         <a class="header-cta" href="/maintenance-calendar/">Build your plan <span aria-hidden="true">↗</span></a>
+        <ThemeToggle />
         <details class="mobile-menu">
           <summary aria-label="Open navigation">Menu <span aria-hidden="true">☰</span></summary>
           <nav aria-label="Mobile navigation"><a href="/maintenance-calendar/">The Planner</a><a href="/checklists/">Checklists</a><a href="/guides/">Field Notes</a><a href="/calculators/">Calculators</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav>

@@ -13,7 +13,8 @@
     "verify": "npm run test && npm run build && npm run check:seo",
     "check:indexnow": "node scripts/indexnow.mjs --check",
     "indexnow:dry-run": "node scripts/indexnow.mjs --dry-run",
-    "indexnow:submit": "node scripts/indexnow.mjs --submit"
+    "indexnow:submit": "node scripts/indexnow.mjs --submit",
+    "check:theme": "node scripts/check-theme.mjs"
   },
   "dependencies": {
     "astro": "^5.16.0"

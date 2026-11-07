@@ -14,7 +14,7 @@ A thoughtfully designed home-maintenance field guide for first-time U.S. homeown
 - Three carefully structured homeowner guides with primary-source links and safety qualifications.
 - Contact page with a no-JavaScript contact form targeting upkeepatlas@protonmail.com, plus a direct email link.
 - Bing IndexNow ownership key and production-verified GitHub Actions notifications for new or changed public URLs.
-- Refined responsive editorial UI; no login, with Google AdSense loader configured for production. Ad placement and approval remain managed in AdSense.
+- Refined responsive editorial UI with a saved night/day theme and device color scheme support; no login, with Google AdSense loader configured for production. Ad placement and approval remain managed in AdSense.
 - Static semantic HTML, per-route SEO metadata, sitemap and robots rules, JSON-LD, accessible navigation and a custom 404 page.
 
 ## Local development
@@ -29,6 +29,7 @@ npm run check
 npm run build
 npm run check:seo
 npm run check:indexnow
+npm run check:theme
 npm run indexnow:dry-run
 ```
 
@@ -47,6 +48,7 @@ GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 
 - [Implementation & deployment notes](docs/IMPLEMENTATION.md)
 - [Contact form setup and mailbox activation](docs/CONTACT_FORM_SETUP.md)
 - [Bing IndexNow deployment automation and verification](docs/INDEXNOW.md)
+- [Theme behavior and accessibility notes](docs/NIGHT_MODE.md)
 - [Bing IndexNow acceptance and production audit](docs/audits/2026-11-08-indexnow.md)
 - [SEO/GEO readiness audit](docs/audits/2026-11-07-final.md)
 - [Search Console, Bing Webmaster and AdSense setup](docs/SEARCH_AND_ADS_SETUP.md)
