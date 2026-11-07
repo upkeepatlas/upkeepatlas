@@ -43,6 +43,7 @@ GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 
 - [Implementation & deployment notes](docs/IMPLEMENTATION.md)
 - [SEO/GEO readiness audit](docs/audits/2026-11-07-final.md)
 - [Search Console, Bing Webmaster and AdSense setup](docs/SEARCH_AND_ADS_SETUP.md)
+- [Search and advertising integration audit — 2026-11-08](docs/audits/2026-11-08-search-ads.md)
 - [Local skills library](.agents/skills/)
 
 Content is AI-assisted, with linked sources and explicit safety limitations. It is not professional home inspection or licensed repair advice. The brand mark is a provisional minimalist vector approximation of the selected art direction; the original approved graphic is not yet installed.
