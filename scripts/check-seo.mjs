@@ -26,7 +26,7 @@ for(const route of PUBLIC_ROUTES){
   for(const match of html.matchAll(/href="(\/[^"#?]*)"/g)){
     const ref=match[1];if(ref.startsWith("//"))continue;
     const target=path.join(output,ref);
-    const found=ref.match(/\.(svg|png|ico|webp|txt|xml|jpg)$/i)?fs.existsSync(target):fs.existsSync(path.join(target,"index.html"));
+    const found=/\.[a-z0-9]{2,8}$/i.test(ref)?fs.existsSync(target):fs.existsSync(path.join(target,"index.html"));
     if(!found)errors.push(route+": broken link "+ref);
   }
 }
