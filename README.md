@@ -12,6 +12,7 @@ A thoughtfully designed home-maintenance field guide for first-time U.S. homeown
 - Free paint coverage calculator with dimensions, openings, coats, product coverage and waste factors.
 - Two printable checklists for the first year and seasonal home care.
 - Three carefully structured homeowner guides with primary-source links and safety qualifications.
+- Contact page with a no-JavaScript contact form targeting upkeepatlas@protonmail.com, plus a direct email link.
 - Refined responsive editorial UI; no login, with Google AdSense loader configured for production. Ad placement and approval remain managed in AdSense.
 - Static semantic HTML, per-route SEO metadata, sitemap and robots rules, JSON-LD, accessible navigation and a custom 404 page.
 
@@ -32,7 +33,7 @@ Build output is `dist/`. Production Cloudflare Pages build command: `npm run bui
 
 Set `PUBLIC_SITE_URL` **only to a verified HTTPS production host** (currently `https://upkeepatlas.pages.dev`) in Cloudflare Pages and CI. If unset, the build intentionally emits `noindex,nofollow`, robots disallow and an empty XML sitemap. Verify that the desired custom domain is actually connected before changing canonical URLs.
 
-GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 6 unit tests, Astro build, strict check, generated 14-page SEO audit and a second production-origin SEO build.
+GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 6 unit tests, Astro build, strict check, generated 15-page SEO audit and a second production-origin SEO build.
 
 ## Editorial and project standards
 
@@ -41,6 +42,7 @@ GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 
 - [Project brief](docs/PROJECT_BRIEF.md)
 - [Research source ledger](docs/SOURCE_LEDGER.md)
 - [Implementation & deployment notes](docs/IMPLEMENTATION.md)
+- [Contact form setup and mailbox activation](docs/CONTACT_FORM_SETUP.md)
 - [SEO/GEO readiness audit](docs/audits/2026-11-07-final.md)
 - [Search Console, Bing Webmaster and AdSense setup](docs/SEARCH_AND_ADS_SETUP.md)
 - [Search and advertising integration audit — 2026-11-08](docs/audits/2026-11-08-search-ads.md)
