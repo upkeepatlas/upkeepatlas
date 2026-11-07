@@ -12,7 +12,7 @@ A thoughtfully designed home-maintenance field guide for first-time U.S. homeown
 - Free paint coverage calculator with dimensions, openings, coats, product coverage and waste factors.
 - Two printable checklists for the first year and seasonal home care.
 - Three carefully structured homeowner guides with primary-source links and safety qualifications.
-- Refined responsive editorial UI; no login, invasive analytics or advertising code at launch.
+- Refined responsive editorial UI; no login, with Google AdSense loader configured for production. Ad placement and approval remain managed in AdSense.
 - Static semantic HTML, per-route SEO metadata, sitemap and robots rules, JSON-LD, accessible navigation and a custom 404 page.
 
 ## Local development
@@ -42,10 +42,11 @@ GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 
 - [Research source ledger](docs/SOURCE_LEDGER.md)
 - [Implementation & deployment notes](docs/IMPLEMENTATION.md)
 - [SEO/GEO readiness audit](docs/audits/2026-11-07-final.md)
+- [Search Console, Bing Webmaster and AdSense setup](docs/SEARCH_AND_ADS_SETUP.md)
 - [Local skills library](.agents/skills/)
 
 Content is AI-assisted, with linked sources and explicit safety limitations. It is not professional home inspection or licensed repair advice. The brand mark is a provisional minimalist vector approximation of the selected art direction; the original approved graphic is not yet installed.
 
 ## Release honesty
 
-Static technical SEO checks and deployment have passed, but live Search Console indexing, complete accessibility and browser tests, Core Web Vitals and ad network approval remain outstanding. No rankings, AI citations, or traffic results are guaranteed.
+Static technical SEO checks and deployment have passed, but live Search Console indexing, complete accessibility and browser tests, Core Web Vitals, account-side ownership verification, ad network approval and regional consent configuration remain outstanding. No rankings, AI citations, or traffic results are guaranteed.
