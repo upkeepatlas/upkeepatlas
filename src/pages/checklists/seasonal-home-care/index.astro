@@ -1,0 +1,39 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import Checklist from "../../../components/Checklist.astro";
+const crumbs=[{title:"Checklists",href:"/checklists/"},{title:"Seasonal home care"}];
+const EPA="https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home";
+const HVAC="https://www.energystar.gov/saveathome/heating-cooling/maintenance-checklist";
+const CPSC="https://www.cpsc.gov/Newsroom/News-Releases/2026/CPSC-Issues-Winter-Weather-Safety-Tips-to-Prevent-Fires-and-Carbon-Monoxide-Poisoning";
+const AIR="https://www.energy.gov/energysaver/air-sealing-your-home";
+const groups=[
+{heading:"Spring · Notice and renew",entries:[
+{title:"Look for pooling water after rain",detail:"Observe from a safe place whether water drains toward the home.",source:EPA},
+{title:"Inspect gutters and downspouts from ground level",detail:"Arrange qualified help if blockage or damage is visible.",source:EPA},
+{title:"Schedule cooling-system service when applicable",detail:"Use a qualified technician and the system manual.",source:HVAC}]},
+{heading:"Summer · Keep watch",entries:[
+{title:"Check accessible HVAC filters during heavy use",detail:"Follow the system and filter maker's guidance.",source:HVAC},
+{title:"Note recurring condensation in humid spaces",detail:"Address the source of moisture promptly.",source:EPA},
+{title:"Update your home maintenance records",detail:"Track service invoices and unexpected observations."}]},
+{heading:"Fall · Prepare thoughtfully",entries:[
+{title:"Arrange relevant heating-system service",detail:"Schedule a qualified inspection before high-demand months.",source:HVAC},
+{title:"Note drafts around windows and doors",detail:"Consider ventilation and combustion safety before air-sealing projects.",source:AIR},
+{title:"Review visible exterior drainage",detail:"Only inspect safely from the ground.",source:EPA}]},
+{heading:"Winter · Protect and observe",entries:[
+{title:"Watch for recurring indoor condensation",detail:"Look for causes of moisture rather than covering damaged surfaces.",source:EPA},
+{title:"Test smoke and CO alarms",detail:"Use manufacturer instructions and CPSC safety guidance.",source:CPSC},
+{title:"Record winter hazards without risky access",detail:"Leave roof, chimney, electrical and fuel-burning equipment issues to experts.",source:CPSC}]}
+];
+---
+<Base title="Seasonal Home Maintenance Checklist" description="Free printable spring, summer, fall and winter home-care checklist with safety boundaries and sources." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">PRINTABLE / FOUR SEASONS</span><h1>Care that follows <em class="serif" style="color:var(--pine)">the seasons.</em></h1><p class="lede">A gentle reminder to review how your home is doing as the weather changes. Your climate, equipment and responsibilities may require a different schedule.</p></div></section>
+  <section class="section-small rule-top"><div class="container narrow">
+    <div class="tool-actions no-print"><button class="button" type="button" id="print-checklist">Print checklist ↗</button><output id="checklist-progress" class="small muted">0 of 12 tasks completed</output></div>
+    <p class="small muted">Check off tasks as you go; selections are not saved after a refresh.</p>
+    {groups.map(group=><Checklist heading={group.heading} entries={group.entries}/>)}
+    <div class="note caution">Seasonal schedules vary widely by climate and equipment. Manufacturer guidance, local requirements and qualified professional advice take priority.</div>
+    <div class="source-list"><h3>Primary references</h3><ul><li><a href={EPA}>EPA — Moisture prevention</a></li><li><a href={HVAC}>ENERGY STAR — HVAC maintenance</a></li><li><a href={CPSC}>CPSC — Winter and alarm safety</a></li><li><a href={AIR}>DOE — Air sealing</a></li></ul></div>
+  </div></section>
+</Base>
+<script>document.querySelector("#print-checklist")?.addEventListener("click",()=>window.print());</script>

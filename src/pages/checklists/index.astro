@@ -1,0 +1,15 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Checklists"}];
+---
+<Base title="Printable Home Maintenance Checklists" description="Free printable home maintenance checklists for the first year of ownership and four seasons. Check tasks off and print." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">FREE PRINTABLES</span><h1>The satisfying art of <em class="serif" style="color:var(--pine)">checking it off.</em></h1><p class="lede">Thoughtful lists for the everyday work of caring for a home. Open, tick what you've done, and print a copy for your records.</p></div></section>
+  <section class="section-small rule-top"><div class="container">
+    <div class="cards">
+      <a href="/checklists/first-year-home-maintenance/" class="editorial-card"><span class="meta">NEW HOMEOWNERS</span><h3>First-year essentials</h3><p>A four-stage starter plan for learning your systems, noticing changes and keeping records.</p><span class="arrow">Open checklist ↗</span></a>
+      <a href="/checklists/seasonal-home-care/" class="editorial-card"><span class="meta">FOUR SEASONS</span><h3>Seasonal home care</h3><p>Useful observation and service reminders for spring, summer, fall and winter.</p><span class="arrow">Open checklist ↗</span></a>
+    </div>
+    <div class="note" style="margin-top:3rem">These are organizational aids. Equipment manuals, local rules, property-specific needs and qualified professional advice come before a general checklist.</div>
+  </div></section>
+</Base>

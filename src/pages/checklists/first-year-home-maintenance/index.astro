@@ -1,0 +1,39 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import Checklist from "../../../components/Checklist.astro";
+const crumbs=[{title:"Checklists",href:"/checklists/"},{title:"First-year essentials"}];
+const EPA="https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home";
+const ENERGY="https://www.energystar.gov/saveathome/heating-cooling";
+const CPSC="https://www.cpsc.gov/Newsroom/News-Releases/2026/CPSC-Issues-Winter-Weather-Safety-Tips-to-Prevent-Fires-and-Carbon-Monoxide-Poisoning";
+const groups=[
+{heading:"Month one · Get oriented",entries:[
+{title:"Collect your inspection report and appliance manuals",detail:"Note any open issues, warranties and equipment model numbers."},
+{title:"Identify utility shutoffs and emergency contacts",detail:"Ask a qualified professional if equipment or shutoffs aren't clear."},
+{title:"Test smoke and carbon monoxide alarms",detail:"Follow model instructions; CPSC recommends testing monthly.",source:CPSC},
+{title:"Look for visible leaks and condensation",detail:"Check accessible fixtures and windows; don't open unsafe equipment.",source:EPA}]},
+{heading:"Months two–three · Find the rhythm",entries:[
+{title:"Set a recurring filter-inspection reminder",detail:"Inspect condition according to manufacturer and system guidance.",source:ENERGY},
+{title:"Start a simple maintenance log",detail:"Record dates, receipts, service contacts and observations."},
+{title:"Determine who handles exterior maintenance",detail:"Separate your responsibility from any HOA or property manager."}]},
+{heading:"Months four–six · Look ahead",entries:[
+{title:"Check the next season's maintenance needs",detail:"Adapt reminders to your actual local climate and equipment."},
+{title:"Arrange relevant professional HVAC service",detail:"Schedule qualified seasonal checks where applicable.",source:ENERGY},
+{title:"Observe drainage from ground level",detail:"Record pooling or gutter overflow; refer roof and ladder work to professionals.",source:EPA}]},
+{heading:"Months seven–twelve · Make it yours",entries:[
+{title:"Review service records and warranty deadlines",detail:"Keep proof of completed work and follow-ups."},
+{title:"Look again at the home after seasonal changes",detail:"Notice developing moisture or wear rather than guessing."},
+{title:"Update next year's maintenance plan",detail:"Keep the reminders that really apply to your house."}]}
+];
+---
+<Base title="First-Year Home Maintenance Checklist" description="Free printable first-year homeowner checklist organized into four manageable stages, with safety notes and official references." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">PRINTABLE / FIRST YEAR</span><h1>Your first year, <em class="serif" style="color:var(--pine)">one good step at a time.</em></h1><p class="lede">A clear starter checklist for getting to know the home, keeping a record and building a comfortable routine.</p></div></section>
+  <section class="section-small rule-top"><div class="container narrow">
+    <div class="tool-actions no-print"><button class="button" type="button" id="print-checklist">Print checklist ↗</button><output id="checklist-progress" class="small muted">0 of 13 tasks completed</output></div>
+    <p class="small muted">Checkmarks are temporary and reset on refresh. Items are planning suggestions, not universal code, warranty or insurance requirements.</p>
+    {groups.map(group=><Checklist heading={group.heading} entries={group.entries}/>)}
+    <div class="note caution">For gas, mains electrical, roof access, structural issues or serious water problems, consult a qualified professional and the correct equipment manual.</div>
+    <div class="source-list"><h3>Primary references</h3><ul><li><a href={EPA}>EPA — Moisture and your home</a></li><li><a href={ENERGY}>ENERGY STAR — HVAC care</a></li><li><a href={CPSC}>CPSC — Alarm safety</a></li></ul></div>
+  </div></section>
+</Base>
+<script>document.querySelector("#print-checklist")?.addEventListener("click",()=>window.print());</script>

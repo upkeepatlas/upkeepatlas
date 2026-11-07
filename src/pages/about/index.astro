@@ -1,0 +1,15 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+const crumbs=[{title:"About"}];
+---
+<Base title="About Upkeep Atlas" description="Upkeep Atlas exists to make everyday home maintenance simpler, more organized and more understandable for first-time homeowners." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">A NOTE FROM THE PROJECT</span><h1>Good care starts with <em class="serif" style="color:var(--pine)">clarity.</em></h1><p class="lede">Upkeep Atlas is a new, independent digital field guide for the small, steady work of taking care of a home.</p></div></section>
+  <section class="section-small rule-top"><div class="container narrow prose">
+    <h2>Why we built this</h2><p>Homeownership can come with a list of things you've never been taught to check. The internet offers plenty of advice, but turning it into a safe routine takes time. We want to make the organizational part easier: checklists, practical tools and primary references worth keeping.</p>
+    <h2>What the project can — and can't — do</h2><p>We offer general tools for scheduling, observing and documenting home-care tasks. We do not inspect a property, verify compliance with local codes, perform repairs, or guarantee that one schedule fits every building.</p>
+    <h2>How content is made</h2><p>The project uses AI assistance for drafting and research organization. Our field notes link to public primary sources and explain limitations. We do not claim personal inspection, credentialed expert review or first-hand testing that hasn't happened. Read our <a href="/editorial-policy/">editorial standards</a>.</p>
+    <div class="note">Our tools are free and require no account. If display advertising is introduced later, it will not change the safety boundaries in our content.</div>
+    <a class="button" href="/maintenance-calendar/">Build your plan ↗</a>
+  </div></section>
+</Base>

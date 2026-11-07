@@ -1,0 +1,22 @@
+---
+interface Entry{title:string;detail?:string;source?:string}
+interface Props{heading:string;entries:Entry[]}
+const {heading,entries}=Astro.props;
+---
+<fieldset class="checklist" data-checklist>
+  <legend class="serif" style="font-size:1.7rem;padding:0 .3rem 0 0">{heading}</legend>
+  {entries.map((entry,i)=><label>
+    <input type="checkbox" name={"item-"+heading.toLowerCase().replace(/[^a-z0-9]/g,"-")+"-"+i}/>
+    <span><strong>{entry.title}</strong>{entry.detail&&<small>{entry.detail}</small>}{entry.source&&<small><a href={entry.source} target="_blank" rel="noopener noreferrer">Primary reference ↗</a></small>}</span>
+  </label>)}
+</fieldset>
+<script>
+  document.querySelectorAll<HTMLFieldSetElement>("[data-checklist]").forEach(group=>{
+    group.addEventListener("change",()=>{
+      const total=document.querySelectorAll<HTMLInputElement>('[data-checklist] input[type="checkbox"]');
+      const checked=Array.from(total).filter(x=>x.checked).length;
+      const output=document.querySelector<HTMLOutputElement>("#checklist-progress");
+      if(output)output.value=checked+" of "+total.length+" tasks completed";
+    });
+  });
+</script>

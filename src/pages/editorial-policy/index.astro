@@ -1,0 +1,16 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Editorial standards"}];
+---
+<Base title="Editorial Standards and Sources" description="How Upkeep Atlas researches general homeowner guides, uses AI assistance and handles source verification and maintenance safety." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">HOW WE WORK</span><h1>Useful first. <em class="serif" style="color:var(--pine)">Always honest.</em></h1><p class="lede">Clear answers, primary references and a strong distinction between ordinary observations and specialist work.</p></div></section>
+  <section class="section-small rule-top"><div class="container narrow prose">
+    <h2>Source selection</h2><p>We prefer relevant primary information from public agencies, ENERGY STAR and manufacturers, particularly for technical and safety-related claims. Substantive guides link to their sources, and some tasks require consulting up-to-date local authorities or equipment manuals.</p>
+    <h2>Use of AI</h2><p>AI assistance may help draft, summarize and structure material. Generated prose is not presented as original field testing or licensed expertise. We don't invent authors, customer testimonials, studies, affiliations or professional reviews.</p>
+    <h2>Safety and uncertainty</h2><p>Roofs, ladders, mains electricity, gas, combustion appliances, serious water damage, structural concerns and hazardous building materials are not casual DIY tasks. Qualified professionals should assess work that presents meaningful risk. Advice varies by location, building and model.</p>
+    <h2>Updates and corrections</h2><p>Research preparation dates do not imply expert certification. When errors or source updates are identified, relevant text should be corrected and revision information updated truthfully. We retain assumptions and source links where practical.</p>
+    <h2>Advertising independence</h2><p>The site may eventually be supported by display advertising. Advertising never replaces verification or justifies unsafe advice. References to public agencies are not claims of endorsement.</p>
+    <div class="note">For consequential work, use the actual equipment manual and qualified local help. A general site cannot assess the conditions inside your home.</div>
+  </div></section>
+</Base>

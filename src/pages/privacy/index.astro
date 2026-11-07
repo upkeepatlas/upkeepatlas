@@ -1,0 +1,15 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Privacy"}];
+---
+<Base title="Privacy and Local Tools" description="How the Upkeep Atlas maintenance planner and calculator handle information and what changes may be required for future analytics and advertising." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">A PLAIN-LANGUAGE NOTE</span><h1>Your home details <em class="serif" style="color:var(--pine)">stay yours.</em></h1><p class="lede">Our core tools are designed to work locally in your browser without an account or a street address.</p></div></section>
+  <section class="section-small rule-top"><div class="container narrow prose">
+    <h2>Planner, calculators and checklists</h2><p>Current planner and calculator selections are calculated in your browser, not sent by our app to a storage service. We do not require a login or uploaded home documents. Checklist checkmarks reset when the page refreshes.</p>
+    <h2>Technical hosting data</h2><p>When a website is hosted online, its hosting and network providers may process standard request information such as IP addresses, browser metadata, requested pages and security logs. Upkeep Atlas targets Cloudflare hosting; consult Cloudflare's own privacy documentation for platform practices.</p>
+    <h2>Advertising and analytics</h2><p>The initial website source does not intentionally load advertising or third-party analytics scripts. If we add them later, the disclosures and any applicable consent controls must be reviewed before activation.</p>
+    <h2>External sources</h2><p>Some pages link to independent websites, including U.S. agencies and ENERGY STAR. Their privacy policies apply when you follow the links.</p>
+    <h2>Policy status</h2><p>This page describes the intended product implementation, not a completed legal compliance assessment. Confirm its statements against actual deployment and third-party scripts before launch. Drafted November 7, 2026.</p>
+  </div></section>
+</Base>
