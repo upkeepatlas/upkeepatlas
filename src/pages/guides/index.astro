@@ -1,0 +1,21 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import GuideCard from "../../components/GuideCard.astro";
+import {guides} from "../../data/guides.mjs";
+const crumbs=[{title:"Field notes"}];
+---
+<Base title="Home Maintenance Guides" description="Sourced home maintenance guides for your first year, moisture awareness and HVAC filter routines." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container">
+    <Breadcrumbs items={crumbs}/>
+    <span class="eyebrow">PRACTICAL KNOW-HOW</span>
+    <h1>Field notes for <em class="serif" style="color:var(--pine)">home life.</em></h1>
+    <p class="lede">A growing library of thoughtful explanations for the work a home asks of you. Credible references, calm advice and practical next steps.</p>
+  </div></section>
+  <section class="section-small rule-top"><div class="container">
+    <div class="cards">
+      {guides.map(g=><GuideCard href={"/guides/"+g.slug+"/"} category={g.category+" · "+g.minutes+" MIN READ"} title={g.title} description={g.description}/>)}
+    </div>
+    <div class="note" style="margin-top:3rem">Our guides are AI-assisted and link to primary sources. We do not claim hands-on testing, licensed professional review or one-size-fits-all maintenance advice. <a href="/editorial-policy/">Read our editorial approach.</a></div>
+  </div></section>
+</Base>

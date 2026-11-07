@@ -1,0 +1,45 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import {guides,sources} from "../../data/guides.mjs";
+export function getStaticPaths(){return guides.map(guide=>({params:{slug:guide.slug},props:{guide}}));}
+const {guide}=Astro.props;
+const crumbs=[{title:"Field notes",href:"/guides/"},{title:guide.title}];
+---
+<Base title={guide.title} description={guide.description} type="article" breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container">
+    <Breadcrumbs items={crumbs}/>
+    <span class="eyebrow">{guide.category} / {guide.minutes} MIN READ</span>
+    <h1 style="max-width:940px">{guide.title}</h1>
+    <p class="lede">{guide.intro}</p>
+    <p class="small muted">Research prepared November 2026 · U.S. general guidance, not a professional inspection</p>
+  </div></section>
+  <div class="container page-layout">
+    <article class="prose">
+      {guide.sections.map(section=><section>
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map(text=><p>{text}</p>)}
+        {section.sourceIds && <p class="small muted">Relevant references: {section.sourceIds.map((id,i)=><><a href={sources[id].url} target="_blank" rel="noopener noreferrer">{sources[id].title}</a>{i<section.sourceIds.length-1?", ":""}</>)}</p>}
+      </section>)}
+      <div class="note caution"><strong>Safety & scope:</strong> These are general maintenance planning ideas. For hazardous repairs, local-code questions, serious water damage, gas, electrical or structural problems, consult an appropriately qualified professional and follow your equipment's instructions.</div>
+      <div class="source-list">
+        <h3>Primary sources consulted</h3>
+        <ul>{guide.sources.map(id=><li><a href={sources[id].url} target="_blank" rel="noopener noreferrer">{sources[id].title} ↗</a></li>)}</ul>
+        <p class="small muted">Source references were checked while preparing this guide on November 7, 2026. No field testing or credentialed expert review is claimed.</p>
+      </div>
+      <div class="paper-panel">
+        <span class="eyebrow">PUT IT TO USE</span>
+        <h2 style="margin:.5rem 0 1rem">Give the advice a place to live.</h2>
+        <p>Turn useful reminders into a calendar you can actually follow.</p>
+        <a class="button" href="/maintenance-calendar/">Build a maintenance plan ↗</a>
+      </div>
+    </article>
+    <aside class="sidebar" aria-label="Related resources">
+      <span class="eyebrow">KEEP EXPLORING</span><h3>Helpful next steps</h3>
+      <a href="/maintenance-calendar/">Annual maintenance calendar ↗</a>
+      <a href="/checklists/first-year-home-maintenance/">First-year checklist ↗</a>
+      <a href="/checklists/seasonal-home-care/">Seasonal checklist ↗</a>
+      <a href="/editorial-policy/">How we research ↗</a>
+    </aside>
+  </div>
+</Base>

@@ -1,0 +1,10 @@
+---
+interface Props {href:string; category:string; title:string; description:string;}
+const {href,category,title,description}=Astro.props;
+---
+<a class="editorial-card" href={href}>
+  <span class="meta">{category}</span>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <span class="arrow">Explore ↗</span>
+</a>
