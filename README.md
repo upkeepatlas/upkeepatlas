@@ -5,6 +5,7 @@
 This repository is the canonical source for future website code, printable tools, article content and quality gates. Initial commit sequence creates project governance and reusable agent skills before application implementation.
 
 ## Start here
+- [**Master website build prompt**](docs/MASTER_BUILD_PROMPT.md) — the complete, executable future build specification.
 - [Project instructions](AGENTS.md)
 - [Product and design brief](docs/PROJECT_BRIEF.md)
 - [SEO/GEO baseline](docs/SEO_READINESS_BASELINE.md)
