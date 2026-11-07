@@ -16,6 +16,12 @@ for(const route of PUBLIC_ROUTES){
   if(count!==1)errors.push(route+": expected one H1; found "+count);
   if(!/<meta\s+name="description"\s+content="[^"]+"/i.test(html))errors.push(route+": description missing");
   if(!html.includes('lang="en-US"'))errors.push(route+": missing language declaration");
+  if(route==="/contact/"){
+    if(!html.includes('action="https://formsubmit.co/upkeepatlas@protonmail.com"'))errors.push("Contact form: email delivery endpoint missing");
+    if(!html.includes('method="POST"'))errors.push("Contact form: POST method missing");
+    if(!html.includes('name="_honey"'))errors.push("Contact form: honeypot missing");
+    if(!html.includes('name="email"')||!html.includes('name="message"'))errors.push("Contact form: required message fields missing");
+  }
   // Verification markers must be in rendered HTML (not client-injected).
   if(!html.includes('name="google-site-verification" content="dLBYqjQSU_b8qIgIePwzoGsC7t8yMRd_7clA3LDZzvg"'))errors.push(route+": Google Search Console marker missing");
   if(!html.includes('name="msvalidate.01" content="6F5CEF54439CF26D57A6D6556901350F"'))errors.push(route+": Bing Webmaster marker missing");
