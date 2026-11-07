@@ -2,6 +2,8 @@
 
 Upkeep Atlas is a trustworthy, design-led home-maintenance planning website for first-time U.S. homeowners. Prioritize practical tools, seasonal guides, calculators, and downloadable checklists. Our revenue model is display advertising, but usefulness and reader trust come first.
 
+For any future request to implement the full website, first read [docs/MASTER_BUILD_PROMPT.md](docs/MASTER_BUILD_PROMPT.md) and execute it alongside all local skills. The master prompt is an implementation plan, not evidence that tests or deployment have already succeeded.
+
 ## Required work sequence
 1. Inspect existing code and deployment configuration. Never overwrite another person's changes.
 2. Read the relevant local instructions under `.agents/skills/` before implementing.
