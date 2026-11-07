@@ -15,7 +15,7 @@ jobs:
           node-version: '22'
       # Initial bootstrap. Commit package-lock.json after a verified install,
       # then switch this to npm ci.
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - run: npm run test
       - run: npm run build
       - run: npm run check:seo
