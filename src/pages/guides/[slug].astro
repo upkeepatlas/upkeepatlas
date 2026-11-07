@@ -19,7 +19,7 @@ const crumbs=[{title:"Field notes",href:"/guides/"},{title:guide.title}];
       {guide.sections.map(section=><section>
         <h2>{section.heading}</h2>
         {section.paragraphs.map(text=><p>{text}</p>)}
-        {section.sourceIds && <p class="small muted">Relevant references: {section.sourceIds.map((id,i)=><><a href={sources[id].url} target="_blank" rel="noopener noreferrer">{sources[id].title}</a>{i<section.sourceIds.length-1?", ":""}</>)}</p>}
+        {section.sourceIds && <div class="small muted"><span>Relevant references:</span><ul>{section.sourceIds.map(id=><li><a href={sources[id].url} target="_blank" rel="noopener noreferrer">{sources[id].title}</a></li>)}</ul></div>}
       </section>)}
       <div class="note caution"><strong>Safety & scope:</strong> These are general maintenance planning ideas. For hazardous repairs, local-code questions, serious water damage, gas, electrical or structural problems, consult an appropriately qualified professional and follow your equipment's instructions.</div>
       <div class="source-list">
