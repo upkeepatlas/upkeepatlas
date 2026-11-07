@@ -1,3 +1,4 @@
+/** @type {Record<string,{title:string,url:string}>} */
 export const sources = {
   epa:{title:"U.S. EPA — A Brief Guide to Mold, Moisture and Your Home",url:"https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"},
   energy:{title:"ENERGY STAR — Heat & Cool Efficiently",url:"https://www.energystar.gov/saveathome/heating-cooling"},
