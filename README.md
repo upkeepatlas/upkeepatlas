@@ -47,6 +47,7 @@ GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 
 - [Implementation & deployment notes](docs/IMPLEMENTATION.md)
 - [Contact form setup and mailbox activation](docs/CONTACT_FORM_SETUP.md)
 - [Bing IndexNow deployment automation and verification](docs/INDEXNOW.md)
+- [Bing IndexNow acceptance and production audit](docs/audits/2026-11-08-indexnow.md)
 - [SEO/GEO readiness audit](docs/audits/2026-11-07-final.md)
 - [Search Console, Bing Webmaster and AdSense setup](docs/SEARCH_AND_ADS_SETUP.md)
 - [Search and advertising integration audit — 2026-11-08](docs/audits/2026-11-08-search-ads.md)
