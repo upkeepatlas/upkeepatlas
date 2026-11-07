@@ -12,7 +12,8 @@ export const PUBLIC_ROUTES=[
   "/guides/hvac-filter-routine/",
   "/about/",
   "/editorial-policy/",
-  "/privacy/"
+  "/privacy/",
+  "/contact/"
 ];
 export function publishedOrigin(value){
   const origin=value?.trim().replace(/\/$/,"");
