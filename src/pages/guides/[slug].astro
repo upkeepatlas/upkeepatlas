@@ -18,6 +18,7 @@ export async function getStaticPaths(){
 
 const { guide:legacyGuide, entry } = Astro.props;
 const guide = entry ? {...entry.data, slug:entry.id} : legacyGuide;
+const legacySections = legacyGuide?.sections ?? [];
 let Content;
 if(entry) ({Content} = await render(entry));
 const crumbs=[{title:"Field notes",href:"/guides/"},{title:guide.title}];
@@ -38,7 +39,7 @@ const reviewedLabel = entry?.data.updatedAt
   </div></section>
   <div class="container page-layout">
     <article class="prose">
-      {Content ? <Content/> : guide.sections.map(section=><section>
+      {Content ? <Content/> : legacySections.map(section=><section>
         <h2>{section.heading}</h2>
         {section.paragraphs.map(text=><p>{text}</p>)}
         {section.sourceIds && <div class="small muted"><span>Relevant references:</span><ul>{section.sourceIds.map(id=><li><a href={sources[id].url} target="_blank" rel="noopener noreferrer">{sources[id].title}</a></li>)}</ul></div>}
