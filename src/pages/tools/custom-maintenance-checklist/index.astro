@@ -1,0 +1,60 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Custom maintenance checklist"}];
+const tasks=[
+ {id:"filter",name:"Review HVAC filter condition and manufacturer instructions",system:"hvac",homes:"all",note:"Use your equipment manual for inspection and replacement timing."},
+ {id:"vents",name:"Check that supply and return vents are unobstructed",system:"hvac",homes:"all",note:"Do not open or service electrical equipment."},
+ {id:"leaks",name:"Look for visible leaks under accessible sinks",system:"plumbing",homes:"all",note:"Call a professional for persistent leaks or water damage."},
+ {id:"drains",name:"Note slow drains and recurring odors",system:"plumbing",homes:"all",note:"Do not mix drain-cleaning chemicals."},
+ {id:"alarms",name:"Check smoke and CO alarm status using manufacturer instructions",system:"safety",homes:"all",note:"Follow local requirements and manufacturer replacement guidance."},
+ {id:"exits",name:"Keep exit paths and emergency contacts accessible",system:"safety",homes:"all",note:"Plan an emergency route for your household."},
+ {id:"gutters",name:"Observe gutter overflow or damage from the ground",system:"exterior",homes:"house",note:"Do not climb onto roofs or ladders for this checklist."},
+ {id:"grading",name:"Look for standing water near the foundation from a safe location",system:"exterior",homes:"house",note:"Consult a qualified contractor if drainage appears problematic."},
+ {id:"shared",name:"Record shared-building maintenance concerns for property management",system:"exterior",homes:"condo",note:"Check association responsibilities before arranging work."}
+];
+---
+<Base title="Custom Home Maintenance Checklist Builder" description="Build and print a home maintenance checklist by home type and systems. Save checkmarks locally, without an account." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">HOME PLANNING · INTERACTIVE CHECKLIST</span><h1>Make a checklist for <em class="serif" style="color:var(--pine)">your home.</em></h1><p class="lede">Choose the home type and systems that apply to you, then print a tailored observation checklist. Your checked items stay in this browser until you erase them.</p></div></section>
+<section class="section-small rule-top"><div class="container narrow">
+<form id="checklist-controls" class="tool-shell">
+<div class="tool-head"><span class="eyebrow">YOUR HOME</span><h2>Customize the list</h2></div>
+<div class="field"><label for="home-type">Home type</label><select id="home-type"><option value="house">Detached or attached house</option><option value="condo">Condo or apartment</option></select></div>
+<fieldset class="systems"><legend>Include systems</legend>
+<label><input type="checkbox" name="system" value="hvac" checked/> Heating and cooling</label>
+<label><input type="checkbox" name="system" value="plumbing" checked/> Plumbing</label>
+<label><input type="checkbox" name="system" value="safety" checked/> Safety</label>
+<label><input type="checkbox" name="system" value="exterior" checked/> Exterior and shared areas</label>
+</fieldset>
+<div class="tool-actions no-print"><button class="button light" id="clear-checks" type="button">Clear checkmarks</button><button class="button light" id="erase-data" type="button">Erase saved choices and checks</button><button class="button" id="print-list" type="button">Print checklist</button></div>
+<p id="save-message" role="status" aria-live="polite" class="small muted"></p>
+</form>
+<section class="tool-shell" aria-labelledby="list-heading"><span class="eyebrow">YOUR CHECKLIST</span><h2 id="list-heading">Tasks to review</h2><p id="count" role="status" aria-live="polite"></p>
+<ul id="custom-list" class="custom-list">
+{tasks.map(task=><li data-id={task.id} data-system={task.system} data-homes={task.homes}><label><input type="checkbox" class="task-check" data-id={task.id}/><span><strong>{task.name}</strong><small>{task.note}</small></span></label></li>)}
+</ul><p id="empty" hidden>No systems selected. Choose at least one above to show tasks.</p>
+</section>
+<h2>What this checklist covers</h2>
+<p>This is a customizable set of <strong>non-invasive observations</strong>, not a comprehensive inspection or a maintenance interval schedule. Tasks appear only for your selected systems and home type. A condo association or landlord may be responsible for common systems; confirm who maintains them. Use equipment manuals, local requirements and qualified professionals for actual servicing.</p>
+<p>For example, a house with HVAC and safety selected shows filter, vent, alarm and exit-path observations, while exterior and plumbing tasks are hidden. Checkmarks mean you reviewed an item, not that the equipment is certified safe.</p>
+<h2>Privacy and printing</h2><p>Selections and checkmarks are stored only in this browser's local storage, not an Upkeep Atlas account. Other users of this browser may see them. Use “Erase saved choices and checks” to remove the saved record. Browser private mode or cleared site data may discard it. Printing opens your browser print dialog; no file is uploaded.</p>
+<p>See the <a href="/maintenance-calendar/">annual maintenance planner</a>, <a href="/tools/hvac-filter-schedule/">HVAC inspection scheduler</a> and <a href="/calculators/">other planning tools</a>. For alarm guidance, see the <a href="https://www.cpsc.gov/Safety-Education/Safety-Guides/Home/Smoke-Alarms">U.S. Consumer Product Safety Commission's smoke alarm information</a>; for home energy maintenance, see <a href="https://www.energy.gov/energysaver/maintaining-your-air-conditioner">U.S. Department of Energy air-conditioner maintenance guidance</a>. Check the current manufacturer's instructions before taking action.</p>
+</div></section>
+<style>
+.systems{border:1px solid var(--line);padding:1rem;margin:1rem 0;display:grid;gap:.7rem}.systems legend{font-weight:700;padding:0 .4rem}.systems label{display:flex;gap:.65rem;align-items:center}.custom-list{list-style:none;padding:0;margin:1rem 0}.custom-list li{padding:1rem 0;border-bottom:1px solid var(--line)}.custom-list label{display:flex;gap:.85rem;align-items:flex-start;cursor:pointer}.custom-list input{margin-top:.3rem;flex-shrink:0}.custom-list small{display:block;color:var(--muted);margin-top:.3rem}.custom-list input:checked+span strong{text-decoration:line-through;text-decoration-thickness:1px}.custom-list li[hidden]{display:none}
+@media print{#checklist-controls{display:none!important}.page-head{padding:1rem 0}.custom-list li{break-inside:avoid} .custom-list input{appearance:auto}}
+</style>
+<script>
+const key="upkeepatlas.custom-checklist.v1";
+const home=document.querySelector("#home-type");
+const controls=document.querySelector("#checklist-controls");
+const rows=[...document.querySelectorAll("#custom-list li")];
+const systems=[...document.querySelectorAll('input[name="system"]')];
+const checks=[...document.querySelectorAll(".task-check")];
+const status=document.querySelector("#save-message");
+function read(){try{const value=JSON.parse(localStorage.getItem(key)||"null");return value&&typeof value==="object"?value:null;}catch{return null;}}
+function save(){try{localStorage.setItem(key,JSON.stringify({home:home.value,systems:systems.filter(s=>s.checked).map(s=>s.value),checked:checks.filter(c=>c.checked).map(c=>c.dataset.id)}));status.textContent="Saved in this browser.";}catch{status.textContent="Browser storage unavailable; you can still print this session."}}
+function render(){const selected=new Set(systems.filter(s=>s.checked).map(s=>s.value));let visible=0,done=0;for(const row of rows){const show=selected.has(row.dataset.system)&&(row.dataset.homes==="all"||row.dataset.homes===home.value);row.hidden=!show;if(show){visible++;if(row.querySelector("input").checked)done++;}}document.querySelector("#count").textContent=done+" of "+visible+" visible items checked.";document.querySelector("#empty").hidden=visible!==0;}
+if(home instanceof HTMLSelectElement&&controls instanceof HTMLFormElement){const saved=read();if(saved){if(["house","condo"].includes(saved.home))home.value=saved.home;if(Array.isArray(saved.systems))systems.forEach(s=>s.checked=saved.systems.includes(s.value));if(Array.isArray(saved.checked))checks.forEach(c=>c.checked=saved.checked.includes(c.dataset.id));}render();controls.addEventListener("change",()=>{render();save();});document.querySelector("#custom-list")?.addEventListener("change",()=>{render();save();});document.querySelector("#clear-checks")?.addEventListener("click",()=>{checks.forEach(c=>c.checked=false);render();save();});document.querySelector("#erase-data")?.addEventListener("click",()=>{try{localStorage.removeItem(key);}catch{}home.value="house";systems.forEach(s=>s.checked=true);checks.forEach(c=>c.checked=false);render();status.textContent="Saved checklist erased; defaults restored.";});document.querySelector("#print-list")?.addEventListener("click",()=>window.print());}
+</script>
+</Base>
