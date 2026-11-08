@@ -14,7 +14,8 @@
     "check:indexnow": "node scripts/indexnow.mjs --check",
     "indexnow:dry-run": "node scripts/indexnow.mjs --dry-run",
     "indexnow:submit": "node scripts/indexnow.mjs --submit",
-    "check:theme": "node scripts/check-theme.mjs"
+    "check:theme": "node scripts/check-theme.mjs",
+    "check:queue": "node scripts/validate-production-queue.mjs"
   },
   "dependencies": {
     "astro": "^5.16.0"
