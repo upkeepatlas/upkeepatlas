@@ -181,7 +181,7 @@
       "phase": "functions",
       "order": 7,
       "priority": 940,
-      "status": "in_progress",
+      "status": "published",
       "title": "Custom homeowner checklist builder",
       "keywordCandidate": "custom home maintenance checklist printable",
       "targetPath": "/tools/custom-maintenance-checklist/",
@@ -191,12 +191,15 @@
         "F002"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
-      "claim": {
-        "id": "F007-20261108-0708",
-        "at": "2026-11-08T07:08:13Z",
-        "branch": "content/F007-custom-checklist"
+      "evidence": "docs/production/evidence/F007.md",
+      "release": {
+        "sha": "0c63ab1b23ba57dd4b4110a62afc014026aca977",
+        "deploymentId": "a0ce0fa0-d4d3-4cfe-9756-d7b1f9d7b304",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42462391240",
+        "verifiedAt": "2026-11-08T08:20:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/tools/custom-maintenance-checklist/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/14",
+        "method": "GitHub-hosted quality workflow success on PR head; Cloudflare production deployment success on exact merge SHA; Cloudflare Browser Rendering confirmed live title, controls, source links and HTML. Interactive selection, persistence, and printing not independently exercised."
       }
     },
     {
