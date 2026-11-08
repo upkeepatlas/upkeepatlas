@@ -208,7 +208,7 @@
       "phase": "functions",
       "order": 8,
       "priority": 930,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Reusable home maintenance log",
       "keywordCandidate": "home maintenance log template",
       "targetPath": "/tools/maintenance-log/",
@@ -218,8 +218,13 @@
         "F002"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F008.md",
+      "release": null,
+      "claim": {
+        "id": "F008-20261108-0910",
+        "at": "2026-11-08T09:10:00Z",
+        "branch": "content/F008-maintenance-log"
+      }
     },
     {
       "id": "F009",
