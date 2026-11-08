@@ -370,7 +370,7 @@
       "phase": "functions",
       "order": 14,
       "priority": 870,
-      "status": "in_progress",
+      "status": "published",
       "title": "Home inventory template",
       "keywordCandidate": "home inventory spreadsheet printable",
       "targetPath": "/tools/home-inventory/",
@@ -381,11 +381,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F014.md",
-      "release": null,
-      "claim": {
-        "id": "F014-20261108-1708",
-        "at": "2026-11-08T16:08:21Z",
-        "branch": "content/F014-home-inventory-20261108"
+      "release": {
+        "sha": "42a021ddc23a1f017eb8d4b55ab6df0ecdfbb863",
+        "deploymentId": "02ae85b1-6586-4d8a-aac9-ca08c022e773",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42498492510",
+        "verifiedAt": "2026-11-08T16:13:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/tools/home-inventory/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/21",
+        "method": "GitHub connector + Actions quality + Cloudflare exact SHA + Browser Rendering HTML at 375px"
       }
     },
     {
