@@ -397,7 +397,7 @@
       "phase": "functions",
       "order": 15,
       "priority": 860,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Climate care selector",
       "keywordCandidate": "home maintenance by climate tool",
       "targetPath": "/tools/climate-home-care/",
@@ -407,8 +407,13 @@
         "F010"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F015.md",
+      "release": null,
+      "claim": {
+        "id": "F015-20261108-1812-prague",
+        "at": "2026-11-08T17:12:44Z",
+        "branch": "content/F015-climate-care-selector"
+      }
     },
     {
       "id": "F016",
