@@ -1,0 +1,61 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Home maintenance log"}];
+---
+<Base title="Home Maintenance Log — Private CSV Record Keeper" description="Record home repairs and routine maintenance in your browser, then export or import a CSV backup. No account required." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">HOME RECORDS · LOCAL TOOL</span><h1>Keep a useful <em class="serif" style="color:var(--pine)">maintenance history.</em></h1><p class="lede">Log what happened, when, and what it cost. Save a CSV copy you control, and bring it back later. Records stay in this browser unless you download or share them.</p></div></section>
+<section class="section-small rule-top"><div class="container narrow">
+<div class="note"><strong>Start with the essentials.</strong> Record a date, system, work description and status. Cost and notes are optional. This log is not a safety inspection, warranty registration, tax classification or secure document vault. Do not enter access codes, account numbers or other sensitive details.</div>
+<form id="log-form" class="tool-shell">
+<div class="tool-head"><span class="eyebrow">NEW RECORD</span><h2>Add maintenance or a repair</h2></div>
+<div class="tool-grid">
+<div class="field"><label for="record-date">Date</label><input id="record-date" type="date" required/></div>
+<div class="field"><label for="record-system">System or area</label><input id="record-system" required maxlength="80" placeholder="e.g. Heating and cooling"/></div>
+<div class="field"><label for="record-work">What was done or observed</label><input id="record-work" required maxlength="240" placeholder="e.g. Filter inspected"/></div>
+<div class="field"><label for="record-status">Status</label><select id="record-status"><option value="completed">Completed</option><option value="planned">Planned</option><option value="follow-up">Needs follow-up</option></select></div>
+<div class="field"><label for="record-cost">Cost in USD (optional)</label><input id="record-cost" type="number" min="0" max="100000000" step=".01" placeholder="0.00"/></div>
+<div class="field"><label for="record-notes">Notes (optional, 500 characters max)</label><textarea id="record-notes" maxlength="500" rows="3" placeholder="Manual reference, invoice location or next step; avoid private details"></textarea></div>
+</div>
+<div class="tool-actions"><button class="button" type="submit">Save record</button><button class="button light" type="reset">Clear form</button></div>
+<p id="log-error" role="alert" class="error" hidden></p>
+</form>
+<section class="tool-shell" aria-labelledby="history-heading">
+<span class="eyebrow">YOUR HISTORY</span><h2 id="history-heading">Saved records</h2><p id="log-status" role="status" aria-live="polite">Loading browser records…</p>
+<div class="tool-actions no-print"><button class="button light" type="button" id="export-log">Download CSV</button><label class="button light" for="import-log">Import CSV</label><input id="import-log" type="file" accept=".csv,text/csv" aria-describedby="import-help"/><button class="button light" type="button" id="clear-log">Erase all saved records</button><button class="button light" type="button" id="print-log">Print records</button></div>
+<p id="import-help" class="small muted">Import replaces this browser's current log after confirmation. Download a backup first. Maximum 500 rows, 1 MB. The CSV header must be date,system,work,status,cost,notes.</p>
+<div class="log-scroll"><table class="log-table"><thead><tr><th>Date</th><th>System</th><th>Work</th><th>Status</th><th>Cost</th><th>Notes</th><th class="no-print">Action</th></tr></thead><tbody id="log-rows"></tbody></table></div>
+<p id="log-empty">No records yet. Add your first entry above.</p>
+</section>
+<h2>How to use this maintenance log</h2><p>Enter one row for each inspection, service visit or planned repair. “Completed” means you recorded an activity, not that the equipment is certified safe. Leave cost blank when unknown; zero means you actually spent $0. Download CSV before changing devices, clearing browser data or using private browsing. CSV files can be opened in common spreadsheet programs; check imported values before relying on them.</p>
+<p><strong>Example:</strong> November 8, 2026 · Heating and cooling · Inspected return filter according to equipment manual · Completed · cost left blank. Record the actual date and your own observation, not a presumed replacement interval.</p>
+<h2>Privacy, records and safety</h2><p>Entries are saved with browser local storage only. They are not sent to an Upkeep Atlas account or application API. Anyone with access to this browser profile or an exported CSV may read them; storage may be cleared without warning. “Erase all saved records” deletes this tool's local record only, not downloaded copies. Keep original invoices, warranties and important improvement receipts in a secure location; this simple log is not a substitute.</p>
+<p>The <a href="https://consumer.ftc.gov/consumer-alerts/2025/06/protecting-your-personal-information-which-documents-keep-which-shred">Federal Trade Commission explains which home improvement receipts and warranty documents to retain</a>. For repair hiring, consult the FTC's <a href="https://consumer.ftc.gov/features/pass-it-on/home-repair-scams">home repair scam guidance</a>. For electrical, gas, roof, structural or other hazardous work, use a qualified professional rather than relying on this log for DIY instructions.</p>
+<p>Pair your records with the <a href="/maintenance-calendar/">annual maintenance planner</a>, <a href="/tools/custom-maintenance-checklist/">custom checklist</a> and <a href="/calculators/">other planning tools</a>.</p>
+</div></section>
+<style>
+.log-scroll{overflow-x:auto}.log-table{width:100%;border-collapse:collapse;font-size:.88rem}.log-table th,.log-table td{padding:.65rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;overflow-wrap:anywhere}.log-table td{min-width:6rem}.log-table td:nth-child(3),.log-table td:nth-child(6){min-width:11rem}#import-log{max-width:100%;font-size:.8rem}.log-table button{font:inherit;text-decoration:underline;cursor:pointer}#log-empty[hidden]{display:none}@media print{#log-form,.no-print,#import-help{display:none!important}.log-scroll{overflow:visible}.log-table{font-size:9pt}.log-table td{min-width:0!important}}
+</style>
+<script>
+import {normalizeRecord,exportCsv,parseCsv} from "../../../lib/maintenance-log.mjs";
+const key="upkeepatlas.maintenance-log.v1";
+type RecordRow=ReturnType<typeof normalizeRecord>;
+let records:RecordRow[]=[];
+const form=document.querySelector<HTMLFormElement>("#log-form");
+const rows=document.querySelector<HTMLElement>("#log-rows");
+const status=document.querySelector<HTMLElement>("#log-status");
+const error=document.querySelector<HTMLElement>("#log-error");
+const empty=document.querySelector<HTMLElement>("#log-empty");
+function message(value:string){if(status)status.textContent=value;}
+function fail(value:string){if(error){error.hidden=false;error.textContent=value;}}
+function persist(){try{localStorage.setItem(key,JSON.stringify(records));message(records.length+" records saved in this browser.");return true;}catch{fail("Browser storage is unavailable or full. Export a CSV backup before leaving.");return false;}}
+function render(){if(!rows)return;rows.replaceChildren();records.forEach((record,index)=>{const tr=document.createElement("tr");for(const value of [record.date,record.system,record.work,record.status,record.cost,record.notes]){const td=document.createElement("td");td.textContent=value;tr.append(td);}const td=document.createElement("td");td.className="no-print";const button=document.createElement("button");button.type="button";button.textContent="Delete";button.setAttribute("aria-label","Delete record "+(index+1));button.addEventListener("click",()=>{if(!confirm("Delete this record?"))return;records.splice(index,1);persist();render();});td.append(button);tr.append(td);rows.append(tr);});if(empty)empty.hidden=records.length!==0;message(records.length+" records in this browser.");}
+try{const saved=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(saved))records=saved.slice(0,500).map(normalizeRecord);else fail("Saved data was not a valid record list.");}catch{fail("Saved data could not be read. Export any existing backup before erasing.");}
+render();
+form?.addEventListener("submit",event=>{event.preventDefault();if(error)error.hidden=true;if(records.length>=500){fail("Maximum 500 records. Export and archive before adding more.");return;}try{const val=(id:string)=>{const e=document.getElementById(id);return e instanceof HTMLInputElement||e instanceof HTMLSelectElement||e instanceof HTMLTextAreaElement?e.value:"";};records.unshift(normalizeRecord({date:val("record-date"),system:val("record-system"),work:val("record-work"),status:val("record-status"),cost:val("record-cost"),notes:val("record-notes")}));persist();render();form.reset();}catch(e){fail(e instanceof Error?e.message:"Invalid entry.");}});
+document.querySelector("#export-log")?.addEventListener("click",()=>{const blob=new Blob(["\uFEFF",exportCsv(records)],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="upkeep-atlas-maintenance-log.csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);message("CSV download requested. Keep the file in a secure location.");});
+document.querySelector<HTMLInputElement>("#import-log")?.addEventListener("change",async event=>{const input=event.currentTarget;if(!(input instanceof HTMLInputElement))return;const file=input.files?.[0];if(!file)return;try{if(file.size>1000000)throw new Error("CSV must be under 1 MB.");const imported=parseCsv((await file.text()).replace(/^\uFEFF/,""));if(!confirm("Replace all "+records.length+" existing records with "+imported.length+" imported records? Download a backup first."))return;records=imported;persist();render();if(error)error.hidden=true;}catch(e){fail(e instanceof Error?e.message:"Unable to import CSV.");}finally{input.value="";}});
+document.querySelector("#clear-log")?.addEventListener("click",()=>{if(!confirm("Permanently erase all records saved by this tool in this browser? Download a CSV backup first."))return;try{localStorage.removeItem(key);records=[];render();message("Saved records erased.");}catch{fail("Unable to erase browser storage.");}});
+document.querySelector("#print-log")?.addEventListener("click",()=>window.print());
+</script>
+</Base>
