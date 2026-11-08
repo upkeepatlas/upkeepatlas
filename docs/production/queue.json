@@ -262,7 +262,7 @@
       "phase": "functions",
       "order": 10,
       "priority": 910,
-      "status": "in_progress",
+      "status": "published",
       "title": "Seasonal maintenance builder",
       "keywordCandidate": "seasonal home maintenance planner",
       "targetPath": "/tools/seasonal-maintenance-builder/",
@@ -273,11 +273,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F010.md",
-      "release": null,
-      "claim": {
-        "id": "F010-20261108-seasonal",
-        "at": "2026-11-08T11:13:30Z",
-        "branch": "content/F010-seasonal-maintenance-builder"
+      "release": {
+        "sha": "5308920d98ec9d4bcf70d12e9c0cd7dfcc6c3fa1",
+        "deploymentId": "69d5182a-a8cc-4c4f-8483-8818af6c4aa3",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42474947223",
+        "verifiedAt": "2026-11-08T11:17:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/tools/seasonal-maintenance-builder/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/17",
+        "method": "GitHub-hosted exact PR-head quality CI green; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering 375px HTML title, H1, canonical, form, print control and primary-source links verified. Form submission/printing not independently automated."
       }
     },
     {
