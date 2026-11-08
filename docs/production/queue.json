@@ -397,7 +397,7 @@
       "phase": "functions",
       "order": 15,
       "priority": 860,
-      "status": "in_progress",
+      "status": "published",
       "title": "Climate care selector",
       "keywordCandidate": "home maintenance by climate tool",
       "targetPath": "/tools/climate-home-care/",
@@ -408,11 +408,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F015.md",
-      "release": null,
-      "claim": {
-        "id": "F015-20261108-1812-prague",
-        "at": "2026-11-08T17:12:44Z",
-        "branch": "content/F015-climate-care-selector"
+      "release": {
+        "sha": "9d0a736c229d7616002213427e4105e08922e81c",
+        "deploymentId": "4c268d1a-2870-4371-b661-abe25df2b2a9",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42503948974",
+        "verifiedAt": "2026-11-08T18:12:20Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/tools/climate-home-care/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/22",
+        "method": "GitHub Actions exact PR-head quality success; Cloudflare production exact merge SHA success; Cloudflare Browser Rendering verified title, H1, form and canonical. Interactive submissions not independently exercised."
       }
     },
     {
