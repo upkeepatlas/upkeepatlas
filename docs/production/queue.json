@@ -235,7 +235,7 @@
       "phase": "functions",
       "order": 9,
       "priority": 920,
-      "status": "in_progress",
+      "status": "published",
       "title": "Enhanced paint material estimator",
       "keywordCandidate": "paint coverage calculator walls ceiling trim",
       "targetPath": "/calculators/paint-coverage/",
@@ -246,11 +246,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F009.md",
-      "release": null,
-      "claim": {
-        "id": "F009-20261108-1108-prague",
-        "at": "2026-11-08T10:08:28Z",
-        "branch": "content/F009-enhanced-paint-estimator"
+      "release": {
+        "sha": "695148b6853540b770339061833e9ab8fd2e405c",
+        "deploymentId": "9c27f290-ce9c-483b-b777-29b8bf16ece4",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42470370807",
+        "verifiedAt": "2026-11-08T10:14:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/calculators/paint-coverage/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/16",
+        "method": "GitHub-hosted exact PR-head quality CI green; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering confirmed live controls and canonical. Interactive browser form/print not independently exercised."
       }
     },
     {
