@@ -35,8 +35,12 @@ async function inspect() {
     const html=output[route];
     const h1=(html.match(/<h1\b/gi)||[]).length;
     if(h1!==1)throw Error(route+": expected one H1, got "+h1);
-    if(!html.includes('rel="canonical" href="'+production+route+'"'))
-      throw Error(route+": wrong canonical");
+    if(isPR) {
+      if(!html.includes('content="noindex,nofollow"') ||
+          html.includes('rel="canonical"')) throw Error(route+": preview indexing must remain disabled");
+    } else if(!html.includes('rel="canonical" href="'+production+route+'"')) {
+      throw Error(route+": wrong production canonical");
+    }
     if(!html.includes('name="google-site-verification"') ||
        !html.includes('name="msvalidate.01"') ||
        !html.includes('name="google-adsense-account"') ||
@@ -46,10 +50,16 @@ async function inspect() {
     }
   }
   const sitemap=output["/sitemap.xml"], robots=output["/robots.txt"];
-  if(!sitemap.includes("<loc>"+production+"/guides/hvac-filter-routine/</loc>") ||
-     !sitemap.includes("<loc>"+production+"/calculators/paint-coverage/</loc>"))
-    throw Error("Sitemap is missing verified canonical routes");
-  if(!robots.includes("Sitemap: "+production+"/sitemap.xml"))throw Error("Robots sitemap reference missing");
+  if(isPR) {
+    if(sitemap.includes("<loc>") || !robots.includes("Disallow: /"))
+      throw Error("Preview sitemap/robots must disallow indexing");
+  } else {
+    if(!sitemap.includes("<loc>"+production+"/guides/hvac-filter-routine/</loc>") ||
+       !sitemap.includes("<loc>"+production+"/calculators/paint-coverage/</loc>"))
+      throw Error("Sitemap is missing verified canonical routes");
+    if(!robots.includes("Sitemap: "+production+"/sitemap.xml"))
+      throw Error("Robots sitemap reference missing");
+  }
   const missing=await fetch(base+"/not-a-real-page-for-smoke-f002/",
     {signal:AbortSignal.timeout(15000)});
   if(missing.status!==404)throw Error("Missing path did not return HTTP 404: "+missing.status);
