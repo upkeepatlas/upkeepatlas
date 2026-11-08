@@ -127,7 +127,7 @@
       "phase": "functions",
       "order": 5,
       "priority": 960,
-      "status": "in_progress",
+      "status": "published",
       "title": "HVAC filter schedule planner",
       "keywordCandidate": "hvac air filter change schedule calculator",
       "targetPath": "/tools/hvac-filter-schedule/",
@@ -138,12 +138,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F005.md",
-      "release": null,
-      "claim": {
-        "id": "F005-20261108-0418-PR12",
-        "at": "2026-11-08T04:18:52Z",
-        "branch": "content/F005-hvac-filter-scheduler",
-        "pr": "https://github.com/upkeepatlas/upkeepatlas/pull/12"
+      "release": {
+        "sha": "b3b14b4d58f8b90ff61530d2253f788aab54c5a1",
+        "deploymentId": "1dfd198b-9816-4a03-8a7d-7fc3f71c3455",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42449681463",
+        "verifiedAt": "2026-11-08T05:11:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/tools/hvac-filter-schedule/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/12",
+        "method": "GitHub-hosted CI success on PR SHA 96614e8; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering live HTML, form and canonical verified. Browser form interaction not independently exercised."
       }
     },
     {
