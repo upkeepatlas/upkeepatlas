@@ -6,6 +6,21 @@ const output=path.resolve("dist");
 if(!fs.existsSync(output))throw new Error("Missing dist directory; run npm run build first.");
 const errors=[];const titles=new Set();const origin=publishedOrigin(process.env.PUBLIC_SITE_URL);
 const read=(name)=>fs.readFileSync(path.join(output,name),"utf8");
+/* Every generated indexable page must be in the registry, and vice versa.
+   This catches forgotten new Astro pages without relying on a fixed count. */
+function renderedRoutes(directory = output) {
+  return fs.readdirSync(directory,{withFileTypes:true}).flatMap(entry => {
+    if(!entry.isDirectory())return [];
+    const target=path.join(directory,entry.name);
+    return renderedRoutes(target);
+  }).concat(fs.existsSync(path.join(directory,"index.html"))
+    ? ["/"+path.relative(output,directory).split(path.sep).filter(Boolean).join("/")+
+       (directory===output?"":"/")] : []);
+}
+const generated = new Set(renderedRoutes());
+for(const route of generated)if(!PUBLIC_ROUTES.includes(route))errors.push("Rendered route absent from registry "+route);
+for(const route of PUBLIC_ROUTES)if(!generated.has(route))errors.push("Registry route absent from rendered HTML "+route);
+
 for(const route of PUBLIC_ROUTES){
   const file=path.join(output,route,"index.html");
   if(!fs.existsSync(file)){errors.push("Missing rendered page "+route);continue;}
@@ -61,7 +76,11 @@ if(errors.length===0){
   const robots=read("robots.txt");const sitemap=read("sitemap.xml");
   if(origin){
     if(!robots.includes("Sitemap: "+origin+"/sitemap.xml"))errors.push("robots sitemap reference incorrect");
-    for(const route of PUBLIC_ROUTES)if(!sitemap.includes("<loc>"+origin+route+"</loc>"))errors.push("sitemap missing "+route);
+    const locations=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]);
+    const wanted=PUBLIC_ROUTES.map(route=>origin+route);
+    for(const url of wanted)if(!locations.includes(url))errors.push("sitemap missing "+url);
+    for(const url of locations)if(!wanted.includes(url))errors.push("sitemap has unregistered URL "+url);
+    if(new Set(locations).size!==locations.length)errors.push("sitemap contains duplicate URLs");
   }else{
     if(!robots.includes("Disallow: /"))errors.push("unverified site has open robots");
     if(sitemap.includes("<loc>"))errors.push("unverified site has public sitemap URLs");
