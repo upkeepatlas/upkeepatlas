@@ -343,7 +343,7 @@
       "phase": "functions",
       "order": 13,
       "priority": 880,
-      "status": "in_progress",
+      "status": "published",
       "title": "Appliance maintenance records tracker",
       "keywordCandidate": "appliance maintenance log",
       "targetPath": "/tools/appliance-maintenance-log/",
@@ -354,11 +354,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F013.md",
-      "release": null,
-      "claim": {
-        "id": "F013-20261108-1517Z",
-        "at": "2026-11-08T15:17:37Z",
-        "branch": "content/F013-appliance-maintenance-register"
+      "release": {
+        "sha": "63383cea9997e7a3ffbf7541c946d06f6524eb6e",
+        "deploymentId": "255887bd-6300-4d7b-92a3-887e162ba96b",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42494207628",
+        "verifiedAt": "2026-11-08T15:21:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/tools/appliance-maintenance-log/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/20",
+        "method": "GitHub-hosted PR-head quality success; Cloudflare Pages production deployment exact merge SHA success; Cloudflare Browser Rendering 375px verified live title, H1, canonical, equipment form and CPSC link. Actual form submission, backup restore, cross-reload persistence and keyboard interactions not independently exercised."
       }
     },
     {
