@@ -424,7 +424,7 @@
       "phase": "functions",
       "order": 16,
       "priority": 850,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Observation-first gutter care planner",
       "keywordCandidate": "gutter inspection checklist from ground",
       "targetPath": "/tools/gutter-care-planner/",
@@ -434,8 +434,13 @@
         "F010"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F016.md",
+      "release": null,
+      "claim": {
+        "id": "F016-20261108-ground-observation",
+        "at": "2026-11-08T19:09:38Z",
+        "branch": "content/F016-ground-gutter-planner"
+      }
     },
     {
       "id": "F017",
