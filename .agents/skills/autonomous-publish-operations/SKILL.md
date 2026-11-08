@@ -10,6 +10,12 @@ description: Select and release one prioritized unit of work with GitHub, CI, Cl
 - A run that cannot finish honestly reports BLOCKED, keeps unfinished work out of production, and records repair steps. Never promise 100% completion if a provider or CI is unavailable.
 - Respect GitHub repository upkeepatlas/upkeepatlas and existing Cloudflare Pages project. Never force push, delete user work, remove Google/Bing/AdSense/IndexNow scripts, change domain or disable ads/consent without reason and review.
 
+## Connector-first release fallback (required)
+
+When the task runtime cannot resolve github.com or cannot clone the repository, use the **GitHub connector directly** to inspect/edit files, create a feature branch, commit, open PRs, review Actions logs and merge. GitHub Actions (not the chat execution container) is the tested environment for npm ci, Astro build, type checking, SEO and unit tests. This avoids depending on unavailable outbound DNS. It is not permission to bypass CI: require the complete green Actions job on the relevant PR head and Cloudflare production SHA verification. Do not repeatedly report local clone failure while GitHub file writes, Actions and Cloudflare remain connected.
+
+For platform infrastructure F001–F003 and F020, replace irrelevant homeowner-query SERP research with primary framework documentation and integration tests. Apply consumer SERP research fully to reader-facing tools and articles.
+
 ## Start of every run
 1. Read the current master prompt and plan, AGENTS.md, applicable skills and queue. Inspect current GitHub head and Cloudflare status.
 2. Recover any existing task already IN_PROGRESS before selecting a new ID. Distinguish real stuck work from active concurrent work, compare run claims safely, and avoid overwriting concurrent changes.

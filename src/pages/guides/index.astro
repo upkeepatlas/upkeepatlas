@@ -2,7 +2,16 @@
 import Base from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import GuideCard from "../../components/GuideCard.astro";
-import {guides} from "../../data/guides.mjs";
+import { getCollection } from "astro:content";
+import { guides as legacyGuides } from "../../data/guides.mjs";
+
+const collection = await getCollection("guides");
+const collectionGuides = collection.map(({id, data}) => ({...data, slug:id}));
+const existing = new Set(legacyGuides.map(guide => guide.slug));
+for (const guide of collectionGuides) {
+  if (existing.has(guide.slug)) throw new Error("Duplicate guide slug: " + guide.slug);
+}
+const guides = [...legacyGuides, ...collectionGuides];
 const crumbs=[{title:"Field notes"}];
 ---
 <Base title="Home Maintenance Guides" description="Sourced home maintenance guides for your first year, moisture awareness and HVAC filter routines." breadcrumbs={crumbs}>

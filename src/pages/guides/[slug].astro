@@ -1,10 +1,33 @@
 ---
 import Base from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
-import {guides,sources} from "../../data/guides.mjs";
-export function getStaticPaths(){return guides.map(guide=>({params:{slug:guide.slug},props:{guide}}));}
-const {guide}=Astro.props;
+import { getCollection, render } from "astro:content";
+import { guides as legacyGuides, sources } from "../../data/guides.mjs";
+
+export async function getStaticPaths(){
+  const collection = await getCollection("guides");
+  const existing = new Set(legacyGuides.map(guide => guide.slug));
+  for(const entry of collection){
+    if(existing.has(entry.id)) throw new Error("Duplicate guide slug: "+entry.id);
+  }
+  return [
+    ...legacyGuides.map(guide => ({params:{slug:guide.slug},props:{guide}})),
+    ...collection.map(entry => ({params:{slug:entry.id},props:{entry}}))
+  ];
+}
+
+const { guide:legacyGuide, entry } = Astro.props;
+const guide = entry ? {...entry.data, slug:entry.id} : legacyGuide;
+const legacySections = legacyGuide?.sections ?? [];
+let Content;
+if(entry) ({Content} = await render(entry));
 const crumbs=[{title:"Field notes",href:"/guides/"},{title:guide.title}];
+const publishedLabel = entry
+  ? entry.data.publishedAt.toLocaleDateString("en-US",{timeZone:"UTC",year:"numeric",month:"long",day:"numeric"})
+  : "November 7, 2026";
+const reviewedLabel = entry?.data.updatedAt
+  ? entry.data.updatedAt.toLocaleDateString("en-US",{timeZone:"UTC",year:"numeric",month:"long",day:"numeric"})
+  : null;
 ---
 <Base title={guide.title} description={guide.description} type="article" breadcrumbs={crumbs}>
   <section class="page-head"><div class="container">
@@ -12,11 +35,11 @@ const crumbs=[{title:"Field notes",href:"/guides/"},{title:guide.title}];
     <span class="eyebrow">{guide.category} / {guide.minutes} MIN READ</span>
     <h1 style="max-width:940px">{guide.title}</h1>
     <p class="lede">{guide.intro}</p>
-    <p class="small muted">Research prepared November 2026 · U.S. general guidance, not a professional inspection</p>
+    <p class="small muted">Published {publishedLabel}{reviewedLabel ? " · Materially updated "+reviewedLabel : ""} · Upkeep Atlas · AI-assisted, not professionally reviewed · U.S. general guidance</p>
   </div></section>
   <div class="container page-layout">
     <article class="prose">
-      {guide.sections.map(section=><section>
+      {Content ? <Content/> : legacySections.map(section=><section>
         <h2>{section.heading}</h2>
         {section.paragraphs.map(text=><p>{text}</p>)}
         {section.sourceIds && <div class="small muted"><span>Relevant references:</span><ul>{section.sourceIds.map(id=><li><a href={sources[id].url} target="_blank" rel="noopener noreferrer">{sources[id].title}</a></li>)}</ul></div>}
