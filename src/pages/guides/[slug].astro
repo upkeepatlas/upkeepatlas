@@ -19,6 +19,12 @@ export async function getStaticPaths(){
 const { guide:legacyGuide, entry } = Astro.props;
 const guide = entry ? {...entry.data, slug:entry.id} : legacyGuide;
 const legacySections = legacyGuide?.sections ?? [];
+const allGuideEntries = await getCollection("guides");
+const relatedGuides = [
+  ...legacyGuides.map(({slug,title,category})=>({slug,title,category})),
+  ...allGuideEntries.map(({id,data})=>({slug:id,title:data.title,category:data.category}))
+].filter(item=>item.slug!==guide.slug).slice(0,3);
+
 let Content;
 if(entry) ({Content} = await render(entry));
 const crumbs=[{title:"Field notes",href:"/guides/"},{title:guide.title}];
@@ -63,6 +69,11 @@ const reviewedLabel = entry?.data.updatedAt
       <a href="/checklists/first-year-home-maintenance/">First-year checklist ↗</a>
       <a href="/checklists/seasonal-home-care/">Seasonal checklist ↗</a>
       <a href="/editorial-policy/">How we research ↗</a>
+      <nav aria-label="More field notes" class="related-guides">
+        <h3>More field notes</h3>
+        {relatedGuides.map(item=><a href={"/guides/"+item.slug+"/"}>{item.title} ↗</a>)}
+        <a href="/guides/">All field notes ↗</a>
+      </nav>
     </aside>
   </div>
 </Base>
