@@ -1,0 +1,52 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Home inventory"}];
+const rooms=["Living room","Kitchen","Bedroom","Bathroom","Home office","Garage / storage","Other"];
+---
+<Base title="Private Home Inventory Worksheet & CSV Download" description="Create a room-by-room home inventory in your browser, print a worksheet and download a spreadsheet-ready CSV without an account." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">HOME RECORDS · PRINTABLE WORKSHEET</span><h1>Know what you own. <em class="serif" style="color:var(--pine)">Keep a private record.</em></h1><p class="lede">Build a room-by-room list of belongings, print it, or save a CSV for a spreadsheet. No sign-in or upload is needed.</p></div></section>
+<section class="section-small rule-top"><div class="container narrow">
+<div class="note"><strong>Privacy first.</strong> Inventory details can reveal valuables and locations. This tool keeps entries in this browser only, where anyone using the same browser profile may see them. Avoid serial numbers, addresses, access codes and policy identifiers. Store downloaded copies securely, preferably encrypted and away from the home.</div>
+<form id="inventory-form" class="tool-shell">
+<div class="tool-head"><span class="eyebrow">ADD A BELONGING</span><h2>One item or set at a time</h2></div>
+<div class="tool-grid">
+<div class="field"><label for="inv-room">Room</label><select id="inv-room" required>{rooms.map(room=><option value={room}>{room}</option>)}</select></div>
+<div class="field"><label for="inv-name">Item description</label><input id="inv-name" required maxlength="100" placeholder="Desk chair" /></div>
+<div class="field"><label for="inv-brand">Brand / model (optional; no serial number)</label><input id="inv-brand" maxlength="100" placeholder="Brand and model" /></div>
+<div class="field"><label for="inv-count">Quantity</label><input id="inv-count" type="number" min="1" max="9999" step="1" value="1" required /></div>
+<div class="field"><label for="inv-year">Purchase year (optional)</label><input id="inv-year" type="number" min="1900" max="2100" step="1" placeholder="2024" /></div>
+<div class="field"><label for="inv-value">Estimated replacement price per item in USD (optional)</label><input id="inv-value" type="number" min="0" max="100000000" step=".01" placeholder="125.00" /></div>
+<div class="field"><label for="inv-proof">Proof stored elsewhere (optional)</label><select id="inv-proof"><option value="">Not recorded</option><option>Photo</option><option>Receipt</option><option>Both</option></select></div>
+</div>
+<div class="tool-actions no-print"><button class="button" type="submit">Add to inventory</button><button class="button light" type="reset">Reset fields</button></div></form>
+<p id="inv-error" class="error" role="alert" hidden></p><p id="inv-status" role="status" aria-live="polite">Inventory ready.</p>
+<section class="tool-shell" aria-labelledby="inventory-heading"><h2 id="inventory-heading">Your inventory</h2><p id="inv-summary">No items entered yet. Use the form above, or print the blank worksheet below.</p><div id="inv-list"></div><div class="tool-actions no-print"><button id="inv-download" class="button" type="button">Download CSV</button><button id="inv-print" class="button light" type="button">Print or save as PDF</button><button id="inv-erase" class="button light" type="button">Erase all browser entries</button></div></section>
+<section class="tool-shell" aria-labelledby="worksheet-heading"><h2 id="worksheet-heading">Blank room-by-room worksheet</h2><p>Print this section for handwriting. Make a separate copy for each room; add photos and receipts to your secure records separately.</p><table class="worksheet"><thead><tr><th>Room / item</th><th>Brand / model</th><th>Qty</th><th>Year</th><th>Est. value</th><th>Proof</th></tr></thead><tbody>{Array.from({length:6},()=> <tr><td>________________</td><td>___________</td><td>___</td><td>____</td><td>______</td><td>_____</td></tr>)}</tbody></table></section>
+<div class="prose"><h2>How to make a useful home inventory</h2><p>Walk through each room and list major possessions. For a fictional example, two desk chairs with an estimated replacement price of $125 each would contribute $250 to the planning total. The tool only totals rows with a price you entered; it never invents a value for missing prices. Replacement estimates are not an appraisal or an insurance settlement.</p><p>Photograph items and receipts separately and note whether proof exists. Check your insurer's own inventory and coverage requirements; a spreadsheet cannot establish ownership, coverage, or reimbursement. Update your record after significant purchases or removals.</p><h2>Saving and protecting the record</h2><p>Entries are stored with browser local storage; clearing site data, using private browsing, or changing devices may remove them. CSV download creates a plain-text file on your device, not a cloud backup. CSV values are escaped to reduce spreadsheet formula injection risk. Protect files containing descriptions of valuables, and avoid storing serial numbers here. The print button uses your browser's print dialog; choose Save as PDF if supported.</p><p>For official guidance, see the <a href="https://www.maine.gov/pfr/insurance/consumers/homeowners-or-renters-insurance/taking-a-home-inventory">Maine Bureau of Insurance home inventory guidance</a> and <a href="https://dlr.sd.gov/insurance/general_guidance/home_inventory.aspx">South Dakota Division of Insurance's NAIC checklist reference</a>. You can also use the <a href="/tools/maintenance-log/">home maintenance log</a> for repair records or the <a href="/calculators/">tools directory</a> for other planners.</p></div>
+</div></section>
+<style>
+#inv-list .inventory-entry{padding:1rem 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}#inv-list .inventory-entry button{margin-left:.75rem;text-decoration:underline;cursor:pointer}#inv-list small{display:block;color:var(--muted)}.worksheet{width:100%;border-collapse:collapse;font-size:.85rem}.worksheet td,.worksheet th{padding:.55rem .3rem;border:1px solid var(--line);text-align:left}.tool-shell{margin-bottom:1.5rem}@media(max-width:600px){.worksheet{font-size:.65rem}.worksheet td,.worksheet th{padding:.3rem .1rem}}@media print{form,.no-print,#inv-error,#inv-status{display:none!important}.inventory-entry{break-inside:avoid}.worksheet{font-size:10pt}.page-head{padding:1rem 0}}
+</style>
+<script>
+import {normalizeInventoryItem,inventorySummary,inventoryCsv} from "../../../lib/home-inventory.mjs";
+type Item=ReturnType<typeof normalizeInventoryItem>;
+const key="upkeepatlas.home-inventory.v1";
+let entries:Item[]=[];
+const field=(id:string)=>{const el=document.getElementById(id);return el instanceof HTMLInputElement||el instanceof HTMLSelectElement?el.value:"";};
+const error=document.querySelector<HTMLElement>("#inv-error");
+const status=document.querySelector<HTMLElement>("#inv-status");
+function fail(message:string){if(error){error.textContent=message;error.hidden=false;}}
+function persist(){try{localStorage.setItem(key,JSON.stringify(entries));if(status)status.textContent="Saved in this browser.";}catch{fail("Storage is unavailable or full. Download your CSV before leaving.");}}
+function render(){
+ const list=document.querySelector("#inv-list"),summary=document.querySelector("#inv-summary");if(!list||!summary)return;list.replaceChildren();
+ const totals=inventorySummary(entries);summary.textContent=totals.count+" entries · "+totals.units+" units · $"+totals.knownValue.toFixed(2)+" total of entered replacement estimates ("+totals.unpriced+" entries without a price).";
+ for(const [index,e] of entries.entries()){const row=document.createElement("div");row.className="inventory-entry";const title=document.createElement("strong");title.textContent=e.room+" · "+e.name;const detail=document.createElement("small");detail.textContent=[e.brand,"Qty "+e.quantity,e.year||"Year unknown",e.value===null?"Price not entered":"$"+e.value.toFixed(2)+" each",e.proof||"Proof not recorded"].filter(Boolean).join(" · ");const button=document.createElement("button");button.type="button";button.textContent="Delete";button.setAttribute("aria-label","Delete "+e.name);button.addEventListener("click",()=>{entries.splice(index,1);persist();render();});row.append(title,detail,button);list.append(row);}
+}
+try{const raw=localStorage.getItem(key);if(raw){const parsed=JSON.parse(raw);if(!Array.isArray(parsed)||parsed.length>500)throw new Error();entries=parsed.map(normalizeInventoryItem);}}catch{entries=[];fail("Stored inventory could not be read. You may erase the browser entries and start again.");}render();
+document.querySelector<HTMLFormElement>("#inventory-form")?.addEventListener("submit",e=>{e.preventDefault();try{if(entries.length>=500)throw new Error("500-item limit reached. Download your CSV.");const item=normalizeInventoryItem({room:field("inv-room"),name:field("inv-name"),brand:field("inv-brand"),quantity:field("inv-count"),year:field("inv-year"),value:field("inv-value"),proof:field("inv-proof")});entries.push(item);persist();render();(e.currentTarget as HTMLFormElement).reset();if(error)error.hidden=true;}catch(x){fail(x instanceof Error?x.message:"Invalid item.");}});
+document.querySelector("#inv-download")?.addEventListener("click",()=>{const blob=new Blob([inventoryCsv(entries)],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="upkeep-atlas-home-inventory.csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+document.querySelector("#inv-print")?.addEventListener("click",()=>window.print());
+document.querySelector("#inv-erase")?.addEventListener("click",()=>{if(!confirm("Erase all home inventory entries saved in this browser?"))return;try{localStorage.removeItem(key);entries=[];render();if(status)status.textContent="Browser inventory erased.";}catch{fail("Unable to erase browser storage.");}});
+</script>
+</Base>
