@@ -73,7 +73,7 @@
       "phase": "functions",
       "order": 3,
       "priority": 980,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Licensed media pipeline",
       "keywordCandidate": "optimized image workflow for home maintenance content",
       "targetPath": null,
@@ -83,8 +83,13 @@
         "F001"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F003.md",
+      "release": null,
+      "claim": {
+        "id": "F003-20261108-media-01",
+        "at": "2026-11-08T01:15:24Z",
+        "branch": "content/F003-licensed-media-pipeline"
+      }
     },
     {
       "id": "F004",
