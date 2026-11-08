@@ -46,7 +46,7 @@
       "phase": "functions",
       "order": 2,
       "priority": 990,
-      "status": "in_progress",
+      "status": "published",
       "title": "Automatic route and SEO registry",
       "keywordCandidate": "Astro sitemap and new article route automation",
       "targetPath": null,
@@ -56,11 +56,15 @@
         "F001"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
-      "claim": {
-        "id": "F002-20261108-route-discovery",
-        "at": "2026-11-08T00:43:00Z"
+      "evidence": "docs/production/evidence/F002.md",
+      "release": {
+        "sha": "14292e7effb7595b25967919a492706e80bb12e9",
+        "deploymentId": "1251d6b2-fb5c-4ce7-b4d5-1e276e211af9",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42431923943",
+        "verifiedAt": "2026-11-08T00:56:09.062Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/hvac-filter-routine/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/9",
+        "method": "GitHub Actions main CI HTTPS smoke + Cloudflare exact-SHA deployment + Cloudflare Browser Rendering"
       }
     },
     {
