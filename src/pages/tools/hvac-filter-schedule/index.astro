@@ -1,0 +1,69 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Tools",href:"/calculators/"},{title:"HVAC filter inspection scheduler"}];
+---
+<Base title="HVAC Filter Inspection Scheduler" description="Plan your next HVAC filter inspection using the interval from your equipment manual. Calculate and print six check dates; no account or automatic replacement guesses." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">HEATING & COOLING · FREE PLANNER</span><h1>HVAC filter <em class="serif" style="color:var(--pine)">inspection scheduler.</em></h1><p class="lede">Use the inspection interval from your equipment or filter instructions to put six check dates on your calendar. A check is not an automatic instruction to replace a filter.</p></div></section>
+<section class="section-small rule-top"><div class="container" style="max-width:850px">
+  <div class="note"><strong>Start with your manual.</strong> Check the equipment manufacturer's filter type, inspection and replacement instructions first. If you cannot find them, contact the manufacturer or a qualified HVAC technician. Do not assume a universal 30-, 60- or 90-day replacement rule.</div>
+  <form id="filter-form" class="tool-panel" style="margin-top:2rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem">
+      <label>Last inspection date <input id="last-check" name="last-check" type="date" required min="2000-01-01" max="2099-12-31" /></label>
+      <label>Inspection interval (days) <input id="interval" name="interval" type="number" required min="1" max="365" step="1" value="30" inputmode="numeric" aria-describedby="interval-help" /></label>
+    </div>
+    <p id="interval-help" class="small muted">30 days is an editable example, not a recommendation. Enter the inspection frequency from your manual or technician. This tool does not infer filter life from pets, dust, thickness or MERV rating.</p>
+    <button class="button" type="submit">Make my inspection dates</button>
+    <p id="filter-error" role="alert" hidden></p>
+  </form>
+  <div id="schedule" aria-live="polite" aria-atomic="true" hidden>
+    <h2>Your next six checks</h2>
+    <p id="schedule-note"></p>
+    <ol id="inspection-list"></ol>
+    <button id="print-schedule" class="button" type="button">Print schedule</button>
+  </div>
+  <h2>How the dates are calculated</h2>
+  <p>Each date is the previous check date plus your chosen whole number of calendar days (1–365). For example, a check on November 8 with a 30-day interval leads to December 8. Dates are calculated as calendar days, without time zones or daylight-saving shifts. Print the list and record what you observed; reset the starting date after each real inspection.</p>
+  <h2>What to check—and when to get help</h2>
+  <p>Use the instructions for your exact equipment and filter. Dust, usage and operating conditions can affect inspection needs. If you cannot safely access the filter, notice damage, abnormal airflow or unusual system behavior, contact a qualified HVAC technician. Do not open electrical panels, bypass safety switches or climb into unsafe spaces for a filter check.</p>
+  <p class="small muted">This is an on-page calculator, not a push notification or an automatic reminder. No schedule data is saved or sent to Upkeep Atlas. Printing uses your browser's print dialog.</p>
+  <h2>Sources and related planning</h2>
+  <p>U.S. Department of Energy, <a href="https://www.energy.gov/energysaver/maintaining-your-air-conditioner">Maintaining Your Air Conditioner</a> (filter care); <a href="https://www.energystar.gov/saveathome/heating-cooling/maintenance-checklist">ENERGY STAR heating and cooling maintenance checklist</a>. Follow the original equipment manual where it differs from general guidance.</p>
+  <p>Read our <a href="/guides/hvac-filter-routine/">HVAC filter routine guide</a> or add observations to your <a href="/maintenance-calendar/">annual maintenance plan</a>.</p>
+</div></section>
+<style>
+.tool-panel{border:1px solid var(--line);padding:1.5rem;margin-bottom:2rem}
+.tool-panel label{display:flex;flex-direction:column;gap:.5rem;font-weight:600}
+.tool-panel input{padding:.7rem;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;max-width:100%}
+#inspection-list li{padding:.4rem 0}
+#filter-error{color:var(--ink);font-weight:700}
+@media print{header,footer,.tool-panel,#print-schedule,.site-header,.site-footer{display:none!important}#schedule{display:block!important}}
+</style>
+<script>
+import {inspectionDates} from "../../../lib/filter-schedule.mjs";
+const form=document.querySelector("#filter-form");
+const date=document.querySelector("#last-check");
+const interval=document.querySelector("#interval");
+const output=document.querySelector("#schedule");
+const error=document.querySelector("#filter-error");
+const list=document.querySelector("#inspection-list");
+const note=document.querySelector("#schedule-note");
+const print=document.querySelector("#print-schedule");
+if(form instanceof HTMLFormElement && date instanceof HTMLInputElement && interval instanceof HTMLInputElement && output instanceof HTMLElement && error instanceof HTMLElement && list instanceof HTMLElement && note instanceof HTMLElement){
+ const today=new Date();date.value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,"0"),String(today.getDate()).padStart(2,"0")].join("-");
+ form.addEventListener("submit",e=>{
+   e.preventDefault();error.hidden=true;output.hidden=true;
+   try{
+     const days=Number(interval.value);
+     if(!interval.value || !Number.isInteger(days)) throw new RangeError("Enter a whole number of days.");
+     const dates=inspectionDates(date.value,days);
+     list.replaceChildren();
+     for(const iso of dates){const li=document.createElement("li");li.textContent=new Date(iso+"T12:00:00Z").toLocaleDateString("en-US",{timeZone:"UTC",year:"numeric",month:"long",day:"numeric"});list.append(li);}
+     note.textContent="Inspect every "+days+" calendar day(s) from "+date.value+". These are inspection dates, not automatic replacement dates.";
+     output.hidden=false;
+   }catch(err){error.textContent=err instanceof Error?err.message:"Please check your entries.";error.hidden=false;}
+ });
+}
+print?.addEventListener("click",()=>window.print());
+</script>
+</Base>

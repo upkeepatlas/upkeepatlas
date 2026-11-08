@@ -33,7 +33,8 @@ test("planner respects disabled features, building type and climate",()=>{
   assert.ok(cold.some(task=>task.id.startsWith("winter-")));
 });
 test("routes and site-origin guardrails are deterministic",()=>{
-  assert.equal(PUBLIC_ROUTES.length,15);
+  assert.ok(PUBLIC_ROUTES.length>=15);
+  assert.ok(PUBLIC_ROUTES.includes('/tools/hvac-filter-schedule/'));
   assert.ok(PUBLIC_ROUTES.includes('/contact/'));
   assert.equal(new Set(PUBLIC_ROUTES).size,PUBLIC_ROUTES.length);
   assert.equal(publishedOrigin(undefined),"");

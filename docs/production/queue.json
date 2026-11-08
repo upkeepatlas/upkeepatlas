@@ -127,7 +127,7 @@
       "phase": "functions",
       "order": 5,
       "priority": 960,
-      "status": "queued",
+      "status": "in_progress",
       "title": "HVAC filter schedule planner",
       "keywordCandidate": "hvac air filter change schedule calculator",
       "targetPath": "/tools/hvac-filter-schedule/",
@@ -137,8 +137,14 @@
         "F002"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F005.md",
+      "release": null,
+      "claim": {
+        "id": "F005-20261108-0418-PR12",
+        "at": "2026-11-08T04:18:52Z",
+        "branch": "content/F005-hvac-filter-scheduler",
+        "pr": "https://github.com/upkeepatlas/upkeepatlas/pull/12"
+      }
     },
     {
       "id": "F006",
