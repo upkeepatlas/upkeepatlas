@@ -154,7 +154,7 @@
       "phase": "functions",
       "order": 6,
       "priority": 950,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Annual home maintenance budget calculator",
       "keywordCandidate": "annual home maintenance budget calculator",
       "targetPath": "/calculators/home-maintenance-budget/",
@@ -164,8 +164,13 @@
         "F002"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F006.md",
+      "release": null,
+      "claim": {
+        "id": "F006-20261108-0717-prague",
+        "at": "2026-11-08T06:17:20Z",
+        "branch": "content/F006-maintenance-budget"
+      }
     },
     {
       "id": "F007",

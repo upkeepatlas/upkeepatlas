@@ -1,0 +1,70 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Annual maintenance budget"}];
+---
+<Base title="Annual Home Maintenance Budget Calculator" description="Compare your own annual home maintenance savings scenarios, monthly set-asides and reserve gaps. Transparent percentages, no guessed repair prices." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">HOME FINANCES · PLANNING TOOL</span><h1>Annual home maintenance <em class="serif" style="color:var(--pine)">budget calculator.</em></h1><p class="lede">Explore a range of annual savings targets from a home value and percentages you choose. This is a savings plan, not a prediction of repair bills or a contractor quote.</p></div></section>
+<section class="section-small rule-top"><div class="container narrow">
+  <div class="note"><strong>Make the assumptions yours.</strong> Fannie Mae describes 1%–4% of home value per year as a broad maintenance and repair budgeting rule of thumb. Your roof, equipment, labor market, local climate, home condition and available cash may make that range inappropriate. No percentage is a guaranteed or required amount.</div>
+  <form id="budget-form" class="tool-shell">
+    <div class="tool-head"><span class="eyebrow">YOUR ASSUMPTIONS</span><h2>Choose a planning range</h2></div>
+    <div class="tool-grid">
+      <div class="field"><label for="home-value">Estimated home value ($)</label><input id="home-value" type="number" required min="1" max="100000000" step="1" value="350000" inputmode="decimal"/><small>Use your own estimate; this is not an appraisal.</small></div>
+      <div class="field"><label for="target-rate">Your target rate (% per year)</label><input id="target-rate" type="number" required min="0.1" max="20" step="0.1" value="2" inputmode="decimal"/><small>Editable scenario, not an assessed expense.</small></div>
+      <div class="field"><label for="low-rate">Lower scenario (%)</label><input id="low-rate" type="number" required min="0.1" max="20" step="0.1" value="1" inputmode="decimal"/></div>
+      <div class="field"><label for="high-rate">Upper scenario (%)</label><input id="high-rate" type="number" required min="0.1" max="20" step="0.1" value="4" inputmode="decimal"/></div>
+      <div class="field"><label for="annual-spend">Planned annual maintenance spending ($)</label><input id="annual-spend" type="number" required min="0" max="100000000" step="0.01" value="2000" inputmode="decimal"/><small>Optional comparison: use 0 if unknown.</small></div>
+      <div class="field"><label for="reserve">Existing maintenance reserve ($)</label><input id="reserve" type="number" required min="0" max="100000000" step="0.01" value="1000" inputmode="decimal"/><small>Money already set aside specifically for upkeep.</small></div>
+    </div>
+    <div class="tool-actions"><button class="button" type="submit">Calculate savings targets</button><button class="button light" type="reset">Restore example</button></div>
+    <p id="budget-error" class="error" role="alert" hidden></p>
+  </form>
+  <section id="budget-results" class="tool-shell" aria-live="polite" aria-atomic="true" hidden>
+    <span class="eyebrow">YOUR SCENARIOS · USD</span><h2>Annual and monthly targets</h2>
+    <div class="budget-table-wrap"><table class="budget-table"><thead><tr><th scope="col">Scenario</th><th scope="col">Annual</th><th scope="col">Monthly</th></tr></thead><tbody><tr><th scope="row">Lower</th><td id="low-year"></td><td id="low-month"></td></tr><tr><th scope="row">Your target</th><td id="target-year"></td><td id="target-month"></td></tr><tr><th scope="row">Upper</th><td id="high-year"></td><td id="high-month"></td></tr></tbody></table></div>
+    <p id="spend-note"></p><p id="reserve-note"></p>
+    <p class="small muted">Existing planned spending and existing reserves are two different comparisons; do not add the two gaps together. The reserve gap assumes no withdrawals or interest and is not a promise that this year's repairs will match the target.</p>
+    <div class="tool-actions no-print"><button id="print-budget" class="button light" type="button">Print this plan</button></div>
+  </section>
+  <h2>How this budget works</h2>
+  <p>For each scenario, <strong>annual target = your home value × your chosen percentage ÷ 100</strong>. Monthly target = annual target ÷ 12. The planned-spending difference is max(0, target − planned annual spending). The first-year reserve gap is max(0, target − current reserve), divided by 12 for an illustrative monthly contribution. Values are calculated before rounding to the nearest cent for display.</p>
+  <p><strong>Worked example:</strong> For a hypothetical $350,000 home, a 1% lower scenario is $3,500 per year (about $291.67/month), a 2% target is $7,000 ($583.33/month), and a 4% upper scenario is $14,000 ($1,166.67/month). If $1,000 is already reserved, the gap to a $7,000 reserve is $6,000, or $500/month over twelve months before any withdrawals.</p>
+  <h2>What this estimate does not know</h2>
+  <p>Home value is not the same as replacement cost. This tool does not estimate local labor or materials, inspect your house, distinguish planned maintenance from urgent repairs, account for interest or inflation, or determine whether you can afford a target. Get written local estimates for major work and use your own maintenance history to revise the percentages. Keep a separate plan for other household emergencies.</p>
+  <p>Entries are processed in your browser, not saved to an account or sent to Upkeep Atlas by this calculator. Printing uses your browser's print dialog. There are no automatic transfers or reminders.</p>
+  <h2>Sources and next steps</h2>
+  <p>Fannie Mae, <a href="https://yourhome.fanniemae.com/own/how-build-your-maintenance-and-repair-budget">How to Build Your Maintenance and Repair Budget</a> (1%–4% planning heuristic, not a guarantee); Federal Trade Commission consumer education, <a href="https://consumer.gov/your-money/making-budget">Making a Budget</a> (plan and review actual spending). Sources reviewed November 8, 2026.</p>
+  <p>Pair your budget with the <a href="/maintenance-calendar/">annual maintenance planner</a>, or explore the <a href="/calculators/">other homeowner calculators</a>.</p>
+</div></section>
+<style>
+.budget-table-wrap{overflow-x:auto}.budget-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin:1.2rem 0}.budget-table th,.budget-table td{padding:.85rem .5rem;border-bottom:1px solid var(--line);text-align:right}.budget-table th:first-child{text-align:left}.budget-table thead th{font-size:.8rem;color:var(--muted)}#budget-results p{max-width:70ch}
+@media print{#budget-form{display:none!important}#budget-results{display:block!important}.budget-table th,.budget-table td{color:#000}}
+</style>
+<script>
+import {maintenanceBudget} from "../../../lib/maintenance-budget.mjs";
+const form=document.querySelector("#budget-form");
+const result=document.querySelector("#budget-results");
+const error=document.querySelector("#budget-error");
+const currency=new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:2,maximumFractionDigits:2});
+function setText(id:string,value:string){const el=document.getElementById(id);if(el)el.textContent=value;}
+if(form instanceof HTMLFormElement && result instanceof HTMLElement && error instanceof HTMLElement){
+ const ids=["home-value","low-rate","target-rate","high-rate","annual-spend","reserve"];
+ const compute=()=>{
+  error.hidden=true;result.hidden=true;
+  try{
+   const values=ids.map(id=>{const el=document.getElementById(id);if(!(el instanceof HTMLInputElement)||el.value.trim()==="")throw new RangeError("Complete every field before calculating.");return Number(el.value);});
+   const [homeValue,lowPercent,targetPercent,highPercent,annualSpend,currentReserve]=values;
+   const b=maintenanceBudget({homeValue,lowPercent,targetPercent,highPercent,annualSpend,currentReserve});
+   for(const [id,value] of [["low-year",b.low],["low-month",b.monthlyLow],["target-year",b.target],["target-month",b.monthlyTarget],["high-year",b.high],["high-month",b.monthlyHigh]] as const)setText(id,currency.format(value));
+   setText("spend-note","Your target is "+currency.format(b.target)+"/year. After "+currency.format(b.annualSpend)+" of planned annual spending, the difference is "+currency.format(b.additionalTarget)+". This is a comparison, not an extra bill.");
+   setText("reserve-note","Your current reserve is "+currency.format(b.currentReserve)+". To reach a reserve equal to your annual target, the gap is "+currency.format(b.firstYearGap)+" (about "+currency.format(b.firstYearMonthlyGap)+"/month over 12 months).");
+   result.hidden=false;
+  }catch(e){error.textContent=e instanceof Error?e.message:"Check your numbers.";error.hidden=false;}
+ };
+ form.addEventListener("submit",e=>{e.preventDefault();compute();});
+ form.addEventListener("reset",()=>{result.hidden=true;error.hidden=true;});
+}
+document.querySelector("#print-budget")?.addEventListener("click",()=>window.print());
+</script>
+</Base>
