@@ -37,6 +37,7 @@ export function routesForChangedFiles(files, currentRoutes = PUBLIC_ROUTES, prev
       chosen.add("/guides/"); // library card/list also changed
       continue;
     }
+    if (file === "src/pages/index.astro") { chosen.add("/"); continue; }
     if (file === "src/lib/planner.mjs") { chosen.add("/maintenance-calendar/"); continue; }
     if (file === "src/lib/paint.mjs") { chosen.add("/calculators/paint-coverage/"); continue; }
     if (file === "src/pages/404.astro" ||
