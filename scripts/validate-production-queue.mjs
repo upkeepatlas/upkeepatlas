@@ -26,7 +26,7 @@ export function validateQueue(queue){
     if(task.status==="in_progress")active++;
     if(!Number.isInteger(task.priority))problems.push(id+": priority must be an integer");
     for(const key of ["title","keywordCandidate","cluster","deliverable"]){
-      if(typeof task[key]!=="string"||task[key].trim().length<5)problems.push(id+": missing "+key);
+      if(typeof task[key]!=="string"||task[key].trim().length<(key==="cluster"?3:5))problems.push(id+": missing "+key);
     }
     if(task.targetPath!==null){
       if(typeof task.targetPath!=="string"||!/^\/(?:[a-z0-9-]+\/)*$/.test(task.targetPath)){
