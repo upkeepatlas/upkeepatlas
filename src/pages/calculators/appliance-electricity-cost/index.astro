@@ -1,0 +1,48 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import {estimateApplianceElectricity} from "../../../lib/appliance-electricity.mjs";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Appliance electricity cost"}];
+const example=estimateApplianceElectricity();
+---
+<Base title="Appliance Electricity Cost Calculator | kWh and Dollars" description="Estimate appliance kWh and electricity cost using your own watts, operating hours, days per week, load factor and utility rate. Transparent formula and example." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">ENERGY / COST PLANNING</span><h1>What does an appliance <em class="serif" style="color:var(--pine)">cost to run?</em></h1><p class="lede">Use your appliance's measured or rated power and the variable price on your own electricity bill. Adjust the average operating load rather than assuming every appliance draws its rated watts continuously.</p></div></section>
+<section class="section-small rule-top"><div class="container page-layout"><div class="tool-shell">
+<div class="tool-head"><span class="eyebrow">YOUR USAGE SCENARIO</span><h2>Electricity estimate</h2><p class="small muted">No account, no data saved. Values below are examples, not typical appliance specifications or a local electricity price.</p></div>
+<form id="electric-form" novalidate><div class="tool-grid">
+<div class="field"><label for="electric-watts">Appliance power (watts)</label><input id="electric-watts" name="watts" type="number" min="0.01" max="100000" step="any" value="100" required/></div>
+<div class="field"><label for="electric-hours">Hours used per active day</label><input id="electric-hours" name="hoursPerDay" type="number" min="0" max="24" step="any" value="4" required/></div>
+<div class="field"><label for="electric-days">Active days per week</label><input id="electric-days" name="daysPerWeek" type="number" min="0" max="7" step="any" value="7" required/></div>
+<div class="field"><label for="electric-rate">Variable electricity rate (USD per kWh)</label><input id="electric-rate" name="ratePerKwh" type="number" min="0" max="10" step="any" value="0.20" required/></div>
+<div class="field"><label for="electric-duty">Average operating load (% of entered watts)</label><input id="electric-duty" name="dutyPercent" type="number" min="0" max="100" step="any" value="100" required/><p class="small muted">Use 100% for constant draw. Lower only if you have a defensible measured average.</p></div>
+</div><p id="electric-error" class="error" role="alert" aria-live="polite"></p><div class="tool-actions no-print"><button class="button" type="submit">Calculate cost ↗</button><button class="button light" type="reset">Restore example</button><button class="button light" id="electric-print" type="button">Print estimate</button></div></form>
+<div class="tool-result" role="status" aria-live="polite" aria-atomic="true"><span class="eyebrow" style="color:#C8DCCC">ESTIMATED VARIABLE COST PER YEAR</span><strong id="electric-cost">${example.annualCost.toFixed(2)}</strong><p id="electric-detail">${example.monthlyCost.toFixed(2)} per average month · {example.annualKwh.toFixed(2)} kWh/year · {example.monthlyKwh.toFixed(2)} kWh/month.</p></div>
+<div class="prose"><h2>Formula and worked example</h2><p>Weekly kWh = watts ÷ 1,000 × hours per active day × days per week × average load percentage ÷ 100. Annual kWh = weekly kWh × 52; average monthly kWh = annual kWh ÷ 12. Multiply kWh by your variable electricity rate in dollars per kWh to estimate usage charges. This uses a 52-week planning year, not a calendar-year meter reading.</p><p>Example: 100 watts × 4 hours/day × 7 days/week at 100% operating load equals {example.annualKwh.toFixed(1)} kWh in 52 weeks. At an illustrative $0.20/kWh, that is <strong>${example.annualCost.toFixed(2)} annually</strong>, or ${example.monthlyCost.toFixed(2)} per average month.</p>
+<h2>How to choose inputs</h2><p>Read the wattage on the appliance label or manual, or use an appropriate electricity monitor when safe and compatible. Rated power is not always average draw: refrigerators, heating equipment and appliances with cycling motors or multiple modes vary. If your appliance lists kWh per year or per cycle, that measured or standardized consumption can be more useful than rated watts multiplied by hours.</p><p>Enter your own applicable energy charge from the utility bill. Time-of-use tiers, demand charges, taxes, fixed service fees and other bill components are not modeled. The estimate is <strong>not your full electric bill</strong> and does not guarantee savings. Never open electrical equipment or modify wiring to measure power.</p><p>Sources: <a href="https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use">U.S. Department of Energy — estimating appliance energy use</a> and <a href="https://www.eia.gov/energyexplained/electricity/prices-and-factors-affecting-prices.php">U.S. Energy Information Administration — why electricity rates vary</a>.</p><p>Related planning: <a href="/tools/maintenance-budget/">maintenance budget calculator</a> and <a href="/calculators/">all calculators</a>.</p></div>
+</div><aside class="sidebar"><span class="eyebrow">BEFORE YOU ESTIMATE</span><h3>Check your actual rate.</h3><p class="small muted">Electricity prices differ by location, utility plan and time of use. The example rate is editable and is not a quoted tariff.</p></aside></div></section>
+</Base>
+<script>
+import {estimateApplianceElectricity} from "../../../lib/appliance-electricity.mjs";
+const form=document.querySelector<HTMLFormElement>("#electric-form");
+const render=()=>{
+ if(!form)return;
+ const error=document.querySelector<HTMLElement>("#electric-error");
+ try{
+  const data=new FormData(form);const input:Record<string,number>={};
+  for(const name of ["watts","hoursPerDay","daysPerWeek","ratePerKwh","dutyPercent"]){
+   const raw=String(data.get(name)??"").trim();
+   if(raw==="")throw new RangeError("Complete every field before calculating.");
+   input[name]=Number(raw);
+  }
+  const result=estimateApplianceElectricity(input);
+  if(error)error.textContent="";
+  const cost=document.querySelector<HTMLElement>("#electric-cost");
+  const detail=document.querySelector<HTMLElement>("#electric-detail");
+  if(cost)cost.textContent=result.annualCost.toLocaleString("en-US",{style:"currency",currency:"USD"});
+  if(detail)detail.textContent=result.monthlyCost.toLocaleString("en-US",{style:"currency",currency:"USD"})+" per average month · "+result.annualKwh.toFixed(2)+" kWh/year · "+result.monthlyKwh.toFixed(2)+" kWh/month.";
+ }catch(e){if(error)error.textContent=e instanceof Error?e.message:"Check your inputs.";}
+};
+form?.addEventListener("submit",e=>{e.preventDefault();render()});
+form?.addEventListener("reset",()=>{setTimeout(render,0)});
+document.querySelector("#electric-print")?.addEventListener("click",()=>window.print());
+</script>
