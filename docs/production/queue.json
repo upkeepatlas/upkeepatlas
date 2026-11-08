@@ -235,7 +235,7 @@
       "phase": "functions",
       "order": 9,
       "priority": 920,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Enhanced paint material estimator",
       "keywordCandidate": "paint coverage calculator walls ceiling trim",
       "targetPath": "/calculators/paint-coverage/",
@@ -245,8 +245,13 @@
         "F002"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F009.md",
+      "release": null,
+      "claim": {
+        "id": "F009-20261108-1108-prague",
+        "at": "2026-11-08T10:08:28Z",
+        "branch": "content/F009-enhanced-paint-estimator"
+      }
     },
     {
       "id": "F010",
