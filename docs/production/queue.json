@@ -157,7 +157,7 @@
       "status": "published",
       "title": "Annual home maintenance budget calculator",
       "keywordCandidate": "annual home maintenance budget calculator",
-      "targetPath": "/calculators/home-maintenance-budget/",
+      "targetPath": "/tools/maintenance-budget/",
       "cluster": "Budget",
       "deliverable": "Build a transparent savings target estimator with user-defined property value/spend assumptions, range scenarios and no unsupported universal cost claims.",
       "dependsOn": [
