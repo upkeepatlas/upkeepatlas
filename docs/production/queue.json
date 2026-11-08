@@ -21,7 +21,7 @@
       "phase": "functions",
       "order": 1,
       "priority": 1000,
-      "status": "queued",
+      "status": "published",
       "title": "Content publishing foundation",
       "keywordCandidate": "content architecture for home maintenance guides",
       "targetPath": null,
@@ -29,8 +29,16 @@
       "deliverable": "Create validated Astro content collections, reusable article front matter, source metadata, honest author/review dates, and one live migration example; preserve all current routes.",
       "dependsOn": [],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F001.md",
+      "release": {
+        "sha": "a41a2cfb7e1415c41e167099c9649970dd8cbfd1",
+        "deploymentId": "959e7155-246e-41ea-bf86-6f8311acfaac",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42430363513",
+        "verifiedAt": "2026-11-08T00:37:32.764Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/hvac-filter-routine/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/7",
+        "method": "GitHub connector edits + GitHub Actions CI + Cloudflare Pages + Browser Rendering HTML verification"
+      }
     },
     {
       "id": "F002",
