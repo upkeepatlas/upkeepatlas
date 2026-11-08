@@ -9,6 +9,7 @@ export const OBSERVATIONS = Object.freeze([
   {id:"ice",label:"Ice buildup or hanging icicles near roof edge",detail:"Keep people away from falling ice and seek professional assessment; do not chip ice or access the roof.",category:"freeze"}
 ]);
 const IDS=new Set(OBSERVATIONS.map(x=>x.id));
+/** @param {{observed?: string[], exposure?: string, date?: string}} [options] */
 export function buildGutterPlan({observed=[],exposure="mixed",date=""}={}){
  if(!Array.isArray(observed)||observed.some(x=>typeof x!=="string"||!IDS.has(x))||new Set(observed).size!==observed.length)throw new Error("Select valid, distinct observations.");
  if(!["mixed","trees","rain","freeze"].includes(exposure))throw new Error("Choose a listed exposure.");
