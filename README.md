@@ -6,6 +6,12 @@ A thoughtfully designed home-maintenance field guide for first-time U.S. homeown
 **Cloudflare Pages project:** `upkeepatlas`, GitHub-connected production branch `main`.  
 **Audit:** [Initial SEO/GEO and deployment report](docs/audits/2026-11-07-final.md).
 
+## Function-first growth program
+
+The versioned [function and article master plan](docs/CONTENT_MASTER_PLAN.md), [hourly task execution prompt](docs/CONTENT_EXECUTION_MASTER_PROMPT.md), [52-item production queue](docs/production/queue.json) and [7 additional skills](.agents/skills/) define how new content and functions are developed, source-checked, tested and verified on Cloudflare. A queued item is NOT a live page and no ranking or AdSense revenue is guaranteed.
+
+Build and queue checks: npm run check:queue; npm run test; npm run build; npm run check:seo; npm run check:theme; npm run check.
+
 ## Features
 
 - Twelve-month, climate/home-type/equipment-aware maintenance planner with source-linked reminders, checkboxes and printing.
@@ -51,6 +57,9 @@ GitHub Actions: [Build & quality](.github/workflows/quality.yml) runs `npm ci`, 
 - [Theme behavior and accessibility notes](docs/NIGHT_MODE.md)
 - [Bing IndexNow acceptance and production audit](docs/audits/2026-11-08-indexnow.md)
 - [SEO/GEO readiness audit](docs/audits/2026-11-07-final.md)
+- [Content publishing production queue operations](docs/production/README.md)
+- [Content and tool SEO/GEO master plan](docs/CONTENT_MASTER_PLAN.md)
+- [Autonomous one-item master prompt](docs/CONTENT_EXECUTION_MASTER_PROMPT.md)
 - [Search Console, Bing Webmaster and AdSense setup](docs/SEARCH_AND_ADS_SETUP.md)
 - [Search and advertising integration audit — 2026-11-08](docs/audits/2026-11-08-search-ads.md)
 - [Local skills library](.agents/skills/)

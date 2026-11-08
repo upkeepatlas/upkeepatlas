@@ -1,6 +1,6 @@
 # Upkeep Atlas — SEO/GEO readiness status (2026-11-07)
 
-**Current state:** Astro website built, committed to GitHub and published to Cloudflare Pages at https://upkeepatlas.pages.dev/. Technical SEO build checks are green, but Search Console, real-user performance, and complete accessibility audits remain outstanding.
+**Current state:** Astro website built, committed to GitHub and published to Cloudflare Pages at https://upkeepatlas.pages.dev/. This file is an initial historical baseline; current growth planning is maintained in [the function-first content plan](CONTENT_MASTER_PLAN.md) and [the production queue](production/queue.json). Technical SEO build checks are green, but Search Console, real-user performance, and complete accessibility audits remain outstanding.
 
 See the detailed evidence-based [initial launch audit](audits/2026-11-07-final.md) for each PASS / BLOCKED / N/A decision and links to CI evidence.
 
