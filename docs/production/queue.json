@@ -451,7 +451,7 @@
       "phase": "functions",
       "order": 17,
       "priority": 840,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Tools discovery and navigation",
       "keywordCandidate": "home maintenance tools directory",
       "targetPath": "/calculators/",
@@ -466,7 +466,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "F017-20261108-directory",
+        "at": "2026-11-08T21:15:31Z",
+        "branch": "content/F017-tools-discovery"
+      }
     },
     {
       "id": "F018",
