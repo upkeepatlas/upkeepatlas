@@ -23,6 +23,10 @@ Additional production skills:
 - .agents/skills/autonomous-publish-operations/SKILL.md
 - .agents/skills/performance-measurement-loop/SKILL.md
 
+## Scheduled task DNS fallback
+
+If the scheduled execution container cannot resolve github.com, DO NOT mark a task blocked merely because git clone failed. Use the connected GitHub file/branch/PR APIs for edits, GitHub Actions as the independent install/test/build environment, and Cloudflare Pages API for deployment verification. See the mandatory GITHUB CONNECTOR MODE section of docs/CONTENT_EXECUTION_MASTER_PROMPT.md. Only mark BLOCKED after exhausting the connected release path or on actual quality/approval failures.
+
 ## Required work sequence
 1. Inspect existing code and deployment configuration. Never overwrite another person's changes.
 2. Read the relevant local instructions under `.agents/skills/` before implementing.
