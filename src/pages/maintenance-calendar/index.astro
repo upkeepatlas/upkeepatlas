@@ -15,7 +15,7 @@ const total=defaultPlan.reduce((num,month)=>num+month.tasks.length,0);
   </div></section>
   <section class="section-small rule-top"><div class="container">
     <div class="tool-shell">
-      <div class="tool-head"><span class="eyebrow">01 / THE DETAILS</span><h2>Tell us a little about your home.</h2><p class="small muted">Your selections remain in your browser during this visit. No account or address required.</p></div>
+      <div class="tool-head"><span class="eyebrow">01 / THE DETAILS</span><h2>Tell us a little about your home.</h2><p class="small muted">Your selections and completed reminders are saved only in this browser (local storage), not sent to us. No account or address required. Use “Erase saved plan” to remove them.</p></div>
       <form id="planner-form" class="tool-grid">
         <div class="field"><label for="climate">Your climate</label><select id="climate" name="climate"><option value="temperate">Temperate / mixed seasons</option><option value="cold">Colder winters</option><option value="warm">Warm weather / mild winter</option></select><small>Broad planning categories, not localized forecasts.</small></div>
         <div class="field"><label for="home">Your home type</label><select id="home" name="home"><option value="detached">Detached house</option><option value="townhouse">Townhouse</option><option value="condo">Condo / apartment</option></select><small>Check HOA or building management responsibilities.</small></div>
@@ -26,7 +26,7 @@ const total=defaultPlan.reduce((num,month)=>num+month.tasks.length,0);
         </div></fieldset>
       </form>
       <div class="output-header"><div><span class="eyebrow">02 / YOUR STARTER YEAR</span><h2>A year in small steps.</h2></div><span class="pill"><output id="task-count">{total} reminders</output></span></div>
-      <div class="tool-actions no-print"><button class="button" type="button" id="print-plan">Print this plan ↗</button><button class="button light" type="button" id="reset-plan">Clear checkmarks</button></div>
+      <div class="tool-actions no-print"><button class="button" type="button" id="print-plan">Print this plan ↗</button><button class="button light" type="button" id="reset-plan">Clear checkmarks</button><button class="button light" type="button" id="export-plan">Download CSV</button><button class="button light" type="button" id="erase-plan">Erase saved plan</button></div>
       <div class="month-grid" id="plan-months">
         {defaultPlan.map(month=><section class="month-card" aria-label={month.name}>
           <h3>{month.name}</h3>
@@ -38,7 +38,7 @@ const total=defaultPlan.reduce((num,month)=>num+month.tasks.length,0);
     <div class="numbered-row">
       <div class="numbered-item"><span class="eyebrow">HOW IT WORKS</span><h3>Change a detail.</h3><p>We update the calendar immediately to match the features and conditions you choose.</p></div>
       <div class="numbered-item"><span class="eyebrow">GOOD TO KNOW</span><h3>Leave risky work to experts.</h3><p>Roof, gas, electrical and hazardous repair tasks belong with qualified professionals.</p></div>
-      <div class="numbered-item"><span class="eyebrow">MAKE IT YOURS</span><h3>Print, keep, repeat.</h3><p>Checkmarks are temporary. Print or save a copy in your personal home-maintenance file.</p></div>
+      <div class="numbered-item"><span class="eyebrow">MAKE IT YOURS</span><h3>Print, keep, repeat.</h3><p>Your choices and checkmarks persist in this browser. Download CSV for your records or erase the saved plan.</p></div>
     </div>
   </div></section>
 </Base>
@@ -49,6 +49,30 @@ const total=defaultPlan.reduce((num,month)=>num+month.tasks.length,0);
   const counter=document.querySelector<HTMLOutputElement>("#task-count");
   function element(tag:string,cls?:string,text?:string):HTMLElement{
     const node=document.createElement(tag);if(cls)node.className=cls;if(text)node.textContent=text;return node;
+  }
+  const storageKey="upkeep-atlas-planner-v1";
+  const allowedFeatures=["hvac","gutters","dryer"];
+  let completed=new Set<string>();
+  function persist(){
+    if(!form)return;
+    const climate=(form.elements.namedItem("climate") as HTMLSelectElement).value;
+    const home=(form.elements.namedItem("home") as HTMLSelectElement).value;
+    const features=Array.from(form.querySelectorAll<HTMLInputElement>('input[name="feature"]:checked')).map(x=>x.value);
+    try{localStorage.setItem(storageKey,JSON.stringify({version:1,climate,home,features,completed:[...completed]}));}catch{ /* Storage can be unavailable; the planner still works in memory. */ }
+  }
+  function restore(){
+    if(!form)return;
+    try{
+      const raw=localStorage.getItem(storageKey);if(!raw)return;
+      const state=JSON.parse(raw);
+      if(state?.version!==1)return;
+      const climate=form.elements.namedItem("climate") as HTMLSelectElement;
+      const home=form.elements.namedItem("home") as HTMLSelectElement;
+      if(["temperate","cold","warm"].includes(state.climate))climate.value=state.climate;
+      if(["detached","townhouse","condo"].includes(state.home))home.value=state.home;
+      if(Array.isArray(state.features))form.querySelectorAll<HTMLInputElement>('input[name="feature"]').forEach(input=>input.checked=state.features.includes(input.value)&&allowedFeatures.includes(input.value));
+      if(Array.isArray(state.completed))completed=new Set(state.completed.filter((id:unknown)=>typeof id==="string"&&id.length<120).slice(0,500));
+    }catch{ /* Ignore corrupt or inaccessible local data. */ }
   }
   function render(){
     if(!form||!container)return;
@@ -64,7 +88,7 @@ const total=defaultPlan.reduce((num,month)=>num+month.tasks.length,0);
       for(const task of month.tasks){
         number++;
         const label=element("label","task-item");
-        const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.setAttribute("data-task",task.id);
+        const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.setAttribute("data-task",task.id);checkbox.checked=completed.has(task.id);
         const contents=element("span");contents.append(element("strong",undefined,task.title));
         const detail=element("small",undefined,task.level+" · ");
         const source=document.createElement("a");source.href=task.source;source.target="_blank";source.rel="noopener noreferrer";source.textContent="source ↗";
@@ -74,9 +98,34 @@ const total=defaultPlan.reduce((num,month)=>num+month.tasks.length,0);
     }
     if(counter)counter.value=number+" reminders";
   }
-  form?.addEventListener("change",render);
+  restore();render();
+  form?.addEventListener("change",()=>{render();persist();});
+  container?.addEventListener("change",event=>{
+    const input=event.target;
+    if(!(input instanceof HTMLInputElement)||!input.matches("input[data-task]"))return;
+    const id=input.dataset.task;if(!id)return;
+    if(input.checked)completed.add(id);else completed.delete(id);
+    persist();
+  });
   document.querySelector("#reset-plan")?.addEventListener("click",()=>{
-    document.querySelectorAll<HTMLInputElement>('#plan-months input[type="checkbox"]').forEach(input=>input.checked=false);
+    completed.clear();render();persist();
+  });
+  document.querySelector("#erase-plan")?.addEventListener("click",()=>{
+    try{localStorage.removeItem(storageKey);}catch{}
+    completed.clear();form?.reset();render();
+  });
+  document.querySelector("#export-plan")?.addEventListener("click",()=>{
+    if(!form)return;
+    const climate=(form.elements.namedItem("climate") as HTMLSelectElement).value;
+    const home=(form.elements.namedItem("home") as HTMLSelectElement).value;
+    const features=Array.from(form.querySelectorAll<HTMLInputElement>('input[name="feature"]:checked')).map(x=>x.value);
+    const plan=generatePlan({climate,home,features});
+    const quote=(value:string)=>'"'+value.replaceAll('"','""')+'"';
+    const rows=[["Month","Task","Status","Level","Source"],...plan.flatMap(month=>month.tasks.map(task=>[month.name,task.title,completed.has(task.id)?"Done":"Pending",task.level,task.source]))];
+    const csv="\uFEFF"+rows.map(row=>row.map(value=>quote(String(value))).join(",")).join("\r\n");
+    const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+    const anchor=document.createElement("a");anchor.href=url;anchor.download="upkeep-atlas-maintenance-plan.csv";anchor.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
   });
   document.querySelector("#print-plan")?.addEventListener("click",()=>window.print());
 </script>
