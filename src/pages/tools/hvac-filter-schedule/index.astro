@@ -50,7 +50,7 @@ const list=document.querySelector("#inspection-list");
 const note=document.querySelector("#schedule-note");
 const print=document.querySelector("#print-schedule");
 if(form instanceof HTMLFormElement && date instanceof HTMLInputElement && interval instanceof HTMLInputElement && output && error && list && note){
- date.value=new Date().toLocaleDateString("en-CA");
+ const today=new Date();date.value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,"0"),String(today.getDate()).padStart(2,"0")].join("-");
  form.addEventListener("submit",e=>{
    e.preventDefault();error.hidden=true;output.hidden=true;
    try{
