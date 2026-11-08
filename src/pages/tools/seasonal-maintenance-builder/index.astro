@@ -1,0 +1,46 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import {TASKS} from "../../../lib/seasonal-maintenance.mjs";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Seasonal maintenance builder"}];
+---
+<Base title="Seasonal Home Maintenance Checklist Builder" description="Build a printable seasonal home maintenance plan by season, broad climate conditions and systems. Safety-first observations, no guessed service intervals." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">SEASONAL PLANNING · CUSTOM TOOL</span><h1>Plan for the season <em class="serif" style="color:var(--pine)">where you live.</em></h1><p class="lede">Choose the season, broad weather conditions and systems in your home. Get a prioritized printable list of observations and planning prompts—not a claim that every home needs the same maintenance.</p></div></section>
+<section class="section-small rule-top"><div class="container narrow">
+<form id="season-form" class="tool-shell">
+<div class="tool-head"><span class="eyebrow">YOUR CONDITIONS</span><h2>Build a seasonal plan</h2></div>
+<div class="tool-grid"><div class="field"><label for="season">Season</label><select id="season" required><option value="spring">Spring</option><option value="summer">Summer</option><option value="fall">Fall</option><option value="winter">Winter</option></select></div>
+<div class="field"><label for="climate">Broad conditions</label><select id="climate" required><option value="mixed">Mixed or variable</option><option value="cold">Cold / frequent freezes</option><option value="hot">Hot</option><option value="wet">Wet / humid</option><option value="dry">Dry / wildfire-aware</option></select><small>Self-selected, not a location or weather forecast. Choose the condition most relevant to your next season.</small></div></div>
+<fieldset class="season-systems"><legend>Systems to include</legend><label><input type="checkbox" name="system" value="hvac" checked/> Heating and cooling</label><label><input type="checkbox" name="system" value="water" checked/> Plumbing and moisture</label><label><input type="checkbox" name="system" value="exterior" checked/> Exterior and drainage</label><label><input type="checkbox" name="system" value="safety" checked/> Household safety</label></fieldset>
+<div class="tool-actions no-print"><button class="button" type="submit">Build my plan</button><button class="button light" type="reset">Reset choices</button></div><p id="season-error" role="alert" class="error" hidden></p>
+</form>
+<section id="season-output" class="tool-shell" aria-labelledby="season-heading"><span class="eyebrow">PRINTABLE PRIORITIES</span><h2 id="season-heading">Your seasonal plan</h2><p id="season-summary" role="status" aria-live="polite">Example: Spring · mixed conditions · all systems. Choose your conditions and select “Build my plan” to customize.</p>
+<ol id="season-list" class="season-list">{TASKS.filter(t=>t.season==="spring"||t.season==="all").map(t=><li><strong>{t.priority===1?"Review first":"Plan next"}: {t.title}</strong><p>{t.detail}</p></li>)}</ol><p id="season-empty" hidden>No tasks match these choices. Select another system or condition.</p><div class="tool-actions no-print"><button id="print-season" type="button" class="button light">Print this plan</button></div></section>
+<h2>How priorities are chosen</h2><p>“Review first” identifies an observation or preparation prompt that may warrant attention before other listed tasks; it is <strong>not</strong> a risk score, deadline, inspection certification or local requirement. The builder includes general year-round prompts plus season-specific tasks for selected systems. Broad conditions add or omit relevant suggestions; mixed conditions do not predict your local weather. You decide timing using your equipment manuals, actual forecasts, local emergency guidance and building responsibilities.</p>
+<p><strong>Example:</strong> Fall with cold conditions and plumbing selected includes a freeze-preparation review; fall with wet conditions instead includes flood and moisture preparedness. Both are planning prompts, not instructions to service pipes.</p>
+<div class="note caution"><strong>Safety boundary:</strong> This planner is limited to ground-level observation, recordkeeping and professional referrals. Never climb roofs or ladders, open electrical/gas equipment, enter floodwater or attempt hazardous repairs based on a checklist. Suspected gas leaks require leaving the area and contacting emergency services or your gas utility.</div>
+<h2>Sources and related planning tools</h2><p>See the <a href="https://www.energy.gov/energysaver/maintaining-your-air-conditioner">U.S. Department of Energy's air-conditioner maintenance guidance</a>, <a href="https://www.ready.gov/winter-weather">Ready.gov winter-weather preparedness</a>, and <a href="https://www.ready.gov/floods">Ready.gov flood guidance</a>. These are general sources; local authorities and manufacturers take precedence for specific conditions. Sources reviewed November 8, 2026.</p>
+<p>Use the <a href="/maintenance-calendar/">annual maintenance calendar</a> for year-round tracking, the <a href="/tools/custom-maintenance-checklist/">custom homeowner checklist</a> for browser-saved checkmarks, or <a href="/calculators/">all planning tools</a>.</p>
+<p class="small muted">Selections are processed only in this browser session. This builder does not save inputs, collect your location or send a schedule to an account. Printing uses your browser print dialog. No reminders are created.</p>
+</div></section>
+<style>.season-systems{border:1px solid var(--line);padding:1rem;margin:1.2rem 0;display:grid;gap:.7rem}.season-systems legend{font-weight:700;padding:0 .4rem}.season-systems label{display:flex;gap:.6rem;align-items:center}.season-list{padding-left:1.5rem}.season-list li{padding:.85rem 0;border-bottom:1px solid var(--line);break-inside:avoid}.season-list p{font-size:.9rem;margin:.35rem 0 0;color:var(--muted)}@media print{#season-form{display:none!important}#season-output{border:0;padding:0}.season-list p{color:#222!important}}</style>
+<script>
+import {buildSeasonalPlan} from "../../../lib/seasonal-maintenance.mjs";
+const form=document.querySelector<HTMLFormElement>("#season-form");
+const list=document.querySelector<HTMLOListElement>("#season-list");
+const summary=document.querySelector<HTMLElement>("#season-summary");
+const empty=document.querySelector<HTMLElement>("#season-empty");
+const error=document.querySelector<HTMLElement>("#season-error");
+function render(){if(!form||!list||!summary||!empty||!error)return;error.hidden=true;try{
+ const season=form.querySelector<HTMLSelectElement>("#season")!.value;
+ const climate=form.querySelector<HTMLSelectElement>("#climate")!.value;
+ const systems=[...form.querySelectorAll<HTMLInputElement>('input[name="system"]:checked')].map(x=>x.value);
+ const plan=buildSeasonalPlan({season,climate,systems});
+ list.replaceChildren();for(const task of plan){const li=document.createElement("li");const strong=document.createElement("strong");strong.textContent=(task.priority===1?"Review first: ":"Plan next: ")+task.title;const p=document.createElement("p");p.textContent=task.detail;li.append(strong,p);list.append(li);}
+ summary.textContent=season[0].toUpperCase()+season.slice(1)+" · "+climate+" conditions · "+systems.length+" systems · "+plan.length+" prompts.";empty.hidden=plan.length!==0;
+ }catch(e){error.textContent=e instanceof Error?e.message:"Choose valid options.";error.hidden=false;}}
+form?.addEventListener("submit",e=>{e.preventDefault();render();});
+form?.addEventListener("reset",()=>{list?.replaceChildren();if(summary)summary.textContent="Choices reset. Select Build my plan to refresh the list.";if(empty)empty.hidden=true;});
+document.querySelector("#print-season")?.addEventListener("click",()=>window.print());
+</script>
+</Base>

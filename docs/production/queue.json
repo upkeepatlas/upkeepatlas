@@ -262,7 +262,7 @@
       "phase": "functions",
       "order": 10,
       "priority": 910,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Seasonal maintenance builder",
       "keywordCandidate": "seasonal home maintenance planner",
       "targetPath": "/tools/seasonal-maintenance-builder/",
@@ -272,8 +272,13 @@
         "F004"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F010.md",
+      "release": null,
+      "claim": {
+        "id": "F010-20261108-seasonal",
+        "at": "2026-11-08T11:13:30Z",
+        "branch": "content/F010-seasonal-maintenance-builder"
+      }
     },
     {
       "id": "F011",
