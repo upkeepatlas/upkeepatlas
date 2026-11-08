@@ -289,7 +289,7 @@
       "phase": "functions",
       "order": 11,
       "priority": 900,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Caulk and sealant quantity estimator",
       "keywordCandidate": "how many tubes of caulk calculator",
       "targetPath": "/calculators/caulk-tube-estimator/",
@@ -299,8 +299,13 @@
         "F002"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F011.md",
+      "release": null,
+      "claim": {
+        "id": "F011-20261108-1316",
+        "at": "2026-11-08T12:16:50Z",
+        "branch": "content/F011-caulk-tube-estimator"
+      }
     },
     {
       "id": "F012",

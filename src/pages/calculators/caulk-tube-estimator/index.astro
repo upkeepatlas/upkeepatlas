@@ -1,0 +1,51 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import {estimateCaulk} from "../../../lib/caulk.mjs";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Caulk tube estimator"}];
+const example=estimateCaulk();
+---
+<Base title="Caulk Tube Calculator | Sealant Quantity Estimator" description="Estimate caulk cartridges from joint length, bead width, depth, tube size and waste. See the transparent volume formula and a worked example." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">PROJECTS / QUANTITY ESTIMATOR</span><h1>How many tubes of <em class="serif" style="color:var(--pine)">caulk?</em></h1><p class="lede">Measure the length and cross-section of the bead you plan to apply. This calculator converts the estimated volume into whole cartridges, with a waste allowance you control.</p></div></section>
+<section class="section-small rule-top"><div class="container page-layout"><div class="tool-shell">
+<div class="tool-head"><span class="eyebrow">MEASURE YOUR JOINT</span><h2>Sealant quantity</h2><p class="small muted">Use inches for width/depth, feet for length and US fluid ounces from the package label.</p></div>
+<form id="caulk-form" novalidate><div class="tool-grid">
+<div class="field"><label for="joint-length">Total joint length (feet)</label><input id="joint-length" name="lengthFeet" type="number" min="0.01" max="100000" step="any" value="50" required/></div>
+<div class="field"><label for="joint-width">Bead width (inches)</label><input id="joint-width" name="widthInches" type="number" min="0.001" max="4" step="any" value="0.25" required/></div>
+<div class="field"><label for="joint-depth">Bead depth (inches)</label><input id="joint-depth" name="depthInches" type="number" min="0.001" max="4" step="any" value="0.25" required/></div>
+<div class="field"><label for="joint-shape">Cross-section model</label><select id="joint-shape" name="shape"><option value="rectangular">Rectangular / filled joint</option><option value="triangular">Triangular corner fillet (half volume)</option></select></div>
+<div class="field"><label for="tube-size">Cartridge label volume (US fl oz)</label><input id="tube-size" name="tubeFluidOunces" type="number" min="0.1" max="128" step="any" value="10.1" required/></div>
+<div class="field"><label for="waste-percent">Allowance for tooling and waste (%)</label><input id="waste-percent" name="wastePercent" type="number" min="0" max="100" step="any" value="10" required/></div>
+</div><p class="error" id="caulk-error" role="alert" aria-live="polite"></p><div class="tool-actions no-print"><button type="submit" class="button">Calculate tubes ↗</button><button type="button" id="caulk-print" class="button light">Print estimate</button></div></form>
+<div class="tool-result" role="status" aria-live="polite" aria-atomic="true"><span class="eyebrow" style="color:#C8DCCC">ESTIMATED CARTRIDGES TO BUY</span><strong id="caulk-count">{example.tubesToBuy} tubes</strong><p id="caulk-detail">{example.exactTubes.toFixed(2)} theoretical tubes including allowance · {example.feetPerTube.toFixed(1)} ft per cartridge before waste.</p></div>
+<div class="prose"><h2>How this estimate works</h2><p>For a rectangular joint, cross-sectional area = width × depth (square inches). A triangular corner bead uses half that area. Multiply by length in feet × 12 inches/foot to obtain cubic inches. Add the chosen waste percentage. One US fluid ounce equals 231 ÷ 128 cubic inches; divide the total by cartridge fluid ounces × 231 ÷ 128 and <strong>round up to a whole tube</strong>.</p>
+<h3>Worked example</h3><p>For 50 feet of ¼-inch-wide × ¼-inch-deep rectangular joint, a 10.1 US fl oz cartridge and 10% allowance: {example.volumeCubicInches.toFixed(2)} cubic inches before waste; {example.exactTubes.toFixed(2)} cartridges calculated; buy <strong>{example.tubesToBuy} whole cartridges</strong>. The triangular model is only a simplified geometry, not a product guarantee.</p>
+<h2>What the number does not tell you</h2><p>Actual yield depends on the product, nozzle, application, joint geometry, surface roughness and material left in the cartridge. Check the manufacturer's coverage chart, product suitability, joint width/depth requirements, curing conditions and directions. Do not use this quantity estimate to design structural, fire-rated, waterproofing or movement joints; consult the relevant manufacturer and qualified installer for those applications.</p>
+<p><a href="https://usa.sika.com/en/construction-products/joint-sealants/architectural-sealants/polyurethane/sikaflex-np-2.html">Sika's product coverage chart and joint-design guidance</a> illustrates why bead width and depth affect coverage; it is product-specific, not universal. Compare your planned measurements with your actual product data sheet.</p>
+<p>Related planning: <a href="/calculators/paint-coverage/">paint coverage estimator</a> and <a href="/tools/maintenance-budget/">home maintenance budget calculator</a>.</p></div>
+</div><aside class="sidebar"><span class="eyebrow">BEFORE YOU BUY</span><h3>Measure the actual gap.</h3><p class="small muted">A thin surface bead and a deep filled joint consume very different quantities. Manufacturer joint-design requirements take precedence over this geometric model.</p><a href="/calculators/">All calculators ↗</a></aside></div></section>
+</Base>
+<script>
+import {estimateCaulk} from "../../../lib/caulk.mjs";
+const form=document.querySelector<HTMLFormElement>("#caulk-form");
+form?.addEventListener("submit",event=>{
+ event.preventDefault();
+ const error=document.querySelector<HTMLElement>("#caulk-error");
+ try{
+ const data=new FormData(form);
+ const input:Record<string,number>={};
+ for(const name of ["lengthFeet","widthInches","depthInches","tubeFluidOunces","wastePercent"]){
+ const raw=String(data.get(name)??"").trim();
+ if(!raw)throw new RangeError("Complete every measurement before calculating.");
+ input[name]=Number(raw);
+ }
+ const result=estimateCaulk({...input,shape:String(data.get("shape")??"rectangular")});
+ if(error)error.textContent="";
+ const count=document.querySelector<HTMLElement>("#caulk-count");
+ const detail=document.querySelector<HTMLElement>("#caulk-detail");
+ if(count)count.textContent=result.tubesToBuy+" "+(result.tubesToBuy===1?"tube":"tubes");
+ if(detail)detail.textContent=result.exactTubes.toFixed(2)+" theoretical tubes including allowance · "+result.feetPerTube.toFixed(1)+" ft per cartridge before waste · "+result.fluidOuncesNeeded.toFixed(1)+" fl oz estimated.";
+ }catch(e){if(error)error.textContent=e instanceof Error?e.message:"Check your measurements.";}
+});
+document.querySelector("#caulk-print")?.addEventListener("click",()=>window.print());
+</script>
