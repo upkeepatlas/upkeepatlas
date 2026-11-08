@@ -451,7 +451,7 @@
       "phase": "functions",
       "order": 17,
       "priority": 840,
-      "status": "in_progress",
+      "status": "published",
       "title": "Tools discovery and navigation",
       "keywordCandidate": "home maintenance tools directory",
       "targetPath": "/calculators/",
@@ -466,11 +466,14 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null,
-      "claim": {
-        "id": "F017-20261108-directory",
-        "at": "2026-11-08T21:15:31Z",
-        "branch": "content/F017-tools-discovery"
+      "release": {
+        "sha": "5373ee5e9751a6c5d0c59e579a1e0ecdfd1d081a",
+        "deploymentId": "c0e4589c-8aa3-474f-950f-a26e49afe3bb",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42524425726",
+        "verifiedAt": "2026-11-08T21:19:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/calculators/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/24",
+        "method": "GitHub Actions exact final PR head quality success; Cloudflare Pages production deployment success on exact merge SHA; Browser Rendering 375px confirmed title, canonical, search and category inputs, 12 crawlable tool links and empty-state HTML. Interactive typing and keyboard navigation not independently exercised."
       }
     },
     {
