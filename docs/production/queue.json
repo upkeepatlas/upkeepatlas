@@ -316,7 +316,7 @@
       "phase": "functions",
       "order": 12,
       "priority": 890,
-      "status": "in_progress",
+      "status": "published",
       "title": "Appliance electricity cost calculator",
       "keywordCandidate": "appliance electricity cost calculator",
       "targetPath": "/calculators/appliance-electricity-cost/",
@@ -327,11 +327,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F012.md",
-      "release": null,
-      "claim": {
-        "id": "F012-20261108-1410Z",
-        "at": "2026-11-08T14:10:43Z",
-        "branch": "content/F012-appliance-electricity-cost"
+      "release": {
+        "sha": "4e85ad68d9385652986aecb43c4065966e1660ef",
+        "deploymentId": "1706999e-cf2a-432d-b732-9fd2f04834ec",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42488712801",
+        "verifiedAt": "2026-11-08T14:14:20Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/calculators/appliance-electricity-cost/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/19",
+        "method": "GitHub Actions exact PR-head success; Cloudflare production deployment success exact merge SHA; Cloudflare Browser Rendering confirmed live HTML title, form, canonical and DOE reference. Browser submission, printing and keyboard interactions not independently exercised."
       }
     },
     {
