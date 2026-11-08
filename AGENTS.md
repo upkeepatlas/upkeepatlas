@@ -4,6 +4,25 @@ Upkeep Atlas is a trustworthy, design-led home-maintenance planning website for 
 
 For any future request to implement the full website, first read [docs/MASTER_BUILD_PROMPT.md](docs/MASTER_BUILD_PROMPT.md) and execute it alongside all local skills. The master prompt is an implementation plan, not evidence that tests or deployment have already succeeded.
 
+## Autonomous functional/content publication
+
+For scheduled or manually requested **single-item content production**, read:
+- docs/CONTENT_MASTER_PLAN.md (editorial, functional roadmap and constraints);
+- docs/CONTENT_EXECUTION_MASTER_PROMPT.md (one-item execution playbook);
+- docs/production/queue.json (authoritative current priority and status);
+- docs/production/README.md and the seven added production skills listed below.
+
+Do not confuse this program with the historical one-time full website build prompt. Finish at most one new function or article per run; functions first, articles after every function is verifiably complete. A successful GitHub push is not proof of a live Cloudflare page. Never mark a run published without production evidence. Prevent misleading scaled AI content and unlicensed media. If a scheduled run lacks GitHub/Cloudflare access, record a blocker instead of claiming success.
+
+Additional production skills:
+- .agents/skills/search-intent-opportunity/SKILL.md
+- .agents/skills/original-editorial-production/SKILL.md
+- .agents/skills/visual-media-rights/SKILL.md
+- .agents/skills/interactive-tool-production/SKILL.md
+- .agents/skills/content-seo-geo-release/SKILL.md
+- .agents/skills/autonomous-publish-operations/SKILL.md
+- .agents/skills/performance-measurement-loop/SKILL.md
+
 ## Required work sequence
 1. Inspect existing code and deployment configuration. Never overwrite another person's changes.
 2. Read the relevant local instructions under `.agents/skills/` before implementing.
