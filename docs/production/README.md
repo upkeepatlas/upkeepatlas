@@ -24,6 +24,10 @@ Check a fresh GitHub main SHA, current queue content, other running PRs/commits 
 - metrics/ contains only measurements from named instruments; no fabricated keyword volume, CPC or page rankings.
 - All task keywords are candidate phrases, not validated search volume or likelihood of ranking. Competitor research happens when a task executes.
 
+## DNS restricted automation environment
+
+The scheduled container may be unable to resolve github.com for git clone, despite GitHub and Cloudflare plugins being fully functional. The required workaround is connector-first: fetch and update files via GitHub app, branch and PR through the connector, let GitHub Actions run all npm/Astro quality gates, merge passing PRs, then independently verify Cloudflare Pages deployment SHA and live URL. Never use "local clone failed" as the sole blocker when the connectors work. See the GITHUB CONNECTOR MODE section of the master prompt.
+
 ## CI and data contract
 
 Run node scripts/validate-production-queue.mjs (or npm run check:queue); it checks schema, IDs, dependencies, one active claim and mandatory release evidence. Do not bypass the check to mark a task complete. If the queue needs extending, make a versioned reviewed update, retaining IDs and history.
