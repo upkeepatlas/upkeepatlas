@@ -181,7 +181,7 @@
       "phase": "functions",
       "order": 7,
       "priority": 940,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Custom homeowner checklist builder",
       "keywordCandidate": "custom home maintenance checklist printable",
       "targetPath": "/tools/custom-maintenance-checklist/",
@@ -192,7 +192,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "F007-20261108-0708",
+        "at": "2026-11-08T07:08:13Z",
+        "branch": "content/F007-custom-checklist"
+      }
     },
     {
       "id": "F008",
