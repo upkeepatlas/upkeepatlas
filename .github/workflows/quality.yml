@@ -33,3 +33,5 @@ jobs:
           npm run check:seo
           npm run check:theme
           node scripts/indexnow.mjs --check
+      - name: Cloudflare Pages HTTPS smoke (preview or exact main SHA)
+        run: node scripts/smoke-pages.mjs
