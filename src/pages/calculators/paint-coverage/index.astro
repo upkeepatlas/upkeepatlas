@@ -1,9 +1,9 @@
 ---
 import Base from "../../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../../components/Breadcrumbs.astro";
-import {estimatePaint} from "../../../lib/paint.mjs";
+import {estimatePaintProject} from "../../../lib/paint.mjs";
 const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Paint coverage"}];
-const estimate=estimatePaint();
+const estimate=estimatePaintProject();
 ---
 <Base title="Interior Paint Coverage Calculator" description="Estimate paint gallons with this free calculator using room dimensions, doors and windows, coats and manufacturer coverage." breadcrumbs={crumbs}>
   <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">FREE TOOL / INTERIOR PAINT</span><h1>Enough paint. <em class="serif" style="color:var(--pine)">Less guesswork.</em></h1><p class="lede">Estimate the paint needed for a rectangular room's walls. Adjust the number of coats, openings, product coverage and waste allowance.</p></div></section>
@@ -11,37 +11,53 @@ const estimate=estimatePaint();
     <div class="tool-shell">
       <div class="tool-head"><span class="eyebrow">ROOM & PRODUCT DETAILS</span><h2>Your wall measurements</h2><p class="small muted">Measurements are in feet. We subtract the combined door and window area from four walls.</p></div>
       <form id="paint-form" novalidate>
-        <div class="tool-grid">
+        <div class="field"><label for="mode">Wall method</label><select id="mode" name="mode"><option value="room">Rectangular room</option><option value="segments">Measured wall segments instead of room</option></select></div><div id="room-fields"><div class="tool-grid">
           <div class="field"><label for="length">Room length (ft)</label><input id="length" name="length" type="number" min="1" max="500" step=".1" value="12" required/></div>
           <div class="field"><label for="width">Room width (ft)</label><input id="width" name="width" type="number" min="1" max="500" step=".1" value="12" required/></div>
           <div class="field"><label for="height">Wall height (ft)</label><input id="height" name="height" type="number" min="1" max="100" step=".1" value="8" required/></div>
           <div class="field"><label for="openings">Doors/windows area (sq ft)</label><input id="openings" name="openings" type="number" min="0" step=".1" value="40" required/></div>
-          <div class="field"><label for="coats">Number of coats</label><input id="coats" name="coats" type="number" min="1" max="8" step="1" value="2" required/></div>
+</div></div><fieldset id="segment-fields" hidden><legend>Measured wall segments</legend><p>Enter each wall only once. These replace, not supplement, the room walls.</p><div class="tool-grid">
+<div class="field"><label for="seg1length">Wall 1 length (ft)</label><input id="seg1length" name="seg1length" type="number" value="12" step=".1"/></div>
+<div class="field"><label for="seg1height">Wall 1 height (ft)</label><input id="seg1height" name="seg1height" type="number" value="8" step=".1"/></div>
+<div class="field"><label for="seg1openings">Wall 1 openings (sq ft)</label><input id="seg1openings" name="seg1openings" type="number" value="0" step=".1"/></div>
+<div class="field"><label for="seg2length">Wall 2 length (ft; 0 omits)</label><input id="seg2length" name="seg2length" type="number" value="0" step=".1"/></div>
+<div class="field"><label for="seg2height">Wall 2 height (ft)</label><input id="seg2height" name="seg2height" type="number" value="8" step=".1"/></div>
+<div class="field"><label for="seg2openings">Wall 2 openings (sq ft)</label><input id="seg2openings" name="seg2openings" type="number" value="0" step=".1"/></div>
+</div></fieldset><div class="tool-grid"><div class="field"><label for="coats">Number of coats</label><input id="coats" name="coats" type="number" min="1" max="8" step="1" value="2" required/></div>
           <div class="field"><label for="coverage">Label coverage (sq ft / gallon)</label><input id="coverage" name="coverage" type="number" min="1" max="2000" step="1" value="350" required/><small>Use your actual paint manufacturer's stated value.</small></div>
           <div class="field"><label for="waste">Allowance for waste (%)</label><input id="waste" name="waste" type="number" min="0" max="50" step="1" value="10" required/></div>
         </div>
-        <p id="paint-error" class="error" role="alert" aria-live="polite"></p>
+</div><fieldset><legend>Optional separate paint surfaces</legend><label><input type="checkbox" id="include-ceiling" name="includeCeiling"/> Include flat rectangular ceiling</label><div class="tool-grid">
+<div class="field"><label for="ceiling-coats">Ceiling coats</label><input id="ceiling-coats" name="ceilingCoats" type="number" value="1"/></div>
+<div class="field"><label for="ceiling-coverage">Ceiling label coverage (sq ft/gal)</label><input id="ceiling-coverage" name="ceilingCoverage" type="number" value="350"/></div>
+<div class="field"><label for="trim-area">Measured trim surface area (sq ft)</label><input id="trim-area" name="trimArea" type="number" value="0" step=".1"/></div>
+<div class="field"><label for="trim-coats">Trim coats</label><input id="trim-coats" name="trimCoats" type="number" value="2"/></div>
+<div class="field"><label for="trim-coverage">Trim label coverage (sq ft/gal)</label><input id="trim-coverage" name="trimCoverage" type="number" value="350"/></div>
+</div></fieldset><p id="paint-error" class="error" role="alert" aria-live="polite"></p>
         <div class="tool-actions no-print"><button type="submit" class="button">Calculate paint ↗</button><button class="button light" type="button" id="paint-print">Print result</button></div>
       </form>
       <div class="tool-result" role="status" aria-live="polite" aria-atomic="true">
         <span class="eyebrow" style="color:#C8DCCC">ESTIMATED WHOLE GALLONS TO BUY</span>
         <strong id="paint-gallons">{estimate.gallonsToBuy} gallons</strong>
         <p id="paint-breakdown">{estimate.paintableArea.toFixed(0)} sq ft of wall after openings · {estimate.gallonsExact.toFixed(2)} gallons calculated, before rounding up.</p>
-      </div>
-      <div class="prose" style="font-size:.93rem">
+<p id="paint-extras">Wall quart scenario: {estimate.wallQuartsToBuy} quart(s). Ceiling and trim excluded.</p></div><div class="prose" style="font-size:.93rem">
         <h2>How the estimate works</h2><p>Wall area = 2 × (length + width) × height. Subtract doors and windows. Multiply by number of coats and (1 + waste percent ÷ 100), then divide by your product's stated square feet per gallon. Finally, round up to full gallons for a simple purchase estimate.</p>
-        <p><strong>Not included:</strong> ceiling, trim, sloped or irregular walls, textured surfaces, primer, surface porosity or different paint pack sizes. The product label and actual surface preparation determine final requirements.</p>
+        <p><strong>Not included:</strong> sloped ceilings, primer, surface porosity or product-specific paint pack sizes. Ceiling and trim are rounded separately; wall segment mode cannot infer an irregular ceiling. The product label and actual surface preparation determine final requirements.</p>
       </div>
     </div>
     <aside class="sidebar"><span class="eyebrow">BEFORE YOU BUY</span><h3>Measure well.</h3><p class="small muted">For rooms with alcoves or slopes, calculate each wall area separately. Manufacturer coverage varies with product, surface and application.</p><a href="/guides/first-year-maintenance-rhythm/">Start a maintenance log ↗</a><a href="/maintenance-calendar/">Make a yearly plan ↗</a></aside>
   </div></section>
 </Base>
 <script>
-  import {estimatePaint} from "../../../lib/paint.mjs";
+  import {estimatePaintProject} from "../../../lib/paint.mjs";
   const form=document.querySelector<HTMLFormElement>("#paint-form");
   const error=document.querySelector<HTMLElement>("#paint-error");
   const amount=document.querySelector<HTMLElement>("#paint-gallons");
   const breakdown=document.querySelector<HTMLElement>("#paint-breakdown");
+  const mode=document.querySelector<HTMLSelectElement>("#mode");
+  const ceilingToggle=document.querySelector<HTMLInputElement>("#include-ceiling");
+  const syncMode=()=>{const segmented=mode?.value==="segments";const room=document.querySelector<HTMLElement>("#room-fields");const walls=document.querySelector<HTMLElement>("#segment-fields");if(room)room.hidden=!!segmented;if(walls)walls.hidden=!segmented;if(ceilingToggle){ceilingToggle.disabled=!!segmented;if(segmented)ceilingToggle.checked=false;}};
+  mode?.addEventListener("change",syncMode);syncMode();
   form?.addEventListener("submit",event=>{
     event.preventDefault();
     try {
@@ -52,10 +68,15 @@ const estimate=estimatePaint();
         if(raw.trim()==="") throw new RangeError("Fill in all fields before calculating.");
         inputs[key]=Number(raw);
       }
-      const result=estimatePaint(inputs);
+      const wallMode=String(values.get("mode")??"room");
+      const segments=[];
+      if(wallMode==="segments")for(const n of [1,2]){const length=Number(values.get("seg"+n+"length"));if(n===2&&length===0)continue;segments.push({length,height:Number(values.get("seg"+n+"height")),openings:Number(values.get("seg"+n+"openings"))});}
+      const result=estimatePaintProject({...inputs,mode:wallMode,segments,includeCeiling:values.has("includeCeiling"),ceilingCoats:Number(values.get("ceilingCoats")),ceilingCoverage:Number(values.get("ceilingCoverage")),trimArea:Number(values.get("trimArea")),trimCoats:Number(values.get("trimCoats")),trimCoverage:Number(values.get("trimCoverage"))});
       if(error)error.textContent="";
       if(amount)amount.textContent=result.gallonsToBuy+" "+(result.gallonsToBuy===1?"gallon":"gallons");
       if(breakdown)breakdown.textContent=result.paintableArea.toFixed(1)+" sq ft of wall after openings · "+result.gallonsExact.toFixed(2)+" gallons calculated, before rounding up.";
+      const extras=document.querySelector<HTMLElement>("#paint-extras");
+      if(extras)extras.textContent="Walls: "+result.wallQuartsToBuy+" quart(s) or "+result.wall.gallonsToBuy+" whole gallon(s). Ceiling: "+result.ceiling.gallonsExact.toFixed(2)+" gal ("+result.ceiling.gallonsToBuy+" whole gallon(s)). Trim: "+result.trim.gallonsExact.toFixed(2)+" gal ("+result.trim.quartsToBuy+" quart(s) or "+result.trim.gallonsToBuy+" whole gallon(s)).";
     }catch(e){if(error)error.textContent=e instanceof Error?e.message:"Check the measurements and try again.";}
   });
   document.querySelector("#paint-print")?.addEventListener("click",()=>window.print());
