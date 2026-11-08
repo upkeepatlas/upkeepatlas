@@ -424,7 +424,7 @@
       "phase": "functions",
       "order": 16,
       "priority": 850,
-      "status": "in_progress",
+      "status": "published",
       "title": "Observation-first gutter care planner",
       "keywordCandidate": "gutter inspection checklist from ground",
       "targetPath": "/tools/gutter-care-planner/",
@@ -435,11 +435,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F016.md",
-      "release": null,
-      "claim": {
-        "id": "F016-20261108-ground-observation",
-        "at": "2026-11-08T19:09:38Z",
-        "branch": "content/F016-ground-gutter-planner"
+      "release": {
+        "sha": "6372c54d79cc99c27a7225f73a2ed75a98bbf3c1",
+        "deploymentId": "cc97d99c-27e7-42a3-a853-51233ee23b61",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42518977745",
+        "verifiedAt": "2026-11-08T20:14:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/tools/gutter-care-planner/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/23",
+        "method": "GitHub-hosted PR-head tests, build, Astro check, SEO/media/theme/IndexNow/queue and HTTPS smoke successful; Cloudflare Pages production exact merge SHA success; Cloudflare Browser Rendering live HTML title, form, canonical and CDC source confirmed. Form submission and print not independently exercised."
       }
     },
     {
