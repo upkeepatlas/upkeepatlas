@@ -15,7 +15,8 @@
     "indexnow:dry-run": "node scripts/indexnow.mjs --dry-run",
     "indexnow:submit": "node scripts/indexnow.mjs --submit",
     "check:theme": "node scripts/check-theme.mjs",
-    "check:queue": "node scripts/validate-production-queue.mjs"
+    "check:queue": "node scripts/validate-production-queue.mjs",
+    "check:media": "node scripts/check-media.mjs"
   },
   "dependencies": {
     "astro": "^5.16.0"
