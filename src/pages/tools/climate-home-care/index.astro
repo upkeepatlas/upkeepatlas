@@ -1,0 +1,34 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import {EXPOSURES, BASELINE} from "../../../lib/climate-home-care.mjs";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Climate home care"}];
+---
+<Base title="Climate Home Care Selector | Maintenance by Conditions" description="Select the weather exposures that matter to your home and build a safe, printable climate-aware maintenance observation plan. No location tracking." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">CLIMATE · HOME CARE</span><h1>Plan for the conditions <em class="serif" style="color:var(--pine)">your home faces.</em></h1><p class="lede">A cold winter, humid summer and storm season can all matter at the same address. Select more than one exposure to create a practical, printable observation list—without a ZIP code or guessed forecast.</p></div></section>
+<section class="section-small rule-top"><div class="container narrow">
+<form id="climate-form" class="tool-shell"><div class="tool-head"><span class="eyebrow">YOUR EXPOSURES</span><h2>Choose relevant conditions</h2></div>
+<fieldset class="climate-choices"><legend>Select any that apply to your property</legend>{EXPOSURES.map(e=><label><input type="checkbox" name="exposure" value={e.id}/> {e.label}</label>)}</fieldset>
+<div class="tool-actions no-print"><button class="button" type="submit">Build climate care plan</button><button class="button light" type="reset">Clear selections</button></div><p id="climate-error" class="error" role="alert" hidden></p></form>
+<section class="tool-shell" aria-labelledby="climate-results-heading"><span class="eyebrow">YOUR PRINTABLE PLAN</span><h2 id="climate-results-heading">Home care priorities</h2><p id="climate-summary" role="status" aria-live="polite">Choose conditions and build a plan. A basic recordkeeping prompt appears below as an example.</p>
+<ol id="climate-results" class="climate-results"><li><strong>{BASELINE.title}</strong><p>{BASELINE.detail}</p></li></ol>
+<div class="tool-actions no-print"><button type="button" id="climate-print" class="button light">Print plan</button></div></section>
+<div class="prose"><h2>What the selector does—and does not do</h2><p>This tool matches your <strong>self-selected exposures</strong> to observation and preparation prompts. It does not determine a climate zone, assess flood or fire risk, read your location, access live weather, set mandatory service dates, or diagnose damage. A home can have several exposures at once. The output is intentionally ordered with weather-specific preparation first and general records afterward.</p>
+<p><strong>Example:</strong> selecting freezing temperatures and frequent heavy rain produces separate freeze-exposure and drainage reviews, followed by a recordkeeping prompt. Choosing no exposure produces only the baseline recordkeeping prompt. Check local emergency alerts and manufacturer manuals before acting.</p>
+<div class="note caution"><strong>Safety:</strong> This is a ground-level and indoor observation planner, not repair instructions. Do not climb ladders or roofs, open gas or electrical equipment, approach fallen power lines, enter floodwater or attempt wildfire response. Follow local emergency officials and qualified professionals.</div>
+<h2>Why climate matters</h2><p>The U.S. Department of Energy explains that moisture management and weatherization depend on the building and climate. Ready.gov provides separate preparedness guidance for <a href="https://www.ready.gov/winter-weather">winter weather</a>, <a href="https://www.ready.gov/floods">floods</a>, <a href="https://www.ready.gov/heat">extreme heat</a> and <a href="https://www.ready.gov/wildfires">wildfires</a>. The <a href="https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home">EPA moisture guide</a> explains why persistent dampness warrants attention. Sources reviewed November 8, 2026.</p>
+<p>For season-specific timing, use the <a href="/tools/seasonal-maintenance-builder/">seasonal maintenance builder</a>. To track completed work, use the <a href="/tools/maintenance-log/">home maintenance log</a> or browse <a href="/calculators/">all homeowner tools</a>.</p><p class="small muted">Choices stay in this browser session only; nothing is saved or transmitted by this selector. Printing opens your browser's print dialog. No alerts or reminders are sent.</p></div>
+</div></section>
+<style>.climate-choices{border:1px solid var(--line);padding:1rem;display:grid;gap:.8rem;margin:1rem 0}.climate-choices legend{font-weight:700;padding:0 .3rem}.climate-choices label{display:flex;align-items:center;gap:.65rem}.climate-choices input{width:1.1rem;height:1.1rem}.climate-results{padding-left:1.5rem}.climate-results li{padding:.85rem 0;border-bottom:1px solid var(--line);break-inside:avoid}.climate-results p{margin:.35rem 0;color:var(--muted)}@media print{#climate-form,.no-print{display:none!important}.climate-results p{color:#222!important}}</style>
+<script>
+import {selectClimateCare} from "../../../lib/climate-home-care.mjs";
+const form=document.querySelector<HTMLFormElement>("#climate-form");
+const results=document.querySelector<HTMLOListElement>("#climate-results");
+const summary=document.querySelector<HTMLElement>("#climate-summary");
+const error=document.querySelector<HTMLElement>("#climate-error");
+function render(ids:string[]){if(!results||!summary)return;const plan=selectClimateCare(ids);results.replaceChildren();for(const task of plan){const li=document.createElement("li"),heading=document.createElement("strong"),detail=document.createElement("p"),source=document.createElement("a");heading.textContent=(task.priority===1?"Review exposure: ":"Plan next: ")+task.title;detail.textContent=task.detail;source.href=task.source;source.textContent="Official guidance";source.rel="noopener noreferrer";li.append(heading,detail,source);results.append(li);}summary.textContent=ids.length+" selected exposures · "+plan.length+" planning prompts. No weather or property risk has been assessed.";}
+form?.addEventListener("submit",e=>{e.preventDefault();try{const ids=[...form.querySelectorAll<HTMLInputElement>('input[name="exposure"]:checked')].map(x=>x.value);render(ids);if(error)error.hidden=true;}catch(x){if(error){error.textContent=x instanceof Error?x.message:"Invalid selection";error.hidden=false;}}});
+form?.addEventListener("reset",()=>{render([]);});
+document.querySelector("#climate-print")?.addEventListener("click",()=>window.print());
+</script>
+</Base>
