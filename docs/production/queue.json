@@ -316,7 +316,7 @@
       "phase": "functions",
       "order": 12,
       "priority": 890,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Appliance electricity cost calculator",
       "keywordCandidate": "appliance electricity cost calculator",
       "targetPath": "/calculators/appliance-electricity-cost/",
@@ -326,8 +326,13 @@
         "F002"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F012.md",
+      "release": null,
+      "claim": {
+        "id": "F012-20261108-1410Z",
+        "at": "2026-11-08T14:10:43Z",
+        "branch": "content/F012-appliance-electricity-cost"
+      }
     },
     {
       "id": "F013",
