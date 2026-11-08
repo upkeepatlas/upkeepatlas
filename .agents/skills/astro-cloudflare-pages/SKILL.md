@@ -14,6 +14,10 @@ Prefer Astro static output for a content-focused site. HTML and critical content
 - `scripts/` for validation tools; `docs/` for editorial and technical decisions.
 - No user credentials or account IDs in committed source.
 
+## Checkout-independent workflow
+
+If local git clone or DNS is disabled in a scheduled ChatGPT runtime, use linked GitHub repository file actions for commits and GitHub Actions runners for independent npm ci, test, Astro build and SEO checks. Cloudflare Pages remains Git-connected to main. A local checkout is optional; production exact-SHA and live checks are mandatory. This avoids a false infrastructure blocker when available GitHub/Cloudflare connectors work.
+
 ## Cloudflare workflow
 1. Inspect current GitHub branch and Cloudflare Pages project (do not assume the deployment exists).
 2. For Astro static: `npm run build`, output directory `dist`, set Node version to a supported version documented for the selected Astro release.
