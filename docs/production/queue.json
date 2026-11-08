@@ -370,7 +370,7 @@
       "phase": "functions",
       "order": 14,
       "priority": 870,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Home inventory template",
       "keywordCandidate": "home inventory spreadsheet printable",
       "targetPath": "/tools/home-inventory/",
@@ -380,8 +380,13 @@
         "F008"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F014.md",
+      "release": null,
+      "claim": {
+        "id": "F014-20261108-1708",
+        "at": "2026-11-08T16:08:21Z",
+        "branch": "content/F014-home-inventory-20261108"
+      }
     },
     {
       "id": "F015",
