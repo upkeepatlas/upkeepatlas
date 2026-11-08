@@ -1,0 +1,70 @@
+---
+import Base from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Appliance maintenance log"}];
+---
+<Base title="Appliance Maintenance Log & Model Register | Upkeep Atlas" description="Keep an appliance-by-appliance maintenance history with model numbers, manual-based next dates and private JSON backups." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">EQUIPMENT / PRIVATE RECORDS</span><h1>Know your appliances. <em class="serif" style="color:var(--pine)">Keep their history.</em></h1><p class="lede">Create a separate record for each appliance model, then log completed care and your own next-due dates from its manual. Everything is kept in this browser, not an account.</p></div></section>
+<section class="section-small rule-top"><div class="container narrow">
+<div class="note"><strong>Use the actual manual.</strong> This tool does not assign universal service intervals, issue background notifications, check recalls, verify warranties or diagnose equipment. Keep receipts and the original manual separately. Never enter serial numbers, access codes or other sensitive identifiers here.</div>
+<form id="equipment-form" class="tool-shell">
+<div class="tool-head"><span class="eyebrow">STEP 1 · EQUIPMENT</span><h2>Register an appliance</h2></div>
+<div class="tool-grid">
+<div class="field"><label for="eq-name">Appliance name</label><input id="eq-name" required maxlength="80" placeholder="Kitchen refrigerator"/></div>
+<div class="field"><label for="eq-brand">Brand (optional)</label><input id="eq-brand" maxlength="80"/></div>
+<div class="field"><label for="eq-model">Model number</label><input id="eq-model" required maxlength="100" placeholder="Copy from manual or label"/></div>
+<div class="field"><label for="eq-location">Location (optional)</label><input id="eq-location" maxlength="80" placeholder="Kitchen"/></div>
+<div class="field"><label for="eq-manual">Manual location / reminder notes (optional)</label><input id="eq-manual" maxlength="240" placeholder="Paper binder or manufacturer's website"/></div>
+</div><div class="tool-actions no-print"><button class="button" type="submit">Add appliance</button><button class="button light" type="reset">Clear fields</button></div></form>
+<form id="activity-form" class="tool-shell">
+<div class="tool-head"><span class="eyebrow">STEP 2 · ACTIVITY</span><h2>Log care or a service visit</h2></div>
+<div class="tool-grid">
+<div class="field"><label for="activity-equipment">Appliance</label><select id="activity-equipment" required><option value="">Register an appliance first</option></select></div>
+<div class="field"><label for="activity-task">Work or observation</label><input id="activity-task" maxlength="160" required placeholder="Checked filter according to manual"/></div>
+<div class="field"><label for="activity-date">Date completed</label><input id="activity-date" type="date" required/></div>
+<div class="field"><label for="activity-next">Next planned date (optional)</label><input id="activity-next" type="date"/></div>
+<div class="field"><label for="activity-notes">Notes (optional)</label><textarea id="activity-notes" rows="2" maxlength="300" placeholder="Invoice stored in household binder"></textarea></div>
+</div><div class="tool-actions no-print"><button class="button" type="submit">Save activity</button><button class="button light" type="reset">Clear fields</button></div></form>
+<p id="register-error" class="error" role="alert" hidden></p><p id="register-status" role="status" aria-live="polite">Loading local records…</p>
+<section class="tool-shell" aria-labelledby="register-heading"><h2 id="register-heading">Equipment register</h2><div id="equipment-list"></div><h2>Upcoming manual-based dates</h2><p class="small muted">Dates only appear when you enter them. “Overdue” compares your entered date with today's device date; it is not a safety assessment or automatic alert.</p><div id="upcoming-list"></div><h2>Recorded service history</h2><div id="activity-list"></div>
+<div class="tool-actions no-print"><button class="button light" id="register-export" type="button">Download JSON backup</button><label for="register-import">Restore JSON backup</label><input id="register-import" type="file" accept=".json,application/json"/><button class="button light" id="register-print" type="button">Print records</button><button class="button light" id="register-clear" type="button">Erase all local records</button></div><p class="small muted">Restoring replaces existing records after confirmation. Back up first. Limit: 100 appliances, 1,000 activities and a 1 MB backup file. Deleting an appliance also deletes its linked history.</p></section>
+<div class="prose"><h2>How this differs from a general home maintenance log</h2><p>Keep one equipment profile per physical appliance, including its exact model, so service records do not get mixed when a unit is replaced. Add a new profile for a replacement model. Enter a next date only after consulting the manufacturer's instructions or your qualified service provider. For example, register “Kitchen refrigerator, model ABC-123” and record “Reviewed manual's filter instructions on November 8, 2026.” The example model is fictional, not a maintenance recommendation.</p>
+<h2>Storage and safety limits</h2><p>Records use this device's browser local storage; a private window or clearing browser data may erase them. Downloaded JSON backups are readable files: store them securely. There is no account sync, automatic notification or server-side archive. Keep sensitive warranty documents elsewhere. Do not open electrical, gas or sealed appliance components for this record-keeping task.</p><p>Consult your model's official owner manual before scheduling work. The <a href="https://www.cpsc.gov/Recalls">U.S. Consumer Product Safety Commission recall database</a> is a separate place to check product safety notices; this tool does not check recalls. The <a href="https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use">U.S. Department of Energy</a> explains why actual appliance energy use varies. See also the <a href="/tools/maintenance-log/">general home maintenance log</a>, <a href="/maintenance-calendar/">annual planner</a> and <a href="/calculators/">tools directory</a>.</p></div>
+</div></section>
+<style>
+.register-entry{padding:1rem 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.register-entry button{margin-left:.7rem;font:inherit;text-decoration:underline;cursor:pointer}.register-entry small{display:block}.register-entry strong{display:block}#register-import{max-width:100%}@media print{form,.no-print,#register-error,#register-status{display:none!important}}
+</style>
+<script>
+import {normalizeAppliance,normalizeActivity,exportAppliances,importAppliances,upcoming} from "../../../lib/appliance-register.mjs";
+type Appliance=ReturnType<typeof normalizeAppliance>;type Activity=ReturnType<typeof normalizeActivity>;
+let appliances:Appliance[]=[];let activities:Activity[]=[];
+const key="upkeepatlas.appliance-register.v1";
+const error=document.querySelector<HTMLElement>("#register-error"),status=document.querySelector<HTMLElement>("#register-status");
+const value=(id:string)=>{const el=document.getElementById(id);return el instanceof HTMLInputElement||el instanceof HTMLSelectElement||el instanceof HTMLTextAreaElement?el.value:"";};
+function fail(e:unknown){if(error){error.hidden=false;error.textContent=e instanceof Error?e.message:"Unable to save this entry.";}}
+function persist(){try{localStorage.setItem(key,exportAppliances(appliances,activities));return true;}catch(e){fail("Storage is unavailable or full. Download a backup before leaving.");return false;}}
+function item(parent:Element,title:string,detail:string,remove:()=>void){const el=document.createElement("div");el.className="register-entry";const strong=document.createElement("strong");strong.textContent=title;const small=document.createElement("small");small.textContent=detail;const button=document.createElement("button");button.type="button";button.textContent="Delete";button.setAttribute("aria-label","Delete "+title);button.addEventListener("click",remove);el.append(strong,small,button);parent.append(el);}
+function render(){
+ const eq=document.querySelector<HTMLSelectElement>("#activity-equipment"),list=document.querySelector("#equipment-list"),history=document.querySelector("#activity-list"),due=document.querySelector("#upcoming-list");
+ if(!eq||!list||!history||!due)return;
+ const selected=eq.value;eq.replaceChildren();const placeholder=document.createElement("option");placeholder.value="";placeholder.textContent="Choose equipment";eq.append(placeholder);
+ for(const a of appliances){const opt=document.createElement("option");opt.value=a.id;opt.textContent=a.name+" · "+a.model;eq.append(opt);}
+ if(appliances.some(a=>a.id===selected))eq.value=selected;
+ list.replaceChildren();history.replaceChildren();due.replaceChildren();
+ for(const a of appliances)item(list,a.name,a.brand+" · "+a.model+" · "+a.location+" · Manual: "+a.manual,()=>{if(!confirm("Delete this appliance and all its activities?"))return;appliances=appliances.filter(x=>x.id!==a.id);activities=activities.filter(x=>x.applianceId!==a.id);persist();render();});
+ for(const [index,a] of activities.entries()){const name=appliances.find(x=>x.id===a.applianceId)?.name||"Unknown";item(history,a.date+" · "+name+" · "+a.task,a.notes+(a.next?" · Next: "+a.next:""),()=>{if(!confirm("Delete this activity?"))return;activities.splice(index,1);persist();render();});}
+ const today=new Date().toLocaleDateString("en-CA",{year:"numeric",month:"2-digit",day:"2-digit"});
+ for(const a of upcoming(activities,today)){const p=document.createElement("p");p.textContent=a.next+" · "+(appliances.find(x=>x.id===a.applianceId)?.name||"Appliance")+" · "+a.task+(a.overdue?" · Date passed":"");due.append(p);}
+ for(const [el,empty] of [[list,"No appliances registered."],[history,"No activity recorded."],[due,"No next dates entered."]] as const){if(!el.childElementCount){const p=document.createElement("p");p.textContent=empty;el.append(p);}}
+ if(status)status.textContent=appliances.length+" appliances · "+activities.length+" activities saved in this browser.";
+}
+try{const raw=localStorage.getItem(key);if(raw){const data=importAppliances(raw);appliances=data.appliances;activities=data.activities;}}catch(e){fail("Saved records could not be read. Restore a valid backup or erase local records.");}
+render();
+document.querySelector<HTMLFormElement>("#equipment-form")?.addEventListener("submit",e=>{e.preventDefault();try{if(appliances.length>=100)throw new Error("100-appliance limit reached.");const a=normalizeAppliance({name:value("eq-name"),brand:value("eq-brand"),model:value("eq-model"),location:value("eq-location"),manual:value("eq-manual")});appliances.push(a);persist();render();(e.currentTarget as HTMLFormElement).reset();if(error)error.hidden=true;}catch(x){fail(x);}});
+document.querySelector<HTMLFormElement>("#activity-form")?.addEventListener("submit",e=>{e.preventDefault();try{if(activities.length>=1000)throw new Error("1,000-activity limit reached.");const a=normalizeActivity({applianceId:value("activity-equipment"),task:value("activity-task"),date:value("activity-date"),next:value("activity-next"),notes:value("activity-notes")},appliances);activities.unshift(a);persist();render();(e.currentTarget as HTMLFormElement).reset();if(error)error.hidden=true;}catch(x){fail(x);}});
+document.querySelector("#register-export")?.addEventListener("click",()=>{const url=URL.createObjectURL(new Blob([exportAppliances(appliances,activities)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="upkeep-atlas-appliance-register.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+document.querySelector<HTMLInputElement>("#register-import")?.addEventListener("change",async e=>{const input=e.currentTarget;if(!(input instanceof HTMLInputElement))return;try{const file=input.files?.[0];if(!file)return;if(file.size>1000000)throw new Error("Backup exceeds 1 MB.");const data=importAppliances(await file.text());if(!confirm("Replace all local appliance records with this backup?"))return;appliances=data.appliances;activities=data.activities;persist();render();if(error)error.hidden=true;}catch(x){fail(x);}finally{input.value="";}});
+document.querySelector("#register-clear")?.addEventListener("click",()=>{if(!confirm("Erase every appliance and activity saved by this tool in this browser?"))return;try{localStorage.removeItem(key);appliances=[];activities=[];render();}catch(x){fail(x);}});
+document.querySelector("#register-print")?.addEventListener("click",()=>window.print());
+</script>
+</Base>

@@ -343,7 +343,7 @@
       "phase": "functions",
       "order": 13,
       "priority": 880,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Appliance maintenance records tracker",
       "keywordCandidate": "appliance maintenance log",
       "targetPath": "/tools/appliance-maintenance-log/",
@@ -353,8 +353,13 @@
         "F008"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F013.md",
+      "release": null,
+      "claim": {
+        "id": "F013-20261108-1517Z",
+        "at": "2026-11-08T15:17:37Z",
+        "branch": "content/F013-appliance-maintenance-register"
+      }
     },
     {
       "id": "F014",
