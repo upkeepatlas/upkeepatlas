@@ -33,7 +33,7 @@ test("guide pages render content collection and existing legacy guides", () => {
   }
   assert.match(guidePage,/await render\(entry\)/);
   assert.match(index,/GuideCard/);
-  assert.match(get("src/lib/routes.mjs"),/\/guides\/hvac-filter-routine\//);
+  assert.match(get("src/lib/routes.mjs"),/discoverRoutesFromPaths/);
 });
 test("scheduled execution instructions include GitHub connector without clone fallback",()=>{
   const prompt=get("docs/CONTENT_EXECUTION_MASTER_PROMPT.md");
