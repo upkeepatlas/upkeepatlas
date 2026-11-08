@@ -46,7 +46,7 @@
       "phase": "functions",
       "order": 2,
       "priority": 990,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Automatic route and SEO registry",
       "keywordCandidate": "Astro sitemap and new article route automation",
       "targetPath": null,
@@ -57,7 +57,11 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "F002-20261108-route-discovery",
+        "at": "2026-11-08T00:43:00Z"
+      }
     },
     {
       "id": "F003",
