@@ -73,7 +73,7 @@
       "phase": "functions",
       "order": 3,
       "priority": 980,
-      "status": "in_progress",
+      "status": "published",
       "title": "Licensed media pipeline",
       "keywordCandidate": "optimized image workflow for home maintenance content",
       "targetPath": null,
@@ -84,11 +84,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F003.md",
-      "release": null,
-      "claim": {
-        "id": "F003-20261108-media-01",
-        "at": "2026-11-08T01:15:24Z",
-        "branch": "content/F003-licensed-media-pipeline"
+      "release": {
+        "sha": "3ed531b8065034985be502073fdd5607ade1cbdf",
+        "deploymentId": "759cbbce-5e65-4cb4-95aa-2c3fb25636d6",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42433618455",
+        "verifiedAt": "2026-11-08T01:19:00.924Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/editorial-policy/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/10",
+        "method": "GitHub connector PR + GitHub Actions exact SHA live HTTPS smoke + Cloudflare Pages production deployment"
       }
     },
     {
