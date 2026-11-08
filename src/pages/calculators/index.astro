@@ -2,24 +2,156 @@
 import Base from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 const crumbs=[{title:"Calculators"}];
+const tools=[
+  {
+    "path": "/tools/gutter-care-planner/",
+    "tag": "Seasonal & exterior",
+    "meta": "EXTERIOR · GROUND-LEVEL CHECK",
+    "title": "Gutter care observation planner",
+    "description": "Record visible gutter and downspout concerns without ladders, and print a professional follow-up list.",
+    "cta": "Build observation report ↗"
+  },
+  {
+    "path": "/tools/climate-home-care/",
+    "tag": "Seasonal & exterior",
+    "meta": "CLIMATE · EXPOSURE PLANNER",
+    "title": "Climate home care selector",
+    "description": "Choose multiple weather exposures to build a safe, printable home observation plan without sharing your location.",
+    "cta": "Build climate plan ↗"
+  },
+  {
+    "path": "/tools/home-inventory/",
+    "tag": "Records",
+    "meta": "HOME RECORDS · PRIVATE WORKSHEET",
+    "title": "Home inventory worksheet",
+    "description": "List belongings by room, print a blank worksheet or export your own spreadsheet CSV.",
+    "cta": "Build inventory ↗"
+  },
+  {
+    "path": "/tools/appliance-maintenance-log/",
+    "tag": "Records",
+    "meta": "APPLIANCES · LOCAL RECORDS",
+    "title": "Appliance maintenance log",
+    "description": "Keep model-specific equipment profiles, record service history and manual-based next dates, then export a private JSON backup.",
+    "cta": "Open appliance register ↗"
+  },
+  {
+    "path": "/calculators/appliance-electricity-cost/",
+    "tag": "Estimate",
+    "meta": "ENERGY · RUNNING COST",
+    "title": "Appliance electricity cost calculator",
+    "description": "Estimate annual kWh and variable cost from your own wattage, operating schedule, load and electricity rate.",
+    "cta": "Estimate electricity ↗"
+  },
+  {
+    "path": "/calculators/caulk-tube-estimator/",
+    "tag": "Estimate",
+    "meta": "SEALANTS · QUANTITY ESTIMATOR",
+    "title": "Caulk tube calculator",
+    "description": "Estimate cartridges from bead width, depth, length and your product label volume, with a transparent allowance.",
+    "cta": "Estimate tubes ↗"
+  },
+  {
+    "path": "/calculators/paint-coverage/",
+    "tag": "Estimate",
+    "meta": "FINISHES · ESTIMATOR",
+    "title": "Interior paint coverage calculator",
+    "description": "Estimate wall area and gallons for a rectangular room, with coats, openings and a waste allowance you control.",
+    "cta": "Open calculator ↗"
+  },
+  {
+    "path": "/tools/seasonal-maintenance-builder/",
+    "tag": "Seasonal & exterior",
+    "meta": "SEASONAL · CUSTOM PLANNER",
+    "title": "Seasonal maintenance builder",
+    "description": "Choose a season, broad climate conditions and home systems to print a prioritized observation plan.",
+    "cta": "Build seasonal plan ↗"
+  },
+  {
+    "path": "/tools/hvac-filter-schedule/",
+    "tag": "Planning",
+    "meta": "HVAC · INSPECTION PLANNER",
+    "title": "HVAC filter inspection schedule",
+    "description": "Enter the inspection interval from your equipment manual to calculate and print your next six checks.",
+    "cta": "Open scheduler ↗"
+  },
+  {
+    "path": "/tools/custom-maintenance-checklist/",
+    "tag": "Planning",
+    "meta": "PLANNING · CUSTOM CHECKLIST",
+    "title": "Custom home maintenance checklist",
+    "description": "Filter by home type and systems, save your checkmarks locally and print the checklist.",
+    "cta": "Build checklist ↗"
+  },
+  {
+    "path": "/tools/maintenance-log/",
+    "tag": "Records",
+    "meta": "PLANNING · LOCAL RECORDS",
+    "title": "Home maintenance log",
+    "description": "Record repairs and routine care privately in your browser. Import, export and print your CSV history.",
+    "cta": "Open maintenance log ↗"
+  },
+  {
+    "path": "/tools/maintenance-budget/",
+    "tag": "Estimate",
+    "meta": "PLANNING · SAVINGS SCENARIOS",
+    "title": "Annual maintenance budget calculator",
+    "description": "Compare your own annual and monthly savings targets, plus a reserve gap, without pretending to quote repair costs.",
+    "cta": "Open budget calculator ↗"
+  }
+];
+const categories=["All tools","Estimate","Planning","Records","Seasonal & exterior"];
 ---
-<Base title="Home Maintenance Calculators" description="Practical homeowner calculators with transparent formulas, clear assumptions and print-friendly results." breadcrumbs={crumbs}>
-  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">MEASURE TWICE</span><h1>Useful numbers, <em class="serif" style="color:var(--pine)">clearly explained.</em></h1><p class="lede">Simple calculations that make a project easier to plan. No hidden assumptions, email forms or account required.</p></div></section>
+<Base title="Home Maintenance Tools and Calculators" description="Find practical homeowner calculators, printable planners and private maintenance records. Filter by task or browse every tool without JavaScript." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">HOMEOWNER TOOLKIT</span><h1>Find the right tool <em class="serif" style="color:var(--pine)">for the job.</em></h1><p class="lede">Estimate materials and energy, plan routine care, or organize household records. All tools are free to use without an account. Browse the complete list below, or narrow it by purpose.</p></div></section>
   <section class="section-small rule-top"><div class="container">
-    <div class="cards">
-      <a class="editorial-card" href="/tools/gutter-care-planner/"><span class="meta">EXTERIOR · GROUND-LEVEL CHECK</span><h3>Gutter care observation planner</h3><p>Record visible gutter and downspout concerns without ladders, and print a professional follow-up list.</p><span class="arrow">Build observation report ↗</span></a>
-      <a class="editorial-card" href="/tools/climate-home-care/"><span class="meta">CLIMATE · EXPOSURE PLANNER</span><h3>Climate home care selector</h3><p>Choose multiple weather exposures to build a safe, printable home observation plan without sharing your location.</p><span class="arrow">Build climate plan ↗</span></a>
-      <a class="editorial-card" href="/tools/home-inventory/"><span class="meta">HOME RECORDS · PRIVATE WORKSHEET</span><h3>Home inventory worksheet</h3><p>List belongings by room, print a blank worksheet or export your own spreadsheet CSV.</p><span class="arrow">Build inventory ↗</span></a>
-      <a class="editorial-card" href="/tools/appliance-maintenance-log/"><span class="meta">APPLIANCES · LOCAL RECORDS</span><h3>Appliance maintenance log</h3><p>Keep model-specific equipment profiles, record service history and manual-based next dates, then export a private JSON backup.</p><span class="arrow">Open appliance register ↗</span></a>
-      <a class="editorial-card" href="/calculators/appliance-electricity-cost/"><span class="meta">ENERGY · RUNNING COST</span><h3>Appliance electricity cost calculator</h3><p>Estimate annual kWh and variable cost from your own wattage, operating schedule, load and electricity rate.</p><span class="arrow">Estimate electricity ↗</span></a>
-      <a class="editorial-card" href="/calculators/caulk-tube-estimator/"><span class="meta">SEALANTS · QUANTITY ESTIMATOR</span><h3>Caulk tube calculator</h3><p>Estimate cartridges from bead width, depth, length and your product label volume, with a transparent allowance.</p><span class="arrow">Estimate tubes ↗</span></a>
-      <a class="editorial-card" href="/calculators/paint-coverage/"><span class="meta">FINISHES · ESTIMATOR</span><h3>Interior paint coverage calculator</h3><p>Estimate wall area and gallons for a rectangular room, with coats, openings and a waste allowance you control.</p><span class="arrow">Open calculator ↗</span></a>
-      <a class="editorial-card" href="/tools/seasonal-maintenance-builder/"><span class="meta">SEASONAL · CUSTOM PLANNER</span><h3>Seasonal maintenance builder</h3><p>Choose a season, broad climate conditions and home systems to print a prioritized observation plan.</p><span class="arrow">Build seasonal plan ↗</span></a>
-      <a class="editorial-card" href="/tools/hvac-filter-schedule/"><span class="meta">HVAC · INSPECTION PLANNER</span><h3>HVAC filter inspection schedule</h3><p>Enter the inspection interval from your equipment manual to calculate and print your next six checks.</p><span class="arrow">Open scheduler ↗</span></a>
-      <a class="editorial-card" href="/tools/custom-maintenance-checklist/"><span class="meta">PLANNING · CUSTOM CHECKLIST</span><h3>Custom home maintenance checklist</h3><p>Filter by home type and systems, save your checkmarks locally and print the checklist.</p><span class="arrow">Build checklist ↗</span></a>
-      <a class="editorial-card" href="/tools/maintenance-log/"><span class="meta">PLANNING · LOCAL RECORDS</span><h3>Home maintenance log</h3><p>Record repairs and routine care privately in your browser. Import, export and print your CSV history.</p><span class="arrow">Open maintenance log ↗</span></a>
-      <a class="editorial-card" href="/tools/maintenance-budget/"><span class="meta">PLANNING · SAVINGS SCENARIOS</span><h3>Annual maintenance budget calculator</h3><p>Compare your own annual and monthly savings targets, plus a reserve gap, without pretending to quote repair costs.</p><span class="arrow">Open budget calculator ↗</span></a>
+    <div class="note"><strong>Choose a starting point:</strong> Use <a href="/maintenance-calendar/">the annual maintenance calendar</a> to plan across the year, or <a href="/guides/hvac-filter-routine/">the HVAC filter guide</a> to understand one common recurring task. These tools support planning; they do not replace manufacturer instructions or qualified inspections.</div>
+    <div class="directory-controls" aria-label="Find tools">
+      <label for="tool-search">Search tools by name or purpose</label>
+      <input id="tool-search" type="search" placeholder="Try paint, appliance, seasonal…" autocomplete="off" aria-controls="tool-list"/>
+      <fieldset><legend>Filter by purpose</legend><div class="directory-filters">
+        {categories.map((category,index)=><label><input type="radio" name="tool-category" value={category} checked={index===0}/><span>{category}</span></label>)}
+      </div></fieldset>
+      <p id="tool-count" role="status" aria-live="polite">{tools.length} tools available.</p>
     </div>
-    <div class="note" style="margin-top:3rem">Calculators provide planning estimates only. Check the actual product label, surface condition, local requirements and professional advice before purchasing or starting work.</div>
+    <div class="cards" id="tool-list">
+      {tools.map(tool=><a class="editorial-card" href={tool.path} data-category={tool.tag} data-search={(tool.title+" "+tool.meta+" "+tool.description).toLowerCase()}><span class="meta">{tool.tag.toUpperCase()} · {tool.meta}</span><h2 class="tool-title">{tool.title}</h2><p>{tool.description}</p><span class="arrow">{tool.cta}</span></a>)}
+    </div>
+    <p id="tool-empty" hidden>No matching tools. Try another term or choose “All tools.”</p>
+    <div class="note" style="margin-top:3rem">Estimates are planning aids, not quotes. Use actual product specifications and local guidance. Records stored by individual tools may remain on this device; review each tool's privacy and erase controls.</div>
   </div></section>
+  <script>
+    const search=document.querySelector<HTMLInputElement>("#tool-search");
+    const filters=document.querySelectorAll<HTMLInputElement>('input[name="tool-category"]');
+    const items=document.querySelectorAll<HTMLElement>("#tool-list .editorial-card");
+    const count=document.querySelector<HTMLElement>("#tool-count");
+    const empty=document.querySelector<HTMLElement>("#tool-empty");
+    function updateDirectory(){
+      const query=(search?.value||"").trim().toLocaleLowerCase();
+      const category=Array.from(filters).find(input=>input.checked)?.value||"All tools";
+      let visible=0;
+      items.forEach(item=>{
+        const match=(category==="All tools"||item.dataset.category===category)&&(!query||(item.dataset.search||"").includes(query));
+        item.hidden=!match;
+        if(match)visible++;
+      });
+      if(count)count.textContent=visible+" of "+items.length+" tools shown.";
+      if(empty)empty.hidden=visible!==0;
+    }
+    search?.addEventListener("input",updateDirectory);
+    filters.forEach(input=>input.addEventListener("change",updateDirectory));
+  </script>
+  <style>
+    .directory-controls{margin:2rem 0;padding:1.25rem 0;border-block:1px solid var(--line,#d1d5ce)}
+    .directory-controls>label{display:block;font-weight:700;margin-bottom:.5rem}
+    .directory-controls input[type="search"]{display:block;width:100%;max-width:32rem;padding:.8rem;border:1px solid currentColor;border-radius:.25rem;background:var(--paper,#fff);color:inherit;font:inherit}
+    .directory-controls fieldset{border:0;margin:1.25rem 0 0;padding:0}
+    .directory-controls legend{font-weight:700;margin-bottom:.65rem}
+    .directory-filters{display:flex;flex-wrap:wrap;gap:.65rem 1.25rem}
+    .directory-filters label{display:inline-flex;align-items:center;gap:.35rem;cursor:pointer}
+    .directory-filters input{accent-color:var(--pine,#234238)}
+    .directory-controls :focus-visible{outline:3px solid currentColor;outline-offset:3px}
+    .tool-title{font-size:1.35rem;line-height:1.25}
+    .editorial-card[hidden],#tool-empty[hidden]{display:none}
+  </style>
 </Base>
