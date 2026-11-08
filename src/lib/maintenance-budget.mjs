@@ -1,5 +1,5 @@
 /** User-defined savings scenarios, not predicted maintenance prices. */
-export function maintenanceBudget({homeValue, lowPercent, targetPercent, highPercent, annualSpend = 0, currentReserve = 0}) {
+export function maintenanceBudget({homeValue, lowPercent, targetPercent, highPercent, annualSpend, currentReserve}) {
   const numbers = [homeValue,lowPercent,targetPercent,highPercent,annualSpend,currentReserve];
   if (numbers.some(v => typeof v !== "number" || !Number.isFinite(v))) throw new RangeError("Enter valid numbers in every field.");
   if (homeValue <= 0 || homeValue > 100000000) throw new RangeError("Home value must be greater than $0 and at most $100 million.");
