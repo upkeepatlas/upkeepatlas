@@ -289,7 +289,7 @@
       "phase": "functions",
       "order": 11,
       "priority": 900,
-      "status": "in_progress",
+      "status": "published",
       "title": "Caulk and sealant quantity estimator",
       "keywordCandidate": "how many tubes of caulk calculator",
       "targetPath": "/calculators/caulk-tube-estimator/",
@@ -300,11 +300,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F011.md",
-      "release": null,
-      "claim": {
-        "id": "F011-20261108-1316",
-        "at": "2026-11-08T12:16:50Z",
-        "branch": "content/F011-caulk-tube-estimator"
+      "release": {
+        "sha": "0c41a4b31235e9dbeae9a0e46e3ecf2d9f5b27d4",
+        "deploymentId": "8c679156-2f5f-45a4-ab99-a9b32cfb1798",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42479629596",
+        "verifiedAt": "2026-11-08T13:17:04Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/calculators/caulk-tube-estimator/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/18",
+        "method": "GitHub Actions PR-head quality success; Cloudflare production exact merge SHA success; Cloudflare Browser Rendering confirmed live title, form, canonical and Sika source link. Interactive calculation and printing not independently browser-exercised."
       }
     },
     {
