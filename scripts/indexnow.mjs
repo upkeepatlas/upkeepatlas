@@ -9,7 +9,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
-import { PUBLIC_ROUTES } from "../src/lib/routes.mjs";
+import { PUBLIC_ROUTES, discoverRoutesFromPaths } from "../src/lib/routes.mjs";
 import {
   INDEXNOW_KEY, INDEXNOW_KEY_PATH, INDEXNOW_ORIGIN, INDEXNOW_ENDPOINT,
   routesForChangedFiles, makeIndexNowPayload
@@ -43,12 +43,20 @@ function checkConfiguration() {
 }
 function getPreviousRoutes() {
   try {
-    const source = git(["show", "HEAD^:src/lib/routes.mjs"]);
-    return [...source.matchAll(/"((?:\/[a-z0-9-]+)*\/)"/g)].map(match => match[1]);
-  } catch {
+    // Enumerate the prior Git tree, not a regex over a once-hardcoded manifest.
+    const files = git(["ls-tree", "-r", "--name-only", "HEAD^", "--", "src/pages", "src/content/guides"])
+      .split("\n").filter(Boolean);
+    const oldGuides = git(["show", "HEAD^:src/data/guides.mjs"]);
+    const legacySlugs = [...oldGuides.matchAll(/slug:\s*["']([a-z0-9-]+)["']/g)]
+      .map(match => match[1]);
+    return discoverRoutesFromPaths(files, legacySlugs);
+  } catch (error) {
+    console.warn("Prior route discovery unavailable; removed URLs cannot be inferred: " +
+      (error instanceof Error ? error.message : String(error)));
     return [];
   }
 }
+
 function getChangedRoutes() {
   if (forceAll) {
     console.log("Manual full-site submission explicitly requested.");
