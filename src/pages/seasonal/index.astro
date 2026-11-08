@@ -1,0 +1,61 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+const crumbs = [{ title: "Seasonal home care" }];
+const seasons = [
+  { id: "spring", name: "Spring", cue: "After cold or wet weather", question: "What changed since winter?", steps: [
+    "From the ground, note overflow marks, displaced downspouts, or water pooling beside the home after rain.",
+    "Look indoors for new stains, musty odors, or damp spots; document changes rather than guessing the cause.",
+    "Review cooling equipment instructions and book professional service if your manufacturer recommends it."
+  ], next: [{ href: "/tools/gutter-care-planner/", label: "Record drainage observations" }, { href: "/guides/spotting-moisture-early/", label: "Recognize early moisture signs" }] },
+  { id: "summer", name: "Summer", cue: "Heat, storms, and humidity", question: "Which exposures affect this home?", steps: [
+    "Check local heat and storm alerts; prioritize household preparedness before discretionary projects.",
+    "Record indoor condensation or dampness and address persistent moisture with appropriate professional help.",
+    "Check the actual HVAC manual for filter inspection guidance; do not assume a universal replacement interval."
+  ], next: [{ href: "/tools/climate-home-care/", label: "Select climate exposures" }, { href: "/tools/hvac-filter-schedule/", label: "Plan manual-based filter checks" }] },
+  { id: "fall", name: "Fall", cue: "Before colder or wetter conditions", question: "What needs attention before the weather shifts?", steps: [
+    "From safe ground level, note blocked-looking outlets, overflowing gutters, and drainage concerns; arrange qualified help for elevated work.",
+    "Review doors and windows for drafts or visible deterioration, and check product instructions before sealing anything.",
+    "Review heating equipment service guidance and household emergency contacts ahead of local severe-weather season."
+  ], next: [{ href: "/tools/gutter-care-planner/", label: "Create a gutter follow-up list" }, { href: "/calculators/caulk-tube-estimator/", label: "Estimate sealant for an appropriate project" }] },
+  { id: "winter", name: "Winter", cue: "Freezing conditions and indoor time", question: "Is the household prepared for local hazards?", steps: [
+    "Monitor official local warnings and plan for heat or power interruptions; never run fuel-burning generators indoors.",
+    "Note condensation, leaks, and indoor moisture; document recurring problems for a qualified professional.",
+    "Review the maintenance log, manufacturer manuals, and next-year priorities instead of scheduling unsafe outdoor work."
+  ], next: [{ href: "/tools/maintenance-log/", label: "Update your maintenance records" }, { href: "/maintenance-calendar/", label: "Adjust your annual plan" }] }
+];
+---
+<Base title="Seasonal Home Maintenance Guide and Planning Hub" description="A practical four-season home care guide: what to observe, what to prioritize, and which free planning tools to use for your own climate." breadcrumbs={crumbs}>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">A HOMEOWNER'S FIELD GUIDE</span><h1>Care for your home, <em class="serif" style="color:var(--pine)">season by season.</em></h1><p class="lede">Start with the weather and systems your home actually has. Use this four-season field guide to spot changes, organize safe follow-up, and open the right planner—not to follow a one-size-fits-all repair schedule.</p></div></section>
+  <section class="section-small rule-top"><div class="container">
+    <div class="note"><strong>How to use this hub:</strong> Start with the season that matches your local conditions, not just the calendar month. For each observation, note what changed, consult equipment manuals and local alerts, and call a qualified professional for roofs, ladders, electrical, gas, structural or other hazardous work.</div>
+    <nav class="season-nav" aria-label="Jump to a season">{seasons.map(s => <a href={"#"+s.id}>{s.name} ↓</a>)}</nav>
+    {seasons.map((s,i) => <section class="season" id={s.id} aria-labelledby={s.id+"-title"}>
+      <span class="eyebrow">{String(i+1).padStart(2,"0")} / {s.cue}</span>
+      <h2 id={s.id+"-title"}>{s.name}: {s.question}</h2>
+      <ul>{s.steps.map(step => <li>{step}</li>)}</ul>
+      <div class="season-links"><strong>Take the next step</strong>{s.next.map(n => <a href={n.href}>{n.label} ↗</a>)}</div>
+    </section>)}
+  </div></section>
+  <section class="section-small rule-top"><div class="container">
+    <h2>Build a plan that fits your home</h2>
+    <p>A seasonal overview helps you decide where to look. For an actual checklist, use the <a href="/tools/seasonal-maintenance-builder/">seasonal maintenance builder</a> to choose your home systems and broad climate conditions. For recurring tasks across all twelve months, open the <a href="/maintenance-calendar/">annual maintenance calendar</a>. Keep completed work in the <a href="/tools/maintenance-log/">private maintenance log</a>.</p>
+    <h2>Sources and limits</h2>
+    <p>Seasonal timing differs by U.S. region, elevation, weather, building type, and equipment. These are observation and planning prompts, not universal inspection intervals or instructions for dangerous repairs. Consult <a href="https://www.ready.gov/winter-weather">FEMA Ready.gov winter weather guidance</a> for preparedness, <a href="https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home">EPA moisture guidance</a> for persistent dampness, and <a href="https://www.energy.gov/energysaver/maintaining-your-air-conditioner">DOE air-conditioner maintenance guidance</a> for equipment context. Use the manufacturer's manual and local emergency instructions for your actual situation.</p>
+    <p class="small muted">Published by Upkeep Atlas · November 8, 2026 · Editorial research and automated checks; no professional inspection or expert review is claimed.</p>
+  </div></section>
+  <style>
+    .season-nav{display:flex;flex-wrap:wrap;gap:1rem;margin:2rem 0 1rem}
+    .season-nav a{display:inline-block;padding:.6rem .85rem;border:1px solid currentColor;text-decoration:none}
+    .season{padding:2.25rem 0;border-bottom:1px solid var(--line,#ccc);scroll-margin-top:2rem}
+    .season h2{max-width:52rem;margin:.65rem 0 1rem}
+    .season ul{max-width:52rem;line-height:1.7;padding-left:1.5rem}
+    .season li{margin:.6rem 0}
+    .season-links{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.5rem;margin-top:1.4rem}
+    .season-links a{color:var(--pine);text-underline-offset:.2rem}
+    :global([data-theme="dark"]) .season-links a{color:inherit}
+    a:focus-visible{outline:3px solid currentColor;outline-offset:4px}
+    @media(max-width:480px){.season-links{display:grid;gap:.7rem}}
+    @media print{.season-nav,.season-links{display:none}.season{break-inside:avoid}}
+  </style>
+</Base>

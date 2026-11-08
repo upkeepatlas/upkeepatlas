@@ -465,7 +465,7 @@
         "F012"
       ],
       "safety": "low",
-      "evidence": null,
+      "evidence": "docs/production/evidence/F017.md",
       "release": {
         "sha": "5373ee5e9751a6c5d0c59e579a1e0ecdfd1d081a",
         "deploymentId": "c0e4589c-8aa3-474f-950f-a26e49afe3bb",
@@ -482,7 +482,7 @@
       "phase": "functions",
       "order": 18,
       "priority": 830,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Seasonal hub and evergreen pathways",
       "keywordCandidate": "seasonal home maintenance schedule",
       "targetPath": "/seasonal/",
@@ -493,7 +493,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "F018-20261108-seasonal-hub",
+        "at": "2026-11-08T22:10:56Z",
+        "branch": "content/F018-seasonal-hub"
+      }
     },
     {
       "id": "F019",
