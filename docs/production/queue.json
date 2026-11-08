@@ -100,7 +100,7 @@
       "phase": "functions",
       "order": 4,
       "priority": 970,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Saved annual maintenance planner",
       "keywordCandidate": "save home maintenance schedule",
       "targetPath": "/maintenance-calendar/",
@@ -110,8 +110,13 @@
         "F002"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F004.md",
+      "release": null,
+      "claim": {
+        "id": "F004-20261108-0216Z",
+        "at": "2026-11-08T02:16:35Z",
+        "branch": "content/F004-saved-annual-planner-20261108"
+      }
     },
     {
       "id": "F005",
