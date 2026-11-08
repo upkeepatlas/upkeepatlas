@@ -482,7 +482,7 @@
       "phase": "functions",
       "order": 18,
       "priority": 830,
-      "status": "in_progress",
+      "status": "published",
       "title": "Seasonal hub and evergreen pathways",
       "keywordCandidate": "seasonal home maintenance schedule",
       "targetPath": "/seasonal/",
@@ -492,12 +492,15 @@
         "F010"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
-      "claim": {
-        "id": "F018-20261108-seasonal-hub",
-        "at": "2026-11-08T22:10:56Z",
-        "branch": "content/F018-seasonal-hub"
+      "evidence": "docs/production/evidence/F018.md",
+      "release": {
+        "sha": "4e86d0009ed4ad72efaf9e99b45fc0206a66a28a",
+        "deploymentId": "cfa52894-91e4-480f-ac00-a9c3a304848c",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42534341823",
+        "verifiedAt": "2026-11-08T23:18:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/seasonal/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/25",
+        "method": "GitHub-hosted exact final PR head quality job success; Cloudflare Pages production exact merge SHA success; Cloudflare Browser Rendering 375px confirmed live title, H1, canonical, four-season content and Ready.gov source. Keyboard and comprehensive viewport interactions not independently exercised."
       }
     },
     {
