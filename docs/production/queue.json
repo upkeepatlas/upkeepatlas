@@ -100,7 +100,7 @@
       "phase": "functions",
       "order": 4,
       "priority": 970,
-      "status": "in_progress",
+      "status": "published",
       "title": "Saved annual maintenance planner",
       "keywordCandidate": "save home maintenance schedule",
       "targetPath": "/maintenance-calendar/",
@@ -111,11 +111,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F004.md",
-      "release": null,
-      "claim": {
-        "id": "F004-20261108-0216Z",
-        "at": "2026-11-08T02:16:35Z",
-        "branch": "content/F004-saved-annual-planner-20261108"
+      "release": {
+        "sha": "0fee0368ca0a2bd13c6a748a79d5fb8a5285e452",
+        "deploymentId": "d2b6dc4e-4130-42ad-8eae-dbfb9b93a2cf",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42437894748",
+        "verifiedAt": "2026-11-08T03:17:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/maintenance-calendar/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/11",
+        "method": "GitHub Actions PR-head CI; Cloudflare Pages exact-SHA production success; Cloudflare Browser Rendering HTML verification (CSV/erase buttons and canonical). Browser persistence/export interactions not independently automated."
       }
     },
     {
