@@ -6,10 +6,10 @@ const crumbs=[{title:"Calculators",href:"/calculators/"},{title:"Paint coverage"
 const estimate=estimatePaintProject();
 ---
 <Base title="Interior Paint Coverage Calculator" description="Estimate paint gallons with this free calculator using room dimensions, doors and windows, coats and manufacturer coverage." breadcrumbs={crumbs}>
-  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">FREE TOOL / INTERIOR PAINT</span><h1>Enough paint. <em class="serif" style="color:var(--pine)">Less guesswork.</em></h1><p class="lede">Estimate the paint needed for a rectangular room's walls. Adjust the number of coats, openings, product coverage and waste allowance.</p></div></section>
+  <section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">FREE TOOL / INTERIOR PAINT</span><h1>Enough paint. <em class="serif" style="color:var(--pine)">Less guesswork.</em></h1><p class="lede">Estimate rectangular or individually measured walls without double-counting. Optionally calculate flat ceiling and trim paint separately.</p></div></section>
   <section class="section-small rule-top"><div class="container page-layout">
     <div class="tool-shell">
-      <div class="tool-head"><span class="eyebrow">ROOM & PRODUCT DETAILS</span><h2>Your wall measurements</h2><p class="small muted">Measurements are in feet. We subtract the combined door and window area from four walls.</p></div>
+      <div class="tool-head"><span class="eyebrow">ROOM & PRODUCT DETAILS</span><h2>Your wall measurements</h2><p class="small muted">Measurements are in feet. Choose a four-wall rectangle or individual wall segments, not both.</p></div>
       <form id="paint-form" novalidate>
         <div class="field"><label for="mode">Wall method</label><select id="mode" name="mode"><option value="room">Rectangular room</option><option value="segments">Measured wall segments instead of room</option></select></div><div id="room-fields"><div class="tool-grid">
           <div class="field"><label for="length">Room length (ft)</label><input id="length" name="length" type="number" min="1" max="500" step=".1" value="12" required/></div>
@@ -27,7 +27,7 @@ const estimate=estimatePaintProject();
           <div class="field"><label for="coverage">Label coverage (sq ft / gallon)</label><input id="coverage" name="coverage" type="number" min="1" max="2000" step="1" value="350" required/><small>Use your actual paint manufacturer's stated value.</small></div>
           <div class="field"><label for="waste">Allowance for waste (%)</label><input id="waste" name="waste" type="number" min="0" max="50" step="1" value="10" required/></div>
         </div>
-</div><fieldset><legend>Optional separate paint surfaces</legend><label><input type="checkbox" id="include-ceiling" name="includeCeiling"/> Include flat rectangular ceiling</label><div class="tool-grid">
+<fieldset><legend>Optional separate paint surfaces</legend><label><input type="checkbox" id="include-ceiling" name="includeCeiling"/> Include flat rectangular ceiling</label><div class="tool-grid">
 <div class="field"><label for="ceiling-coats">Ceiling coats</label><input id="ceiling-coats" name="ceilingCoats" type="number" value="1"/></div>
 <div class="field"><label for="ceiling-coverage">Ceiling label coverage (sq ft/gal)</label><input id="ceiling-coverage" name="ceilingCoverage" type="number" value="350"/></div>
 <div class="field"><label for="trim-area">Measured trim surface area (sq ft)</label><input id="trim-area" name="trimArea" type="number" value="0" step=".1"/></div>
@@ -41,7 +41,7 @@ const estimate=estimatePaintProject();
         <strong id="paint-gallons">{estimate.gallonsToBuy} gallons</strong>
         <p id="paint-breakdown">{estimate.paintableArea.toFixed(0)} sq ft of wall after openings · {estimate.gallonsExact.toFixed(2)} gallons calculated, before rounding up.</p>
 <p id="paint-extras">Wall quart scenario: {estimate.wallQuartsToBuy} quart(s). Ceiling and trim excluded.</p></div><div class="prose" style="font-size:.93rem">
-        <h2>How the estimate works</h2><p>Wall area = 2 × (length + width) × height. Subtract doors and windows. Multiply by number of coats and (1 + waste percent ÷ 100), then divide by your product's stated square feet per gallon. Finally, round up to full gallons for a simple purchase estimate.</p>
+        <h2>How the estimate works</h2><p>Rectangular wall area = 2 × (length + width) × height. Segment mode instead sums each wall length × height; never add both. Subtract openings once. Multiply net area by coats and (1 + waste percent ÷ 100), then divide by the selected paint label's square feet per gallon. Flat ceiling area = length × width; trim is measured surface square feet. Each paint type is calculated and rounded separately. Quart scenarios round up to quarter-gallon increments where quarts are sold.</p>
         <p><strong>Not included:</strong> sloped ceilings, primer, surface porosity or product-specific paint pack sizes. Ceiling and trim are rounded separately; wall segment mode cannot infer an irregular ceiling. The product label and actual surface preparation determine final requirements.</p>
       </div>
     </div>
