@@ -39,6 +39,19 @@ At the start of THIS execution (not relying on previous chat answers):
 5. Inspect actual Astro code, relevant routes, existing guides/tools, tests, route registry, sitemap, robots, IndexNow, theme CSS, Search Console/Bing and AdSense integration as needed. Preserve existing assets, verified code and legitimate site changes. Read docs/production/README.md.
 6. If any connector is missing or user action/approval is requested, stop safely with BLOCKED and exact reconnect steps. Do not assume scheduled tasks inherit the same account permissions.
 
+## 0A. GITHUB CONNECTOR MODE — DEFAULT WHEN LOCAL CHECKOUT IS UNAVAILABLE
+
+**No local clone or outbound DNS access is required to implement a task if the connected GitHub file API, GitHub Actions and Cloudflare connection are working.** This is an explicitly supported release path, not a weakened quality gate.
+
+1. First use the connected GitHub plugin to inspect current files, create or reuse the task branch, commit changed files via create_file/update_file (or the Git Tree API for multi-file commits), open a PR, and inspect the real GitHub Actions workflow jobs/logs. Do not try to clone again after a proven hostname-resolution error unless there is a concrete reason it may now work.
+2. Perform all build, dependency, type, test, SEO, queue and security quality checks using the **GitHub-hosted Actions runner** that is already configured in .github/workflows/quality.yml. A passing Actions run on the exact PR SHA is valid objective test evidence; a local npm install is optional, not a release precondition.
+3. Fix failed checks by reading actual Actions logs, updating the same branch through the GitHub plugin, and rerunning CI. Use the plugin to merge only after the complete workflow succeeds, with an expected head SHA to prevent racing changes.
+4. Use the Cloudflare connector to confirm production deployment ID, success, exact SHA and production host; use available live HTTP/browser verification. If local shell/HTTP network is restricted but connected Cloudflare Pages API can validate the deployment, supplement with a deployed-content fingerprint or GitHub Actions HTTP smoke test and clearly record remaining unavailable browser measurements.
+5. Only declare BLOCKED when the **connector-based route also fails** or required safety/quality evidence is truly unavailable. Local DNS failure alone is **not** a blocker and must not cause repeated hourly reports with no code changes.
+6. GitHub file updates require the current blob SHA; read before updating and re-fetch after conflicts. GitHub Actions is the independent build environment; never claim to have run local npm if you only saw CI. Preserve existing production paths and one task per run.
+
+If a task is platform infrastructure (F001–F003 or F020), homeowner-keyword SERP analysis is not meaningful. Cite official Astro/Cloudflare/Google implementation references and verify actual site functionality instead of fabricating three competing homeowner search results. For reader-facing functions and all articles, retain full real SERP and intent research.
+
 ## 1. SELECT EXACTLY ONE ITEM AND CLAIM IT SAFELY
 
 Read and validate queue.json using node scripts/validate-production-queue.mjs when an execution environment is available, otherwise check its schema and logic manually.
@@ -115,7 +128,7 @@ For the selected page or live function, ensure:
 ## 6. QUALITY GATES, RELEASE AND LIVE VERIFICATION
 
 A. Update unit tests and generated HTML/metadata checks as appropriate; validate source ledger, rights and planned route.
-B. Execute or inspect a real green CI run covering: npm ci; npm run test; npm run build; npm run check; npm run check:seo; npm run check:theme; npm run check:indexnow; npm run check:queue. For unique tools also test the real calculation, form, print/export or persistence flow.
+B. Use a real green GitHub Actions CI run on the exact PR SHA (local npm optional) covering: npm ci; npm run test; npm run build; npm run check; npm run check:seo; npm run check:theme; npm run check:indexnow; npm run check:queue. For unique tools also test the real calculation, form, print/export or persistence flow.
 C. Inspect Cloudflare preview and browser/mobile (320/375/768/1024/1440px as accessible); verify keyboard focus, error states, dark theme, and no broken or fake image assets. Accessibility/performance scores require measured tools.
 D. Open and review a PR for the selected ID; fix failures and rerun CI. Merge only after quality gates, no concurrent conflicts and honest safety/media review. Never force-push or override another person's production changes.
 E. Wait for or inspect actual Cloudflare Pages production deployment of the exact merge commit (or appropriate later verified release commit). Check that live URL returns 200 (platform tasks: verify changed existing URL), expected title/H1/canonical, source/assets, interactions and links. When a CDN cache is stale, verify deploy SHA and retry briefly.
