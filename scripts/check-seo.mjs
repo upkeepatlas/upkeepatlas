@@ -4,7 +4,7 @@ import {PUBLIC_ROUTES,publishedOrigin} from "../src/lib/routes.mjs";
 import {INDEXNOW_KEY} from "../src/lib/indexnow.mjs";
 const output=path.resolve("dist");
 if(!fs.existsSync(output))throw new Error("Missing dist directory; run npm run build first.");
-const errors=[];const titles=new Set();const origin=publishedOrigin(process.env.PUBLIC_SITE_URL);
+const errors=[];const titles=new Set();const descriptions=new Set();const origin=publishedOrigin(process.env.PUBLIC_SITE_URL);
 const read=(name)=>fs.readFileSync(path.join(output,name),"utf8");
 /* Every generated indexable page must be in the registry, and vice versa.
    This catches forgotten new Astro pages without relying on a fixed count. */
@@ -30,7 +30,13 @@ for(const route of PUBLIC_ROUTES){
   else if(titles.has(title))errors.push(route+": duplicate title "+title);else titles.add(title);
   const count=(html.match(/<h1(?:\s[^>]*)?>/gi)||[]).length;
   if(count!==1)errors.push(route+": expected one H1; found "+count);
-  if(!/<meta\s+name="description"\s+content="[^"]+"/i.test(html))errors.push(route+": description missing");
+  const description=html.match(/<meta\\s+name="description"\\s+content="([^"]+)"/i)?.[1];
+  if(!description)errors.push(route+": description missing");
+  else if(descriptions.has(description))errors.push(route+": duplicate meta description");
+  else descriptions.add(description);
+  for(const block of html.matchAll(/<script\\s+type="application\\/ld\\+json"[^>]*>([\\s\\S]*?)<\\/script>/gi)){
+    try { JSON.parse(block[1]); } catch { errors.push(route+": malformed JSON-LD"); }
+  }
   if(!html.includes('lang="en-US"'))errors.push(route+": missing language declaration");
   if(origin && process.env.CF_PAGES_BRANCH==="main" && process.env.CF_PAGES_COMMIT_SHA &&
     !html.includes('name="upkeepatlas-deploy-commit" content="'+process.env.CF_PAGES_COMMIT_SHA+'"')){
