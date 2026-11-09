@@ -30,7 +30,7 @@ for(const route of PUBLIC_ROUTES){
   else if(titles.has(title))errors.push(route+": duplicate title "+title);else titles.add(title);
   // Duplicate IDs break label/fragment targeting and can confuse assistive technology.
   const ids=new Set();
-  for(const match of html.matchAll(/\\sid="([^"]+)"/gi)){
+  for(const match of html.matchAll(/\sid="([^"]+)"/gi)){
     const value=match[1];
     if(ids.has(value))errors.push(route+": duplicate HTML id "+value);
     ids.add(value);
