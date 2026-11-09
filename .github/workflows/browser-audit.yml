@@ -1,0 +1,37 @@
+name: F020 browser audit
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'scripts/audit-browser.mjs'
+      - '.github/workflows/browser-audit.yml'
+      - 'package.json'
+      - 'package-lock.json'
+permissions:
+  contents: read
+jobs:
+  browser-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --no-audit --no-fund
+      - name: Install ephemeral browser runner
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Start Astro preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/astro-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/astro-preview.log
+          exit 1
+      - name: Exercise every tool at five viewport widths
+        run: node scripts/audit-browser.mjs
