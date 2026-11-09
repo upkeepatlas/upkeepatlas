@@ -34,6 +34,11 @@ try {
         } catch { /* Unsupported browser signal is reported as null. */ }
       });
       const errors = [];
+      // Observe real print calls rather than merely checking print CSS.
+      await page.addInitScript(() => {
+        window.__auditPrintCalls = 0;
+        window.print = () => { window.__auditPrintCalls++; };
+      });
       page.on('pageerror', error => errors.push(error.message));
       try {
         const response = await page.goto(origin + route, { waitUntil: 'domcontentloaded', timeout: 20000 });
@@ -111,6 +116,22 @@ try {
           await page.reload({ waitUntil: 'domcontentloaded' });
           const persistedTheme = await page.locator('html').getAttribute('data-theme');
           if (persistedTheme !== afterTheme) failures.push({ route, width, check: 'theme persistence', observed: { afterTheme, persistedTheme } });
+          // Exercise visible print actions with keyboard activation. A print
+          // media query alone cannot prove that the site's button is wired.
+          const printButtons = page.getByRole('button', { name: /print/i });
+          const printButtonCount = await printButtons.count();
+          for (let i = 0; i < printButtonCount; i++) {
+            const control = printButtons.nth(i);
+            if (!(await control.isVisible()) || !(await control.isEnabled())) continue;
+            const beforeCalls = await page.evaluate(() => window.__auditPrintCalls);
+            await control.focus();
+            await page.keyboard.press('Enter');
+            const afterCalls = await page.evaluate(() => window.__auditPrintCalls);
+            if (afterCalls <= beforeCalls) failures.push({
+              route, width, check: 'keyboard print action',
+              observed: { button: await control.innerText(), beforeCalls, afterCalls }
+            });
+          }
           await page.emulateMedia({ media: 'print' });
           const print = await page.evaluate(() => ({ media: matchMedia('print').matches, body: !!document.body.innerText.trim() }));
           if (!print.media || !print.body) failures.push({ route, width, check: 'print media', observed: print });
