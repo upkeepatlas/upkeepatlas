@@ -30,11 +30,11 @@ for(const route of PUBLIC_ROUTES){
   else if(titles.has(title))errors.push(route+": duplicate title "+title);else titles.add(title);
   const count=(html.match(/<h1(?:\s[^>]*)?>/gi)||[]).length;
   if(count!==1)errors.push(route+": expected one H1; found "+count);
-  const description=html.match(/<meta\\s+name="description"\\s+content="([^"]+)"/i)?.[1];
+  const description=html.match(/<meta\s+name="description"\s+content="([^"]+)"/i)?.[1];
   if(!description)errors.push(route+": description missing");
   else if(descriptions.has(description))errors.push(route+": duplicate meta description");
   else descriptions.add(description);
-  for(const block of html.matchAll(/<script\\s+type="application\\/ld\\+json"[^>]*>([\\s\\S]*?)<\\/script>/gi)){
+  for(const block of html.matchAll(/<script\s+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)){
     try { JSON.parse(block[1]); } catch { errors.push(route+": malformed JSON-LD"); }
   }
   if(!html.includes('lang="en-US"'))errors.push(route+": missing language declaration");
