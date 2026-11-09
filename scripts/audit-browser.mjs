@@ -145,6 +145,62 @@ try {
       }
     }
   }
+  // End-to-end representative arithmetic and CSV round-trip assertions.
+  // Browser data is isolated in a fresh context; no production user data is touched.
+  {
+    const context = await browser.newContext({ acceptDownloads: true });
+    const page = await context.newPage();
+    try {
+      await page.goto(origin + '/calculators/appliance-electricity-cost/', { waitUntil: 'load' });
+      await page.locator('#electric-watts').fill('1000');
+      await page.locator('#electric-hours').fill('2');
+      await page.locator('#electric-days').fill('7');
+      await page.locator('#electric-rate').fill('0.25');
+      await page.locator('#electric-duty').fill('50');
+      await page.locator('#electric-form button[type="submit"]').click();
+      const cost = await page.locator('#electric-cost').innerText();
+      const detail = await page.locator('#electric-detail').innerText();
+      // 1 kW × 2 h × 7 days × 0.5 load × 52 weeks = 364 kWh; at $0.25 = $91.
+      if (!cost.includes('91.00') || !detail.includes('364.00 kWh/year'))
+        failures.push({ route: '/calculators/appliance-electricity-cost/', check: 'actual calculation', observed: { cost, detail } });
+      await page.locator('#electric-watts').fill('-1');
+      await page.locator('#electric-form button[type="submit"]').click();
+      const error = await page.locator('#electric-error').innerText();
+      if (!error.trim()) failures.push({ route: '/calculators/appliance-electricity-cost/', check: 'invalid input error missing' });
+
+      await page.goto(origin + '/tools/maintenance-log/', { waitUntil: 'load' });
+      await page.locator('#record-date').fill('2026-11-09');
+      await page.locator('#record-system').fill('HVAC');
+      await page.locator('#record-work').fill('Inspected filter');
+      await page.locator('#log-form button[type="submit"]').click();
+      if (await page.locator('#log-rows tr').count() !== 1)
+        failures.push({ route: '/tools/maintenance-log/', check: 'save record' });
+      await page.reload({ waitUntil: 'load' });
+      if (await page.locator('#log-rows tr').count() !== 1)
+        failures.push({ route: '/tools/maintenance-log/', check: 'persist record after reload' });
+      const downloadPromise = page.waitForEvent('download');
+      await page.locator('#export-log').click();
+      const download = await downloadPromise;
+      const path = await download.path();
+      const { readFile } = await import('node:fs/promises');
+      const csv = await readFile(path, 'utf8');
+      if (!csv.includes('2026-11-09,HVAC,Inspected filter'))
+        failures.push({ route: '/tools/maintenance-log/', check: 'CSV content', observed: csv.slice(0, 300) });
+      page.once('dialog', dialog => dialog.accept());
+      await page.locator('#clear-log').click();
+      if (await page.locator('#log-rows tr').count() !== 0)
+        failures.push({ route: '/tools/maintenance-log/', check: 'erase records' });
+      page.once('dialog', dialog => dialog.accept());
+      await page.locator('#import-log').setInputFiles({ name: 'backup.csv', mimeType: 'text/csv', buffer: Buffer.from(csv) });
+      if (await page.locator('#log-rows tr').count() !== 1)
+        failures.push({ route: '/tools/maintenance-log/', check: 'CSV import round trip' });
+      results.push({ route: 'interaction-samples', checks: ['electricity arithmetic', 'invalid input', 'log persistence', 'CSV export', 'erase', 'CSV import'] });
+    } catch (error) {
+      failures.push({ route: 'interaction-samples', check: 'end-to-end flow', observed: String(error) });
+    } finally {
+      await context.close();
+    }
+  }
 } finally {
   await browser.close();
 }
