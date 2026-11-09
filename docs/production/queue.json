@@ -509,7 +509,7 @@
       "phase": "functions",
       "order": 19,
       "priority": 820,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Printable resource library",
       "keywordCandidate": "home maintenance printable planner downloads",
       "targetPath": "/printables/",
@@ -520,8 +520,13 @@
         "F008"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/F019.md",
+      "release": null,
+      "claim": {
+        "id": "F019-20261109-printables",
+        "at": "2026-11-09T00:12:33Z",
+        "branch": "content/F019-printable-resource-library"
+      }
     },
     {
       "id": "F020",
