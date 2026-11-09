@@ -537,7 +537,7 @@
       "phase": "functions",
       "order": 20,
       "priority": 810,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Site-wide tool and SEO hardening",
       "keywordCandidate": "accessible home maintenance calculators",
       "targetPath": null,
@@ -550,7 +550,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "F020-2026-11-09-tool-hardening",
+        "at": "2026-11-09T01:09:07Z",
+        "branch": "content/F020-tool-seo-hardening"
+      }
     },
     {
       "id": "A001",
