@@ -509,7 +509,7 @@
       "phase": "functions",
       "order": 19,
       "priority": 820,
-      "status": "in_progress",
+      "status": "published",
       "title": "Printable resource library",
       "keywordCandidate": "home maintenance printable planner downloads",
       "targetPath": "/printables/",
@@ -521,11 +521,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/F019.md",
-      "release": null,
-      "claim": {
-        "id": "F019-20261109-printables",
-        "at": "2026-11-09T00:12:33Z",
-        "branch": "content/F019-printable-resource-library"
+      "release": {
+        "sha": "008813827828a9ad602c5e64141de550c51f9fee",
+        "deploymentId": "e9b4dc63-b21e-484f-9736-babbc52e035c",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42539058409",
+        "verifiedAt": "2026-11-09T00:18:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/printables/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/26",
+        "method": "GitHub-hosted PR-head quality success; Cloudflare Pages production success for exact merge SHA; Browser Rendering 375px confirmed title, H1, canonical, worksheet controls and FEMA source. Actual print dialog, Save PDF, keyboard traversal and multi-viewport testing not independently exercised."
       }
     },
     {
