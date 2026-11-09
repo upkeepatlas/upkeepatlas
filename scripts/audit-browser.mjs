@@ -41,7 +41,7 @@ try {
                 (id && document.querySelector('label[for="' + CSS.escape(id) + '"]')?.textContent.trim()) ||
                 el.closest('label')?.textContent.trim() ||
                 el.getAttribute('aria-label')?.trim() ||
-                (el.getAttribute('aria-labelledby') || '').split(/\\s+/).some(ref => document.getElementById(ref)?.textContent.trim());
+                (el.getAttribute('aria-labelledby') || '').split(/\s+/).some(ref => document.getElementById(ref)?.textContent.trim());
               return !label;
             }).map(el => ({ tag: el.tagName, type: el.type || '', id: el.id || '', name: el.name || '' }))
           );
