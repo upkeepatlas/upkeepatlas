@@ -1,0 +1,53 @@
+---
+import Base from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+const crumbs=[{title:"Printable resources"}];
+const sheets=[
+ {id:"service",title:"Maintenance & service record",purpose:"Document actual work and unresolved follow-up.",headers:["Date","System or area","Work / observation","Provider / next step"],rows:9},
+ {id:"season",title:"Seasonal observation worksheet",purpose:"Record what applies to your climate and home; do not assume a universal schedule.",headers:["Season / date","Ground-level observation","Action or professional follow-up","Completed"],rows:9},
+ {id:"inventory",title:"Room-by-room inventory sheet",purpose:"Write down possessions privately; keep copies somewhere secure.",headers:["Room","Item / quantity","Purchase or replacement detail","Receipt / photo reference"],rows:9}
+];
+---
+<Base title="Free Home Maintenance Printables and Worksheets" description="Print three original blank homeowner worksheets or save them as PDF using your browser, with links to editable planning tools." breadcrumbs={crumbs}>
+<section class="page-head"><div class="container"><Breadcrumbs items={crumbs}/><span class="eyebrow">HOMEOWNER RESOURCE LIBRARY</span><h1>Print a plan. <em class="serif" style="color:var(--pine)">Keep a record.</em></h1><p class="lede">Three reusable US Letter worksheets for observations, maintenance history, and household inventory. No sign-in, no preset service intervals, and no personal information sent to this site.</p></div></section>
+<section class="section-small rule-top"><div class="container">
+<div class="note"><strong>How to save a PDF:</strong> Select a worksheet below, then use its Print / Save PDF button. In the browser print dialog choose “Save as PDF” or your printer. The worksheets are also readable and printable without JavaScript using your browser's Print command. Preview before saving; browser print settings vary.</div>
+<nav class="sheet-nav" aria-label="Choose a worksheet">{sheets.map(s=><a href={"#"+s.id}>{s.title}</a>)}</nav>
+{ sheets.map((s,i)=><section class="sheet-block" id={s.id} aria-labelledby={s.id+"-title"}>
+<div class="sheet-intro"><span class="eyebrow">WORKSHEET {String(i+1).padStart(2,"0")}</span><h2 id={s.id+"-title"}>{s.title}</h2><p>{s.purpose}</p><button type="button" data-print={s.id}>Print / Save PDF of this worksheet</button></div>
+<div class="print-sheet" data-sheet={s.id}>
+<h3>UPKEEP ATLAS / {s.title}</h3><p>Home / reference: __________________________ &nbsp; Date: __________________</p>
+<table><thead><tr>{s.headers.map(h=><th scope="col">{h}</th>)}</tr></thead><tbody>{Array.from({length:s.rows},()=> <tr>{s.headers.map(()=> <td><span class="write-space">&nbsp;</span></td>)}</tr>)}</tbody></table>
+<p class="sheet-foot">Notes / next review: ______________________________________________________________</p>
+<p class="small">Use actual manufacturer instructions, local conditions, and qualified professionals for hazardous work. Blank worksheet · upkeepatlas.pages.dev</p>
+</div>
+</section>)}
+<h2>Prefer an editable tool?</h2>
+<p>Build a <a href="/tools/custom-maintenance-checklist/">custom maintenance checklist</a>, maintain a <a href="/tools/maintenance-log/">private maintenance log with CSV export</a>, or use the <a href="/tools/home-inventory/">home inventory worksheet and CSV download</a>. These are separate tools with their own save and erase controls. For weather-dependent priorities see the <a href="/seasonal/">seasonal home care hub</a>.</p>
+<h2>Privacy, safety, and sources</h2><p>These blank sheets do not store what you write. A printed or saved inventory can contain sensitive details; keep it secure and check your insurer's current documentation requirements. Do not treat these worksheets as proof of inspection or a substitute for professional advice. For background see <a href="https://www.ready.gov/plan">FEMA Ready.gov household planning</a> and <a href="https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home">EPA moisture guidance</a>.</p>
+<p class="small muted">Upkeep Atlas · November 9, 2026 · Original blank worksheets; no professional review claimed.</p>
+</div></section>
+<script>
+document.querySelectorAll<HTMLButtonElement>("[data-print]").forEach(button=>button.addEventListener("click",()=>{
+ const id=button.dataset.print;
+ document.documentElement.dataset.printSheet=id||"";
+ try {window.print()} finally { /* afterprint clears selection on supported browsers */ }
+}));
+window.addEventListener("afterprint",()=>{delete document.documentElement.dataset.printSheet});
+</script>
+<style>
+.sheet-nav{display:flex;flex-wrap:wrap;gap:1rem;margin:2rem 0}.sheet-nav a{border:1px solid currentColor;padding:.65rem}.sheet-block{border-top:1px solid var(--line,#ccc);padding:2rem 0;scroll-margin-top:1rem}.sheet-intro button{background:var(--pine);color:white;border:0;padding:.85rem 1rem;cursor:pointer;font:inherit}.sheet-intro button:focus-visible,.sheet-nav a:focus-visible{outline:3px solid currentColor;outline-offset:3px}.print-sheet{background:#fff;color:#202824;border:1px solid #aab5ac;padding:1.2rem;margin-top:1.2rem;overflow-x:auto}.print-sheet h3{font:700 1.1rem system-ui;margin:0 0 1rem}.print-sheet table{width:100%;border-collapse:collapse;table-layout:fixed;font: .78rem system-ui}.print-sheet th,.print-sheet td{border:1px solid #777;padding:.45rem;text-align:left;overflow-wrap:anywhere}.print-sheet td{height:2.4rem}.sheet-foot{margin:1.2rem 0}.print-sheet .small{font-size:.7rem}
+@media(max-width:600px){.print-sheet{padding:.5rem}.print-sheet th,.print-sheet td{padding:.2rem;font-size:.65rem}}
+@media print{
+@page{size:letter portrait;margin:.55in}
+body *{visibility:hidden!important}
+.print-sheet,.print-sheet *{visibility:visible!important}
+.print-sheet{position:absolute;left:0;top:0;width:100%;border:0;padding:0;margin:0;overflow:visible}
+.sheet-block{break-before:page}
+html[data-print-sheet="service"] .print-sheet:not([data-sheet="service"]),html[data-print-sheet="season"] .print-sheet:not([data-sheet="season"]),html[data-print-sheet="inventory"] .print-sheet:not([data-sheet="inventory"]){display:none!important}
+html[data-print-sheet="service"] .sheet-block:not(#service),html[data-print-sheet="season"] .sheet-block:not(#season),html[data-print-sheet="inventory"] .sheet-block:not(#inventory){display:none!important} 
+.print-sheet table th,.print-sheet table td{font-size:10pt}
+.print-sheet table td{height:.55in}
+}
+</style>
+</Base>
