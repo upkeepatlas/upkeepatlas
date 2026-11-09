@@ -37,11 +37,29 @@ try {
               getComputedStyle(document.activeElement).visibility !== 'hidden'
           }));
           if (!focus.visible) failures.push({ route, width, check: 'first keyboard focus', observed: focus });
-          await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' });
+          // Emulating a color preference after load does not prove the site's
+          // user-controlled theme works. Exercise the real keyboard control.
+          const toggle = page.locator('[data-theme-toggle]');
+          await toggle.waitFor({ state: 'visible' });
+          const beforeTheme = await page.locator('html').getAttribute('data-theme');
+          await toggle.focus();
+          await page.keyboard.press('Enter');
+          const afterTheme = await page.locator('html').getAttribute('data-theme');
+          const actionLabel = await toggle.getAttribute('aria-label');
+          const savedTheme = await page.evaluate(() => localStorage.getItem('upkeepatlas-theme'));
+          if (beforeTheme === afterTheme || !['dark', 'light'].includes(afterTheme) ||
+              savedTheme !== afterTheme ||
+              actionLabel !== (afterTheme === 'dark' ? 'Switch to day mode' : 'Switch to night mode')) {
+            failures.push({ route, width, check: 'keyboard theme toggle', observed: { beforeTheme, afterTheme, actionLabel, savedTheme } });
+          }
           const dark = await page.evaluate(() => ({
+            theme: document.documentElement.dataset.theme,
             background: getComputedStyle(document.body).backgroundColor,
             color: getComputedStyle(document.body).color
           }));
+          await page.reload({ waitUntil: 'domcontentloaded' });
+          const persistedTheme = await page.locator('html').getAttribute('data-theme');
+          if (persistedTheme !== afterTheme) failures.push({ route, width, check: 'theme persistence', observed: { afterTheme, persistedTheme } });
           await page.emulateMedia({ media: 'print' });
           const print = await page.evaluate(() => ({ media: matchMedia('print').matches, body: !!document.body.innerText.trim() }));
           if (!print.media || !print.body) failures.push({ route, width, check: 'print media', observed: print });
