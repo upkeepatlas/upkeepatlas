@@ -28,6 +28,13 @@ for(const route of PUBLIC_ROUTES){
   const title=html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.trim();
   if(!title)errors.push(route+": title missing");
   else if(titles.has(title))errors.push(route+": duplicate title "+title);else titles.add(title);
+  // Duplicate IDs break label/fragment targeting and can confuse assistive technology.
+  const ids=new Set();
+  for(const match of html.matchAll(/\\sid="([^"]+)"/gi)){
+    const value=match[1];
+    if(ids.has(value))errors.push(route+": duplicate HTML id "+value);
+    ids.add(value);
+  }
   const count=(html.match(/<h1(?:\s[^>]*)?>/gi)||[]).length;
   if(count!==1)errors.push(route+": expected one H1; found "+count);
   const description=html.match(/<meta\s+name="description"\s+content="([^"]+)"/i)?.[1];
