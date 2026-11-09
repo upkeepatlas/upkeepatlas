@@ -30,6 +30,22 @@ try {
         if (!initial.title || initial.h1 !== 1 || !initial.main || !initial.skip || initial.overflow)
           failures.push({ route, width, check: 'structure/overflow', observed: initial });
         if (width === 375) {
+          // Check the accessible name of each visible native form control. This
+          // catches unlabeled inputs that structural SEO checks cannot detect.
+          const unnamedControls = await page.locator('input, select, textarea').evaluateAll(elements =>
+            elements.filter(el => {
+              const style = getComputedStyle(el);
+              if (el.type === 'hidden' || style.display === 'none' || style.visibility === 'hidden' || !el.getClientRects().length) return false;
+              const id = el.id;
+              const label = (el.labels && Array.from(el.labels).some(node => node.textContent.trim())) ||
+                (id && document.querySelector('label[for="' + CSS.escape(id) + '"]')?.textContent.trim()) ||
+                el.closest('label')?.textContent.trim() ||
+                el.getAttribute('aria-label')?.trim() ||
+                (el.getAttribute('aria-labelledby') || '').split(/\\s+/).some(ref => document.getElementById(ref)?.textContent.trim());
+              return !label;
+            }).map(el => ({ tag: el.tagName, type: el.type || '', id: el.id || '', name: el.name || '' }))
+          );
+          if (unnamedControls.length) failures.push({ route, width, check: 'unlabeled visible form controls', observed: unnamedControls });
           await page.keyboard.press('Tab');
           const focus = await page.evaluate(() => ({
             tag: document.activeElement?.tagName,
