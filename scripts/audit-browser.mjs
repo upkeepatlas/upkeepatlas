@@ -10,11 +10,29 @@ if (!routes.length) throw new Error('No tool routes discovered');
 const browser = await chromium.launch({ headless: true });
 const failures = [];
 const results = [];
+const labPerformance = [];
 try {
   for (const route of routes) {
     for (const width of viewports) {
       const context = await browser.newContext({ viewport: { width, height: 800 }, reducedMotion: 'reduce' });
       const page = await context.newPage();
+      // Collect browser lab signals. These are NOT CrUX field CWV or a Lighthouse score.
+      if (width === 375) await page.addInitScript(() => {
+        window.__auditVitals = { lcp: null, cls: 0, shifts: 0 };
+        try {
+          new PerformanceObserver(list => {
+            for (const entry of list.getEntries()) window.__auditVitals.lcp = Math.round(entry.startTime);
+          }).observe({ type: 'largest-contentful-paint', buffered: true });
+          new PerformanceObserver(list => {
+            for (const entry of list.getEntries()) {
+              if (!entry.hadRecentInput) {
+                window.__auditVitals.cls += entry.value;
+                window.__auditVitals.shifts++;
+              }
+            }
+          }).observe({ type: 'layout-shift', buffered: true });
+        } catch { /* Unsupported browser signal is reported as null. */ }
+      });
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
       try {
@@ -30,6 +48,23 @@ try {
         if (!initial.title || initial.h1 !== 1 || !initial.main || !initial.skip || initial.overflow)
           failures.push({ route, width, check: 'structure/overflow', observed: initial });
         if (width === 375) {
+          // A short, reproducible lab observation window before user interactions.
+          // LCP/CLS here are diagnostic samples, not real-user p75 or INP.
+          await page.waitForLoadState('load');
+          await page.waitForTimeout(750);
+          const perf = await page.evaluate(() => {
+            const nav = performance.getEntriesByType('navigation')[0];
+            const fcp = performance.getEntriesByName('first-contentful-paint')[0];
+            return {
+              lcpMs: window.__auditVitals?.lcp ?? null,
+              clsObserved: window.__auditVitals ? Number(window.__auditVitals.cls.toFixed(4)) : null,
+              layoutShiftEntries: window.__auditVitals?.shifts ?? null,
+              fcpMs: fcp ? Math.round(fcp.startTime) : null,
+              domContentLoadedMs: nav ? Math.round(nav.domContentLoadedEventEnd) : null,
+              transferBytes: nav?.transferSize ?? null
+            };
+          });
+          labPerformance.push({ route, width, ...perf });
           // Check the accessible name of each visible native form control. This
           // catches unlabeled inputs that structural SEO checks cannot detect.
           const unnamedControls = await page.locator('input, select, textarea').evaluateAll(elements =>
@@ -92,5 +127,5 @@ try {
 } finally {
   await browser.close();
 }
-console.log(JSON.stringify({ date: new Date().toISOString(), origin, routes: routes.length, viewports, sampled: results, failures }, null, 2));
+console.log(JSON.stringify({ date: new Date().toISOString(), origin, routes: routes.length, viewports, sampled: results, labPerformance, labLimitations: 'Chromium 375x800, local Astro preview, 750ms observation after load; LCP/CLS/FCP are lab signals, not CrUX p75 or INP; no throttling or screen reader', failures }, null, 2));
 if (failures.length) process.exitCode = 1;
