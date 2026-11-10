@@ -662,7 +662,7 @@
       "phase": "articles",
       "order": 4,
       "priority": 485,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Spring vs fall HVAC maintenance: what's different",
       "keywordCandidate": "spring vs fall hvac maintenance",
       "targetPath": "/guides/spring-vs-fall-hvac-maintenance/",
@@ -675,8 +675,13 @@
         "F005"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A004.md",
+      "release": null,
+      "claim": {
+        "id": "A004-20261110-0612Z",
+        "at": "2026-11-10T06:12:55Z",
+        "branch": "content/A004-seasonal-hvac-maintenance"
+      }
     },
     {
       "id": "A005",
