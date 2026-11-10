@@ -662,7 +662,7 @@
       "phase": "articles",
       "order": 4,
       "priority": 485,
-      "status": "in_progress",
+      "status": "published",
       "title": "Spring vs fall HVAC maintenance: what's different",
       "keywordCandidate": "spring vs fall hvac maintenance",
       "targetPath": "/guides/spring-vs-fall-hvac-maintenance/",
@@ -676,11 +676,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A004.md",
-      "release": null,
-      "claim": {
-        "id": "A004-20261110-0612Z",
-        "at": "2026-11-10T06:12:55Z",
-        "branch": "content/A004-seasonal-hvac-maintenance"
+      "release": {
+        "sha": "db3f159597ece906751ff1e6670786f301d61941",
+        "deploymentId": "99ee77a7-73ad-439b-995a-57f60b7567d8",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42767199545",
+        "verifiedAt": "2026-11-10T07:15:51Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/spring-vs-fall-hvac-maintenance/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/31",
+        "method": "GitHub Actions exact PR SHA quality and browser audit successful; Cloudflare Pages exact merge SHA production deployment successful; Cloudflare Browser Rendering live 375px title, H1, canonical, matrix, printable handoff, source and internal links verified."
       }
     },
     {
