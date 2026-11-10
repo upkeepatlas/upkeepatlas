@@ -781,7 +781,7 @@
       "phase": "articles",
       "order": 8,
       "priority": 465,
-      "status": "in_progress",
+      "status": "published",
       "title": "First-year homeowner tasks by month vs season",
       "keywordCandidate": "first year home maintenance schedule",
       "targetPath": "/guides/first-year-home-maintenance-by-month/",
@@ -794,11 +794,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A008.md",
-      "release": null,
-      "claim": {
-        "id": "A008-20261110-1317",
-        "at": "2026-11-10T13:17:23Z",
-        "branch": "content/A008-first-year-month-vs-season"
+      "release": {
+        "sha": "24559ca8806f6e685f37022aad98e86d97529efc",
+        "deploymentId": "aa8ea542-f0bb-46c4-ae3e-fc9fb46e0854",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42823465181",
+        "verifiedAt": "2026-11-10T13:24:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/first-year-home-maintenance-by-month/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/35",
+        "method": "GitHub Actions final PR-head build/quality and browser audit success; Cloudflare Pages exact merge SHA production deployment success; Cloudflare Browser Rendering 375px verified live title, H1, canonical, two-clock table, worksheet, EPA source and seasonal tool link. Manual keyboard, screen-reader and CrUX not independently measured."
       }
     },
     {
