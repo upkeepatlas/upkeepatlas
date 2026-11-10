@@ -845,7 +845,7 @@
       "phase": "articles",
       "order": 10,
       "priority": 455,
-      "status": "queued",
+      "status": "in_progress",
       "title": "How to plan a home repair reserve",
       "keywordCandidate": "how much to save for home repairs",
       "targetPath": "/guides/home-repair-emergency-fund/",
@@ -858,8 +858,13 @@
         "F006"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A010.md",
+      "release": null,
+      "claim": {
+        "id": "A010-20261110-1714Z",
+        "at": "2026-11-10T17:14:22Z",
+        "branch": "content/A010-home-repair-emergency-fund"
+      }
     },
     {
       "id": "A011",
