@@ -905,7 +905,7 @@
       "phase": "articles",
       "order": 12,
       "priority": 445,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Summer home maintenance without the busywork",
       "keywordCandidate": "summer home maintenance priorities",
       "targetPath": "/guides/summer-maintenance-priorities/",
@@ -918,8 +918,13 @@
         "F018"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A012.md",
+      "release": null,
+      "claim": {
+        "id": "A012-20261110-2113",
+        "at": "2026-11-10T20:13:26Z",
+        "branch": "content/A012-summer-priorities"
+      }
     },
     {
       "id": "A013",
