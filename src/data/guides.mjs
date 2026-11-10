@@ -1,5 +1,7 @@
 /** @type {Record<string,{title:string,url:string}>} */
 export const sources = {
+  ftc:{title:"Federal Trade Commission — Warranties",url:"https://consumer.ftc.gov/articles/warranties"},
+  irs:{title:"Internal Revenue Service — Publication 530, Tax Information for Homeowners",url:"https://www.irs.gov/publications/p530"},
   epa:{title:"U.S. EPA — A Brief Guide to Mold, Moisture and Your Home",url:"https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"},
   energy:{title:"ENERGY STAR — Heat & Cool Efficiently",url:"https://www.energystar.gov/saveathome/heating-cooling"},
   hvac:{title:"ENERGY STAR — HVAC Maintenance Checklist",url:"https://www.energystar.gov/saveathome/heating-cooling/maintenance-checklist"},
