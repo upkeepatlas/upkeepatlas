@@ -722,7 +722,7 @@
       "phase": "articles",
       "order": 6,
       "priority": 475,
-      "status": "in_progress",
+      "status": "published",
       "title": "Home maintenance records: what to keep",
       "keywordCandidate": "home maintenance record keeping",
       "targetPath": "/guides/home-maintenance-records-to-keep/",
@@ -734,12 +734,16 @@
         "F003"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
-      "claim": {
-        "id": "A006-20261110-1014-prague",
-        "at": "2026-11-10T09:14:38Z",
-        "branch": "content/A006-home-maintenance-records"
+      "evidence": "docs/production/evidence/A006.md",
+      "release": {
+        "sha": "b2e184a3c4c1189dd4b5ff1928956d1c3553696a",
+        "deploymentId": "77b6a1cb-5dab-44c0-aefc-e627a5a27641",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42789381616",
+        "browserAuditUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42789381611",
+        "verifiedAt": "2026-11-10T10:14:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/home-maintenance-records-to-keep/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/33",
+        "method": "GitHub-hosted exact PR-head quality and browser audit success; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering 375px live HTML with canonical and FTC link. Manual screen reader and real-user CWV not measured."
       }
     },
     {
