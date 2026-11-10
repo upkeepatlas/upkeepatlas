@@ -781,7 +781,7 @@
       "phase": "articles",
       "order": 8,
       "priority": 465,
-      "status": "queued",
+      "status": "in_progress",
       "title": "First-year homeowner tasks by month vs season",
       "keywordCandidate": "first year home maintenance schedule",
       "targetPath": "/guides/first-year-home-maintenance-by-month/",
@@ -793,8 +793,13 @@
         "F003"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A008.md",
+      "release": null,
+      "claim": {
+        "id": "A008-20261110-1317",
+        "at": "2026-11-10T13:17:23Z",
+        "branch": "content/A008-first-year-month-vs-season"
+      }
     },
     {
       "id": "A009",
