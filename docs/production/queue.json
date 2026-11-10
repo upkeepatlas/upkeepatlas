@@ -601,7 +601,7 @@
       "phase": "articles",
       "order": 2,
       "priority": 495,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Find the right HVAC air-filter size",
       "keywordCandidate": "how to find air filter size home",
       "targetPath": "/guides/how-to-find-hvac-filter-size/",
@@ -614,8 +614,14 @@
         "F005"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A002.md",
+      "release": null,
+      "claim": {
+        "id": "A002-2026-11-10-0311Z",
+        "at": "2026-11-10T03:11:26Z",
+        "branch": "content/A002-hvac-filter-size",
+        "baseSha": "5f4c753031f0ed97b7921ed3e5e08a73294a4576"
+      }
     },
     {
       "id": "A003",
