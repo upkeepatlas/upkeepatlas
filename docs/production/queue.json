@@ -752,7 +752,7 @@
       "phase": "articles",
       "order": 7,
       "priority": 470,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Monthly home maintenance without an overwhelming checklist",
       "keywordCandidate": "monthly home maintenance routine",
       "targetPath": "/guides/monthly-home-maintenance-routine/",
@@ -764,8 +764,13 @@
         "F003"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A007.md",
+      "release": null,
+      "claim": {
+        "id": "A007-2026-11-10-1112Z",
+        "at": "2026-11-10T11:12:36Z",
+        "branch": "content/A007-monthly-maintenance-routine"
+      }
     },
     {
       "id": "A008",
