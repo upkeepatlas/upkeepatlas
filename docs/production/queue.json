@@ -537,7 +537,7 @@
       "phase": "functions",
       "order": 20,
       "priority": 810,
-      "status": "in_progress",
+      "status": "published",
       "title": "Site-wide tool and SEO hardening",
       "keywordCandidate": "accessible home maintenance calculators",
       "targetPath": null,
@@ -549,8 +549,16 @@
         "F019"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
+      "evidence": "docs/production/evidence/F020.md",
+      "release": {
+        "sha": "8bfcf627bc65629230f07a823accd804a2186a0b",
+        "deploymentId": "a4f89865-2b7c-477a-bbd2-9ae3e7a6c823",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42726427464",
+        "verifiedAt": "2026-11-10T01:11:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/calculators/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/27",
+        "method": "Exact PR SHA 6d28727 passed quality and Playwright browser audit (runs 42726427464, 42726427107; failures []); merge SHA 8bfcf627 confirmed successful Cloudflare Pages production canonical deployment a4f89865. Cloudflare Browser Rendering confirmed live calculator HTML/canonical shortly before merge; post-merge Browser Rendering rate-limited HTTP 429, so no post-merge interaction or screen-reader/field CWV claim. Lab timings are local unthrottled observations only."
+      },
       "claim": {
         "id": "F020-2026-11-09-tool-hardening",
         "at": "2026-11-09T01:09:07Z",
