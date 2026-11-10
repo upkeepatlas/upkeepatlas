@@ -810,7 +810,7 @@
       "phase": "articles",
       "order": 9,
       "priority": 460,
-      "status": "in_progress",
+      "status": "published",
       "title": "Annual maintenance budget: categories and tradeoffs",
       "keywordCandidate": "annual home maintenance budget example",
       "targetPath": "/guides/annual-maintenance-budget-categories/",
@@ -823,8 +823,16 @@
         "F006"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
+      "evidence": "docs/production/evidence/A009.md",
+      "release": {
+        "sha": "82b4df320d9997b0485fa46b1e21e4c5d44b72d5",
+        "deploymentId": "f5ae1b5a-12f7-43ec-af86-13a029a49307",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42842819491",
+        "verifiedAt": "2026-11-10T16:18:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/annual-maintenance-budget-categories/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/36",
+        "method": "Exact PR-head GitHub-hosted Build and quality and F020 browser audit success; Cloudflare Pages exact merge SHA production deployment success; Cloudflare Browser Rendering 375px confirmed live title, H1, canonical, worksheet, DOE and FTC references and calculator link. Keyboard/screen reader and real-user CWV not independently measured."
+      },
       "claim": {
         "id": "A009-20261110-1528",
         "at": "2026-11-10T14:28:47Z",
