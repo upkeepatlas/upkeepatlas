@@ -571,7 +571,7 @@
       "phase": "articles",
       "order": 1,
       "priority": 500,
-      "status": "queued",
+      "status": "in_progress",
       "title": "How often should you inspect an HVAC filter?",
       "keywordCandidate": "how often check hvac air filter",
       "targetPath": "/guides/how-often-check-hvac-filter/",
@@ -585,7 +585,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "A001-20261110-0216Z",
+        "at": "2026-11-10T02:16:00Z",
+        "branch": "content/A001-filter-inspection-decision"
+      }
     },
     {
       "id": "A002",
