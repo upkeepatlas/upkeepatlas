@@ -601,7 +601,7 @@
       "phase": "articles",
       "order": 2,
       "priority": 495,
-      "status": "in_progress",
+      "status": "published",
       "title": "Find the right HVAC air-filter size",
       "keywordCandidate": "how to find air filter size home",
       "targetPath": "/guides/how-to-find-hvac-filter-size/",
@@ -615,12 +615,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A002.md",
-      "release": null,
-      "claim": {
-        "id": "A002-2026-11-10-0311Z",
-        "at": "2026-11-10T03:11:26Z",
-        "branch": "content/A002-hvac-filter-size",
-        "baseSha": "5f4c753031f0ed97b7921ed3e5e08a73294a4576"
+      "release": {
+        "sha": "08ad0a9e303be9063bfb29e42641d4e0daa49679",
+        "deploymentId": "bf889f1e-3d63-4e2b-bfe5-996d4e567ab7",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42747811248",
+        "verifiedAt": "2026-11-10T03:15:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/how-to-find-hvac-filter-size/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/29",
+        "method": "GitHub-hosted build/quality and browser audit green on PR head b9f03e3; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering live HTML confirms title, worksheet, canonical URL and primary source"
       }
     },
     {
