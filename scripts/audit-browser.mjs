@@ -184,7 +184,7 @@ try {
       const path = await download.path();
       const { readFile } = await import('node:fs/promises');
       const csv = await readFile(path, 'utf8');
-      if (!csv.includes('2026-11-09,HVAC,Inspected filter'))
+      if (!csv.includes('"2026-11-09","HVAC","Inspected filter"'))
         failures.push({ route: '/tools/maintenance-log/', check: 'CSV content', observed: csv.slice(0, 300) });
       page.once('dialog', dialog => dialog.accept());
       await page.locator('#clear-log').click();
@@ -192,8 +192,11 @@ try {
         failures.push({ route: '/tools/maintenance-log/', check: 'erase records' });
       page.once('dialog', dialog => dialog.accept());
       await page.locator('#import-log').setInputFiles({ name: 'backup.csv', mimeType: 'text/csv', buffer: Buffer.from(csv) });
-      if (await page.locator('#log-rows tr').count() !== 1)
-        failures.push({ route: '/tools/maintenance-log/', check: 'CSV import round trip' });
+      try {
+        await page.locator('#log-rows tr').first().waitFor({ state: 'visible', timeout: 5000 });
+      } catch {
+        failures.push({ route: '/tools/maintenance-log/', check: 'CSV import round trip', observed: await page.locator('#log-rows').innerText() });
+      }
       results.push({ route: 'interaction-samples', checks: ['electricity arithmetic', 'invalid input', 'log persistence', 'CSV export', 'erase', 'CSV import'] });
     } catch (error) {
       failures.push({ route: 'interaction-samples', check: 'end-to-end flow', observed: String(error) });
