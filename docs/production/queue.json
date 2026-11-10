@@ -875,7 +875,7 @@
       "phase": "articles",
       "order": 11,
       "priority": 450,
-      "status": "in_progress",
+      "status": "published",
       "title": "Spring maintenance: what changes after winter",
       "keywordCandidate": "spring home maintenance priorities",
       "targetPath": "/guides/spring-maintenance-priorities/",
@@ -889,10 +889,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A011.md",
-      "release": null,
-      "claim": {
-        "id": "A011-20261110-1810",
-        "at": "2026-11-10T18:10:35Z"
+      "release": {
+        "sha": "1b1cbaa9e9b7d50c3ec584fa1a0e75205d47f389",
+        "deploymentId": "b20be581-8b7a-4d95-b87a-6d0fba2d6e2a",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42872860628",
+        "verifiedAt": "2026-11-10T19:16:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/spring-maintenance-priorities/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/38",
+        "method": "GitHub Actions quality and browser audit success on exact PR head d096f9b; Cloudflare production exact merge SHA success; Cloudflare Browser Rendering 375px confirmed title, H1, canonical, EPA/DOE links and printable content. Manual screen-reader and live print interaction not independently verified."
       }
     },
     {
