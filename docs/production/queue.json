@@ -571,7 +571,7 @@
       "phase": "articles",
       "order": 1,
       "priority": 500,
-      "status": "in_progress",
+      "status": "published",
       "title": "How often should you inspect an HVAC filter?",
       "keywordCandidate": "how often check hvac air filter",
       "targetPath": "/guides/how-often-check-hvac-filter/",
@@ -584,12 +584,15 @@
         "F005"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
-      "claim": {
-        "id": "A001-20261110-0216Z",
-        "at": "2026-11-10T02:16:00Z",
-        "branch": "content/A001-filter-inspection-decision"
+      "evidence": "docs/production/evidence/A001.md",
+      "release": {
+        "sha": "5c02636a1fed56abbd0b7b82584ff985d2a3087d",
+        "deploymentId": "dcb706be-5836-48e6-9c17-cc7858187fe9",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42741711180",
+        "verifiedAt": "2026-11-10T02:23:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/how-often-check-hvac-filter/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/28",
+        "method": "GitHub Actions quality and browser audit success on exact PR head 4535ccf; Cloudflare production successful on exact merge SHA; Cloudflare Browser Rendering confirmed live 375px title, H1, decision table, source link, and no noindex. Canonical recheck was rate limited HTTP 429; CI verified generated production-host SEO output."
       }
     },
     {
