@@ -905,7 +905,7 @@
       "phase": "articles",
       "order": 12,
       "priority": 445,
-      "status": "in_progress",
+      "status": "published",
       "title": "Summer home maintenance without the busywork",
       "keywordCandidate": "summer home maintenance priorities",
       "targetPath": "/guides/summer-maintenance-priorities/",
@@ -919,7 +919,15 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A012.md",
-      "release": null,
+      "release": {
+        "sha": "947ee8f84f9f9078d4f23a73094bd0bd54ed818c",
+        "deploymentId": "aba7a535-2718-4246-a3a8-13605afaac10",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42893449107",
+        "verifiedAt": "2026-11-10T21:17:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/summer-maintenance-priorities/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/39",
+        "method": "Exact PR head 1c96c5b passed Build and quality and F020 browser audit (runs 42893449107 and 42893449562). Merge SHA 947ee8f matched successful Cloudflare production deployment aba7a535. Cloudflare Browser Rendering at 375px confirmed live title, H1, canonical, heat decision matrix, EPA reference, printable record and seasonal hub link. No manual screen reader, field CWV or indexing claim."
+      },
       "claim": {
         "id": "A012-20261110-2113",
         "at": "2026-11-10T20:13:26Z",
