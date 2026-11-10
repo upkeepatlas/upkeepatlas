@@ -810,7 +810,7 @@
       "phase": "articles",
       "order": 9,
       "priority": 460,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Annual maintenance budget: categories and tradeoffs",
       "keywordCandidate": "annual home maintenance budget example",
       "targetPath": "/guides/annual-maintenance-budget-categories/",
@@ -824,7 +824,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "A009-20261110-1528",
+        "at": "2026-11-10T14:28:47Z",
+        "branch": "content/A009-budget-categories-20261110"
+      }
     },
     {
       "id": "A010",
