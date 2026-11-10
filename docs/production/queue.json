@@ -631,7 +631,7 @@
       "phase": "articles",
       "order": 3,
       "priority": 490,
-      "status": "queued",
+      "status": "in_progress",
       "title": "MERV filter ratings explained for homeowners",
       "keywordCandidate": "merv rating filter explained",
       "targetPath": "/guides/merv-ratings-for-homeowners/",
@@ -644,8 +644,13 @@
         "F005"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A003.md",
+      "release": null,
+      "claim": {
+        "id": "A003-20261110-0507-prague",
+        "at": "2026-11-10T04:07:55Z",
+        "branch": "content/A003-merv-ratings"
+      }
     },
     {
       "id": "A004",
