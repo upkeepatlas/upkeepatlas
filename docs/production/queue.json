@@ -845,7 +845,7 @@
       "phase": "articles",
       "order": 10,
       "priority": 455,
-      "status": "in_progress",
+      "status": "published",
       "title": "How to plan a home repair reserve",
       "keywordCandidate": "how much to save for home repairs",
       "targetPath": "/guides/home-repair-emergency-fund/",
@@ -859,11 +859,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A010.md",
-      "release": null,
-      "claim": {
-        "id": "A010-20261110-1714Z",
-        "at": "2026-11-10T17:14:22Z",
-        "branch": "content/A010-home-repair-emergency-fund"
+      "release": {
+        "sha": "8eaa10803aaa74ff0f37e09ff01a95b5a8d6088e",
+        "deploymentId": "1b4ad43a-8d12-4c32-9de2-39cd0b9de61c",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42863165415",
+        "verifiedAt": "2026-11-10T17:18:36Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/home-repair-emergency-fund/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/37",
+        "method": "GitHub Actions exact PR-head quality and browser audit successful; Cloudflare Pages production exact merge SHA success; Cloudflare Browser Rendering live title, H1, canonical, worksheet, CFPB and internal guide link confirmed. Interactive and manual screen-reader checks not independently exercised."
       }
     },
     {
