@@ -752,7 +752,7 @@
       "phase": "articles",
       "order": 7,
       "priority": 470,
-      "status": "in_progress",
+      "status": "published",
       "title": "Monthly home maintenance without an overwhelming checklist",
       "keywordCandidate": "monthly home maintenance routine",
       "targetPath": "/guides/monthly-home-maintenance-routine/",
@@ -765,11 +765,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A007.md",
-      "release": null,
-      "claim": {
-        "id": "A007-2026-11-10-1112Z",
-        "at": "2026-11-10T11:12:36Z",
-        "branch": "content/A007-monthly-maintenance-routine"
+      "release": {
+        "sha": "58b207cbe4e1b384b0e6ee20a58cdabe483a8977",
+        "deploymentId": "f2f45a67-0e31-48ad-a325-0c808e14e8fd",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42805902450",
+        "verifiedAt": "2026-11-10T12:11:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/monthly-home-maintenance-routine/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/34",
+        "method": "GitHub Actions build/quality and browser audit success at exact PR head b2094c7; Cloudflare production exact merge SHA success; Cloudflare Browser Rendering verified live title, H1, DOE/EPA links and record content. No independent keyboard or screen-reader audit."
       }
     },
     {
