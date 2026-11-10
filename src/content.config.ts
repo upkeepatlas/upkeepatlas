@@ -23,7 +23,7 @@ const guides = defineCollection({
       "qualified-professional-reviewed"
     ]),
     risk: z.enum(["low", "medium", "high"]),
-    sources: z.array(z.enum(["epa", "energy", "hvac", "cpsc", "air"])).min(1)
+    sources: z.array(z.enum(["epa", "energy", "hvac", "cpsc", "air", "ftc", "irs"])).min(1)
   }).superRefine((data, ctx) => {
     if (data.updatedAt && data.updatedAt.getTime() < data.publishedAt.getTime()) {
       ctx.addIssue({code:"custom",message:"updatedAt cannot predate publishedAt",path:["updatedAt"]});
