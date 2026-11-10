@@ -692,7 +692,7 @@
       "phase": "articles",
       "order": 5,
       "priority": 480,
-      "status": "queued",
+      "status": "in_progress",
       "title": "What a heat pump maintenance calendar includes",
       "keywordCandidate": "heat pump maintenance schedule homeowner",
       "targetPath": "/guides/heat-pump-maintenance-calendar/",
@@ -705,8 +705,13 @@
         "F005"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A005.md",
+      "release": null,
+      "claim": {
+        "id": "A005-20261110-0912-prague",
+        "at": "2026-11-10T08:12:50Z",
+        "branch": "content/A005-heat-pump-calendar"
+      }
     },
     {
       "id": "A006",
