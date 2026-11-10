@@ -722,7 +722,7 @@
       "phase": "articles",
       "order": 6,
       "priority": 475,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Home maintenance records: what to keep",
       "keywordCandidate": "home maintenance record keeping",
       "targetPath": "/guides/home-maintenance-records-to-keep/",
@@ -735,7 +735,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "A006-20261110-1014-prague",
+        "at": "2026-11-10T09:14:38Z",
+        "branch": "content/A006-home-maintenance-records"
+      }
     },
     {
       "id": "A007",
