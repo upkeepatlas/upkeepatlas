@@ -875,7 +875,7 @@
       "phase": "articles",
       "order": 11,
       "priority": 450,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Spring maintenance: what changes after winter",
       "keywordCandidate": "spring home maintenance priorities",
       "targetPath": "/guides/spring-maintenance-priorities/",
@@ -888,8 +888,12 @@
         "F018"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A011.md",
+      "release": null,
+      "claim": {
+        "id": "A011-20261110-1810",
+        "at": "2026-11-10T18:10:35Z"
+      }
     },
     {
       "id": "A012",
