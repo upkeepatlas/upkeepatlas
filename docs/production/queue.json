@@ -631,7 +631,7 @@
       "phase": "articles",
       "order": 3,
       "priority": 490,
-      "status": "in_progress",
+      "status": "published",
       "title": "MERV filter ratings explained for homeowners",
       "keywordCandidate": "merv rating filter explained",
       "targetPath": "/guides/merv-ratings-for-homeowners/",
@@ -645,11 +645,15 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A003.md",
-      "release": null,
-      "claim": {
-        "id": "A003-20261110-0507-prague",
-        "at": "2026-11-10T04:07:55Z",
-        "branch": "content/A003-merv-ratings"
+      "release": {
+        "sha": "9d4e88e194d2f52530ef1666d16ebc1572bc2c3d",
+        "deploymentId": "a2ecd49c-9d45-4b6e-87c0-cd3a41e2811e",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42754010588",
+        "browserRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42754011047",
+        "verifiedAt": "2026-11-10T05:20:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/merv-ratings-for-homeowners/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/30",
+        "method": "GitHub-hosted exact PR-head quality and browser workflows passed; Cloudflare exact merge SHA production success; Cloudflare Browser Rendering verified live title, H1, canonical, worksheet and EPA link."
       }
     },
     {
