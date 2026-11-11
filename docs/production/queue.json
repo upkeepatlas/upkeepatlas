@@ -970,7 +970,7 @@
       "phase": "articles",
       "order": 14,
       "priority": 435,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Winter observation checklist for homeowners",
       "keywordCandidate": "winter home maintenance observations",
       "targetPath": "/guides/winter-home-observations/",
@@ -984,7 +984,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "A014-20261111-0013Z",
+        "at": "2026-11-11T00:13:09Z",
+        "branch": "content/A014-winter-home-observations"
+      }
     },
     {
       "id": "A015",
