@@ -1030,7 +1030,7 @@
       "phase": "articles",
       "order": 16,
       "priority": 425,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Under-sink moisture: what to note",
       "keywordCandidate": "water damage under sink warning signs",
       "targetPath": "/guides/under-sink-moisture-warning-signs/",
@@ -1043,8 +1043,13 @@
         "F007"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A016.md",
+      "release": null,
+      "claim": {
+        "id": "A016-2026-11-11-0316",
+        "at": "2026-11-11T03:16:42Z",
+        "branch": "content/A016-under-sink-moisture"
+      }
     },
     {
       "id": "A017",
