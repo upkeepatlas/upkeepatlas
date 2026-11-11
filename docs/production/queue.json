@@ -1000,7 +1000,7 @@
       "phase": "articles",
       "order": 15,
       "priority": 430,
-      "status": "in_progress",
+      "status": "published",
       "title": "Condensation or leak: clues to record",
       "keywordCandidate": "window condensation versus leak",
       "targetPath": "/guides/condensation-versus-water-leak/",
@@ -1014,11 +1014,14 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A015.md",
-      "release": null,
-      "claim": {
-        "id": "A015-20261111-0117-connector",
-        "at": "2026-11-11T01:17:26Z",
-        "branch": "content/A015-condensation-versus-water-leak"
+      "release": {
+        "sha": "6a74963bac586a8cfe9839b65e63df2a3f99d521",
+        "deploymentId": "c67308a4-2360-4235-bc34-ec385f70cc59",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42938029908",
+        "verifiedAt": "2026-11-11T02:15:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/condensation-versus-water-leak/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/42",
+        "method": "GitHub-hosted exact PR-head quality CI and browser audit passed; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering 375px confirmed live title, H1, canonical, observation matrix, printable record, EPA source and maintenance-log link. Manual screen-reader and actual print activation not verified."
       }
     },
     {
