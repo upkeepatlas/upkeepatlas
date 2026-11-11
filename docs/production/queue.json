@@ -1061,7 +1061,7 @@
       "phase": "articles",
       "order": 17,
       "priority": 420,
-      "status": "in_progress",
+      "status": "published",
       "title": "What to document before calling a plumber",
       "keywordCandidate": "water leak documentation checklist",
       "targetPath": "/guides/water-leak-documentation/",
@@ -1074,8 +1074,16 @@
         "F007"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
+      "evidence": "docs/production/evidence/A017.md",
+      "release": {
+        "sha": "cace21c208567b74a99300ad1f39b4fab72710c8",
+        "deploymentId": "a714bf46-21ad-409f-8b95-e27f21a1a021",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42964424223",
+        "verifiedAt": "2026-11-11T06:19:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/water-leak-documentation/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/44",
+        "method": "GitHub Actions exact PR head quality and browser audit success; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering 375px live title/H1, handoff matrix, printable worksheet, EPA link and maintenance-log link verified. Actual print activation and manual screen-reader testing not independently exercised."
+      },
       "claim": {
         "id": "A017-20261111-0513Z",
         "at": "2026-11-11T05:13:00Z",
