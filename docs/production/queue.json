@@ -1000,7 +1000,7 @@
       "phase": "articles",
       "order": 15,
       "priority": 430,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Condensation or leak: clues to record",
       "keywordCandidate": "window condensation versus leak",
       "targetPath": "/guides/condensation-versus-water-leak/",
@@ -1013,8 +1013,13 @@
         "F007"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A015.md",
+      "release": null,
+      "claim": {
+        "id": "A015-20261111-0117-connector",
+        "at": "2026-11-11T01:17:26Z",
+        "branch": "content/A015-condensation-versus-water-leak"
+      }
     },
     {
       "id": "A016",
