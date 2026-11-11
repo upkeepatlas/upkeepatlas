@@ -1030,7 +1030,7 @@
       "phase": "articles",
       "order": 16,
       "priority": 425,
-      "status": "in_progress",
+      "status": "published",
       "title": "Under-sink moisture: what to note",
       "keywordCandidate": "water damage under sink warning signs",
       "targetPath": "/guides/under-sink-moisture-warning-signs/",
@@ -1044,11 +1044,15 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A016.md",
-      "release": null,
-      "claim": {
-        "id": "A016-2026-11-11-0316",
-        "at": "2026-11-11T03:16:42Z",
-        "branch": "content/A016-under-sink-moisture"
+      "release": {
+        "sha": "f83c541eae5dc10996151156002f7ec67f932c3e",
+        "deploymentId": "046430a8-650a-4efa-9246-380cf6e051f6",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42951834247",
+        "browserAuditUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42951834110",
+        "verifiedAt": "2026-11-11T04:12:15Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/under-sink-moisture-warning-signs/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/43",
+        "method": "Exact PR-head GitHub Actions quality and browser audit success; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering 375px live HTML title/H1/canonical/EPA/printable/log link verified."
       }
     },
     {
