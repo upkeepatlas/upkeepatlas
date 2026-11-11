@@ -1096,7 +1096,7 @@
       "phase": "articles",
       "order": 18,
       "priority": 415,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Basement moisture observation guide",
       "keywordCandidate": "basement moisture signs homeowner",
       "targetPath": "/guides/basement-moisture-observations/",
@@ -1109,8 +1109,13 @@
         "F007"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A018.md",
+      "release": null,
+      "claim": {
+        "id": "A018-20261111-0709",
+        "at": "2026-11-11T07:09:36Z",
+        "branch": "content/A018-basement-moisture-observations"
+      }
     },
     {
       "id": "A019",
