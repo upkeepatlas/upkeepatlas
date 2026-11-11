@@ -1131,7 +1131,7 @@
       "phase": "articles",
       "order": 19,
       "priority": 410,
-      "status": "queued",
+      "status": "in_progress",
       "title": "Window condensation in winter: a homeowner log",
       "keywordCandidate": "winter window condensation home",
       "targetPath": "/guides/winter-window-condensation-log/",
@@ -1144,8 +1144,13 @@
         "F007"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null
+      "evidence": "docs/production/evidence/A019.md",
+      "release": null,
+      "claim": {
+        "id": "A019-20261111-0909Z",
+        "at": "2026-11-11T09:09:00Z",
+        "branch": "content/A019-winter-window-condensation-log"
+      }
     },
     {
       "id": "A020",
