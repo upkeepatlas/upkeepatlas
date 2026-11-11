@@ -1096,7 +1096,7 @@
       "phase": "articles",
       "order": 18,
       "priority": 415,
-      "status": "in_progress",
+      "status": "published",
       "title": "Basement moisture observation guide",
       "keywordCandidate": "basement moisture signs homeowner",
       "targetPath": "/guides/basement-moisture-observations/",
@@ -1110,7 +1110,15 @@
       ],
       "safety": "low",
       "evidence": "docs/production/evidence/A018.md",
-      "release": null,
+      "release": {
+        "sha": "60bfc0e9a4a0608def1431bd1346a68676ce51f9",
+        "deploymentId": "ab8601eb-5744-47ae-bee0-ade3918134a2",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42977628784",
+        "verifiedAt": "2026-11-11T08:17:00Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/basement-moisture-observations/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/45",
+        "method": "GitHub-hosted exact PR-head quality and browser audit succeeded; Cloudflare Pages exact merge SHA production success; Cloudflare Browser Rendering 375px confirmed title, H1, canonical, EPA link, print content, maintenance-log link. Print activation and manual screen reader not independently verified."
+      },
       "claim": {
         "id": "A018-20261111-0709",
         "at": "2026-11-11T07:09:36Z",
