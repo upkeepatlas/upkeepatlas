@@ -1061,7 +1061,7 @@
       "phase": "articles",
       "order": 17,
       "priority": 420,
-      "status": "queued",
+      "status": "in_progress",
       "title": "What to document before calling a plumber",
       "keywordCandidate": "water leak documentation checklist",
       "targetPath": "/guides/water-leak-documentation/",
@@ -1075,7 +1075,12 @@
       ],
       "safety": "low",
       "evidence": null,
-      "release": null
+      "release": null,
+      "claim": {
+        "id": "A017-20261111-0513Z",
+        "at": "2026-11-11T05:13:00Z",
+        "branch": "content/A017-water-leak-documentation"
+      }
     },
     {
       "id": "A018",
