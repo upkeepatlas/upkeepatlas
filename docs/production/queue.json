@@ -970,7 +970,7 @@
       "phase": "articles",
       "order": 14,
       "priority": 435,
-      "status": "in_progress",
+      "status": "published",
       "title": "Winter observation checklist for homeowners",
       "keywordCandidate": "winter home maintenance observations",
       "targetPath": "/guides/winter-home-observations/",
@@ -983,12 +983,15 @@
         "F018"
       ],
       "safety": "low",
-      "evidence": null,
-      "release": null,
-      "claim": {
-        "id": "A014-20261111-0013Z",
-        "at": "2026-11-11T00:13:09Z",
-        "branch": "content/A014-winter-home-observations"
+      "evidence": "docs/production/evidence/A014.md",
+      "release": {
+        "sha": "3b884854ea181bb24be6228109b9484fcb1fc947",
+        "deploymentId": "1b280f0e-78f6-4845-babb-782a1e9a816d",
+        "ciRunUrl": "https://github.com/upkeepatlas/upkeepatlas/actions/runs/42929789100",
+        "verifiedAt": "2026-11-11T00:17:29Z",
+        "liveUrl": "https://upkeepatlas.pages.dev/guides/winter-home-observations/",
+        "pullRequest": "https://github.com/upkeepatlas/upkeepatlas/pull/41",
+        "method": "GitHub Actions exact PR-head quality and browser audit success; Cloudflare Pages production exact merge SHA success; Cloudflare Browser Rendering live 375px HTML verified title, H1, canonical, condition matrix, printable record, EPA source and hub link. Manual keyboard/print and screen-reader interactions not independently tested."
       }
     },
     {
